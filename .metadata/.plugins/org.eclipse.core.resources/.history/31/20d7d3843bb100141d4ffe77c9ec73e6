@@ -1,0 +1,10 @@
+/**The Register class represents a quantum register that contains 'n' qubits 
+ * @author Connor Imrie
+ * 
+ * The register is stored as an array of states. 
+ * These quantum states are a superposition of qubits and handle their own behaviour 
+ * relating to normalisation etc.
+ **/
+public class Register {
+	
+}

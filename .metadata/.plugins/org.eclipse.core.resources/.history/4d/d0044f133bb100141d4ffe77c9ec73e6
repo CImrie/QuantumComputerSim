@@ -1,0 +1,7 @@
+/**The Register class represents a quantum register that contains 'n' qubits 
+ * @author connorimrie
+ * 
+ **/
+public class Register {
+
+}
