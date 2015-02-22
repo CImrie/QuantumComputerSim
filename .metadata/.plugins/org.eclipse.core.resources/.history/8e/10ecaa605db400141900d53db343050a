@@ -1,0 +1,24 @@
+package FXLogic;
+
+import javafx.scene.control.TableColumn;
+
+public class SuperTableColumn extends TableColumn<Record, String> {
+	private TableColumn tableColumn;
+	
+	public SuperTableColumn(){
+		super();
+	}
+	
+	public SuperTableColumn(TableColumn<Record, ?> tableColumn2){
+		tableColumn = tableColumn2;
+		
+	}
+	
+	public int getNoOfRows(){
+		int count = 0;
+		while (tableColumn.getCellObservableValue(count) != null){
+			count++;
+		}
+		return count;
+	}
+}

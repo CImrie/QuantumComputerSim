@@ -15,4 +15,16 @@ public class Register {
 	public Register(int n){
 		this.states = new State[n];
 	}
+	
+	public Matrix getMatrix(){
+		//go through each state in the array and take the tensor product with the element to its right:
+		int length = this.states.length;
+		//start with the last two elements:
+		Matrix currentTensorMatrix = this.states[length-2].tensorProduct(this.states[length-1].getMatrix());
+		//Then loop through the remaining elements and take the tensor product with a matrix
+		for (int i = this.states.length-3; i > 0 ; i--){
+			currentTensorMatrix = this.states[i].tensorProduct(currentTensorMatrix);
+		}
+		return currentTensorMatrix;
+	}
 }

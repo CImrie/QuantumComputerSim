@@ -1,0 +1,9 @@
+package FXLogic;
+
+import javafx.scene.control.TableView;
+
+public class SuperTableView extends TableView {
+	public SuperTableView(){
+		super();
+	}
+}

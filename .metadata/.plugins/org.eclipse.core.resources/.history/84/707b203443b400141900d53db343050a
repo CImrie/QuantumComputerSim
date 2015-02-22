@@ -1,0 +1,585 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package FX.Controller;
+
+import FXLogic.EditingCell;
+import FXLogic.FXKeyListener;
+import FXLogic.Record;
+import FXLogic.SuperTableColumn;
+
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.util.Callback;
+
+import javax.swing.Timer;
+
+import mailFX.FXAbout;
+import mailFX.FXError;
+import mailFX.FXSetting;
+import mailLogic.AddressBook;
+import mailLogic.Mailbox;
+import mailLogic.Server;
+import mailLogic.myDouble;
+
+/**
+ * FXML Controller class
+ *
+ * @author Connor
+ */
+public class FXGUIController implements Initializable {
+	private Stage stage;
+	
+	@FXML
+	TableView<Record> srcTable;
+	@FXML
+	TableView<Record> destTable;
+	@FXML
+        ProgressIndicator structureReplicatedProgress;
+        @FXML
+        ProgressIndicator noMessagesAttemptedProgress;
+        @FXML
+        ProgressIndicator totalProgress;
+        
+        public myDouble structureReplicatedFraction = new myDouble();
+        public myDouble noMessagesAttemptedFraction = new myDouble();
+        public myDouble totalProgressFraction = new myDouble();
+        
+	private TableColumn srcId;
+	private TableColumn srcEmail;
+	private TableColumn srcPass;
+	private TableColumn srcURL;
+	
+	private TableColumn destId;
+	private TableColumn destEmail;
+	private TableColumn destPass;
+	private TableColumn destURL;
+	@FXML
+	private CheckBox SSLCheckBox;
+	@FXML
+	private CheckBox noDuplicatesCheckBox;
+        @FXML
+        private Button submitBatchButton;
+	private boolean SSL;
+	private boolean noDuplicates;
+	
+	private int srcCount=0;;
+	private int destCount=0;
+        
+        private AddressBook ab;
+        private Timer ticker;
+        private SimpleBooleanProperty minRecords;
+	
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+    	addTables();
+    	SSL = SSLCheckBox.isSelected();
+    	noDuplicates = noDuplicatesCheckBox.isSelected();
+        minRecords = new SimpleBooleanProperty();
+        minRecords.setValue(false);
+        addListener();
+        checkForMinRecords();
+    	
+    }    
+    public void addListener(){
+    	minRecords.addListener(new ChangeListener<Boolean>(){
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(newValue){
+                    //minRecords.set(false);
+                    //submitBatchButton.setDisable(false);
+                    //submitBatchButton.setTooltip(new Tooltip("Complete the records in 'Source' and 'Destination' to enable this button"));
+                }
+                else {
+                    //minRecords.set(true);
+                    //submitBatchButton.setDisable(true);
+                    //submitBatchButton.setTooltip(new Tooltip("Click here to begin processing the batch of mailboxes you have input"));
+                }
+            }
+        });
+        submitBatchButton.disableProperty().bind(minRecords);
+    }
+    
+    public void addTables(){
+    	setUpSrcTable();
+    	setUpDestTable();
+    }
+    
+    @SuppressWarnings("unchecked")
+	public void setStartEditTableColumn(ArrayList<TableColumn> ts){
+        Callback<TableColumn, TableCell> cellFactory = new Callback<TableColumn, TableCell>() {
+            @Override
+            public TableCell call(TableColumn p) {
+                return new EditingCell();
+            }
+        };
+    	for (int i = 0; i < ts.size(); i++){
+    		ts.get(i).setCellFactory(cellFactory);
+    	}
+    } 
+    
+    @SuppressWarnings("unchecked")
+	public void setCommitEditTableColumn(ArrayList<TableColumn> ts){
+        int limit = ts.size();
+    	for (int i = 0; i < limit; i++){
+        	ts.get(i).setOnEditCommit(new EventHandler<CellEditEvent>() {
+    			@Override
+    			public void handle(final CellEditEvent t) {
+    				int column = t.getTablePosition().getColumn();
+                                Record currentRec = ((Record) t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                                String newVal = (String) t.getNewValue(); 
+    				switch(column) {
+    					case 0 :	break;
+    					case 1 :	if (t.getNewValue() != null){
+			        					currentRec.setUsername(newVal);
+                                                                        checkForMinRecords();
+			        					break;
+			        				}
+    					case 2 :	if (t.getNewValue() != null){
+		        						currentRec.setPassword(newVal);
+                                                                        checkForMinRecords();
+		        						break;
+		        					}
+    					case 3 :	if (t.getNewValue() != null){
+    									currentRec.setHost(newVal);
+                                                                        checkForMinRecords();
+    									break;
+    					}
+    				}
+    			}});
+    	}
+    }  
+        
+    public void checkForMinRecords(){
+    	minRecords.setValue(true);
+    	submitBatchButton.setTooltip(new Tooltip("Click here to submit the accounts given on 'Source' and 'Destination' and begin copying mail"));
+    	submitBatchButton.setText("Submit Batch");
+        int srcSize = srcTable.getItems().size();
+        int destSize = destTable.getItems().size();
+        ObservableList<Record> srcItems = srcTable.getItems();
+        ObservableList<Record> destItems = destTable.getItems();
+        for (int i = 0; i < srcSize && i < destSize; i++){
+            if(!Record.checkIfEmpty(srcItems.get(i)) && !Record.checkIfEmpty(destItems.get(i))){
+                minRecords.setValue(false);
+                submitBatchButton.setText("Submit Batch");
+            }
+        }
+        
+    }
+    
+    private ArrayList<TableColumn> getEditableTableColumns(TableView<Record> t){
+    	ArrayList<TableColumn> columns = new ArrayList<TableColumn>();
+        int size = t.getColumns().size();
+    	for (int i = 0; i < size; i++){
+    		if (t.getColumns().get(i).isEditable()){
+    			columns.add(t.getColumns().get(i));
+    		}
+    	}
+	return columns;
+    }
+    
+    @SuppressWarnings("unchecked")
+	private void setUpSrcTable(){
+	   	//allow multiple selections and selection by cell instead of row
+    	srcTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    	srcTable.getSelectionModel().cellSelectionEnabledProperty().set(true);
+    	
+    	//generate cell table and set current cell count to noOfCells
+    	int noOfCells = 20;
+    	ObservableList<Record> data = generateEmptyRecords(0, noOfCells);
+    	srcCount += noOfCells;
+    	//define columns
+    	srcId = srcTable.getColumns().get(0);
+    	srcEmail = srcTable.getColumns().get(1);
+    	srcPass = srcTable.getColumns().get(2);
+    	srcURL = srcTable.getColumns().get(3);
+    	//System.out.println("# of Columns: " + srcTable.getColumns().size());
+    	//define where cells get data
+    	srcId.setCellValueFactory(new PropertyValueFactory<Record,String>("idString"));
+    	srcEmail.setCellValueFactory(new PropertyValueFactory<Record,String>("username"));
+    	srcPass.setCellValueFactory(new PropertyValueFactory<Record,String>("password"));
+    	srcURL.setCellValueFactory(new PropertyValueFactory<Record,String>("host"));
+    	
+    	srcTable.setItems(data);
+    	//manageEditables
+    	srcTable.setEditable(true);    	
+    	setStartEditTableColumn(getEditableTableColumns(srcTable));
+    	setCommitEditTableColumn(getEditableTableColumns(srcTable));
+    	
+    	setTabListener(srcTable);
+    	setTableKeyListeners(srcTable);
+    	
+    }
+    
+    private void setUpDestTable(){
+    	//allow multiple selections and selection by cell instead of row
+    	destTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    	destTable.getSelectionModel().cellSelectionEnabledProperty().set(true);
+    	
+    	
+    	//generate cell table and set current cell count to noOfCells
+    	int noOfCells = 20;
+    	ObservableList<Record> data2 = generateEmptyRecords(0, noOfCells);
+    	destCount += noOfCells;
+    	
+    	destId = destTable.getColumns().get(0);
+    	destEmail = destTable.getColumns().get(1);
+    	destPass = destTable.getColumns().get(2);
+    	destURL = destTable.getColumns().get(3);
+    	//System.out.println("# of Columns: " + destTable.getColumns().size());
+    	destId.setCellValueFactory(new PropertyValueFactory<Record,String>("idString"));
+    	destEmail.setCellValueFactory(new PropertyValueFactory<Record,String>("username"));
+    	destPass.setCellValueFactory(new PropertyValueFactory<Record,String>("password"));
+    	destURL.setCellValueFactory(new PropertyValueFactory<Record,String>("host"));
+    	
+    	destTable.setItems(data2);
+    	destTable.setEditable(true);
+    	
+    	
+    	setStartEditTableColumn(getEditableTableColumns(destTable));
+    	setCommitEditTableColumn(getEditableTableColumns(destTable));
+    	
+    	setTabListener(destTable);
+    	setTableKeyListeners(destTable);
+    }
+    
+    public ObservableList<Record> generateEmptyRecords(int currentRows, int size){
+    	ObservableList<Record> data = FXCollections.observableArrayList(); 
+    	// create the data
+    	//define records
+    	for (int i = currentRows; i < size; i++){
+    		data.add(generateEmptyRecord(i));
+    	}
+
+    	return data;
+    }
+    
+    public Record generateEmptyRecord(int i){
+    	Record temp = new Record(i+1, "", "", "");
+        return temp;
+    }
+    @FXML
+    private void toggleDuplicates(){
+    	boolean current = noDuplicates;
+    	this.noDuplicates = !current;
+    }
+    @FXML
+    private void toggleSSL(){
+    	boolean current = SSL;
+    	this.SSL = !current;
+    }
+    
+    @FXML
+    private void exitProgram(){
+    	System.exit(0);
+    }
+    
+    public void checkProgress(){
+        Timer t = new Timer(200, new ActionListener(){
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                structureReplicatedFraction = myDouble.toMyDouble(ab.checkStructureReplicatedProgress());
+                noMessagesAttemptedFraction =  myDouble.toMyDouble(ab.checkNoMessagesAttemptedProgress());
+                //System.out.println("messages processed progress: " + ab.checkNoMessagesAttemptedProgress());
+                totalProgressFraction =  myDouble.toMyDouble(ab.getTotalProgress());
+               // System.out.println("total progress: " + ab.getTotalProgress());
+                
+            }
+        });
+        t.start();
+    }
+
+    @FXML
+    private void submitIMAPBatch(){
+    	checkForMinRecords();
+    	if (!this.minRecords.getValue()){
+        //disable submit button
+        minRecords.setValue(true);
+        String origText = submitBatchButton.getText();
+        submitBatchButton.setText("Working...");
+        //System.out.println("disabled: "+ submitBatchButton.isDisable());
+        // separate non-FX thread
+        final Task t = new Task() {
+            @Override
+            protected Object call() throws Exception {
+                int realCount = 0;
+                ObservableList<Record> srcItems = srcTable.getItems();
+                ObservableList<Record> destItems = destTable.getItems();
+                //loop through adding mailboxes to server and server to server array lists
+                for(int i = 0; i < srcCount && i < destCount; i++){
+                    if(!(Record.checkIfEmpty(srcItems.get(i)) || Record.checkIfEmpty(destItems.get(i)))){
+                            realCount++;
+                    }
+                }
+                ArrayList<Server> srcServers = new ArrayList<>();
+                ArrayList<Server> desServers = new ArrayList<>();
+                //prepare server arrays to hold source and destination list of servers
+                Server[] sourceServerArray = new Server[realCount];
+                Server[] destServerArray = new Server[realCount];
+                int limit = srcItems.size();
+                for (int i = 0; i < limit; i++){
+                    if(!(Record.checkIfEmpty(srcItems.get(i)) || Record.checkIfEmpty(destItems.get(i)))){
+                        //create mailboxes for source and destination, based on tabular input in GUI
+                        ObservableList<TableColumn<Record, ?>> srcColumns = srcTable.getColumns();
+                        ObservableList<TableColumn<Record, ?>> destColumns = destTable.getColumns();
+                        Mailbox srcM = new Mailbox(srcColumns.get(1).getCellData(i).toString(),
+                                        srcColumns.get(2).getCellData(i).toString());
+                        Mailbox destM = new Mailbox(destColumns.get(1).getCellData(i).toString(),
+                                                destColumns.get(2).getCellData(i).toString());
+
+                        //create a server object using mailboxes and server url, then append to list of servers
+                        srcServers.add(new Server(srcM, (String) srcColumns.get(3).getCellData(i), SSL));
+                        desServers.add(new Server(destM, (String) destColumns.get(3).getCellData(i), SSL));
+                    }
+                }
+                for (int j = 0; j < srcServers.size(); j++){
+                    sourceServerArray[j] = srcServers.get(j);
+                    destServerArray[j] = desServers.get(j);
+                }
+                //create address book using servers, and clone each one in turn
+                ab = new AddressBook(sourceServerArray, destServerArray, noDuplicates);
+                ab.cloneMailbox();
+                return null;
+            }
+        };
+
+                
+        //timer to check for progress
+        ticker = new Timer(300, new ActionListener(){
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                Platform.runLater(new Runnable(){
+                    @Override
+                    public void run() {
+                        if (ab != null){
+                            //System.out.println("folders progress: " + ab.checkStructureReplicatedProgress());
+                            structureReplicatedFraction.setDoubleProperty(ab.checkStructureReplicatedProgress());
+                            noMessagesAttemptedFraction.setDoubleProperty(ab.checkNoMessagesAttemptedProgress());
+                            //System.out.println("messages processed progress: " + ab.checkNoMessagesAttemptedProgress());
+                            totalProgressFraction.setDoubleProperty(ab.getTotalProgress());
+                            //System.out.println("total progress: " + ab.getTotalProgress());
+                        }
+                    }
+                });
+            }
+        });
+        //
+        setProgressListeners();
+        ticker.start();
+        new Thread(t).start();
+        
+        //re-enable submit button and text
+        minRecords.setValue(false);
+        submitBatchButton.setText(origText);
+    	}
+    }
+    
+    public void stopTicker(){
+        ticker.stop();
+    }
+    
+    public void setProgressListeners(){
+        this.totalProgressFraction.getDoubleProperty().addListener(new ChangeListener(){
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                totalProgress.setProgress((double) newValue);
+                if(Math.abs(totalProgress.getProgress()-1.0) <= 0.001){
+                    stopTicker();
+                }
+            }
+        });
+        this.structureReplicatedFraction.getDoubleProperty().addListener(new ChangeListener(){
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                structureReplicatedProgress.setProgress((double) newValue);
+            }
+        });
+        this.noMessagesAttemptedFraction.getDoubleProperty().addListener(new ChangeListener(){
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                noMessagesAttemptedProgress.setProgress((double) newValue);
+            }
+        });
+    }
+    
+    public void updateProgress(double structureProg, double messageAttemptProg, double totalProg){
+        this.structureReplicatedProgress.setProgress(structureProg);
+        this.noMessagesAttemptedProgress.setProgress(messageAttemptProg);
+        this.totalProgress.setProgress(totalProg);
+    }
+   
+
+    public void setTabListener(final TableView<Record> table){
+    	/*table.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            final KeyCombination reverseTab = new KeyCodeCombination(KeyCode.TAB, KeyCombination.SHIFT_ANY);
+            ObservableList<TablePosition> cells = table.getSelectionModel().getSelectedCells();
+    	    @Override
+    	    public void handle(javafx.scene.input.KeyEvent t) {
+    	    	if (reverseTab.match(t) && t.isShiftDown()){
+    	        	TablePosition firstCell = cells.get(0);
+    	        	int row = firstCell.getRow();
+    	        	TableColumn column = firstCell.getTableColumn();
+    	        	
+    	        	if (firstCell.getColumn() != 0){
+    	        		table.getSelectionModel().selectLeftCell();
+	    	        	if(table.getSelectionModel().isSelected(row, column)){
+	    	        		table.getSelectionModel().clearSelection(row, column);
+	    	        	}
+    	        	}
+    	        	t.consume(); //do nothing
+    	        }
+    	    	else if (t.getCode() == KeyCode.TAB ) {
+                    TablePosition firstCell = cells.get(0);
+                    int row = firstCell.getRow();
+                    TableColumn column = firstCell.getTableColumn();
+
+                    if (table.getColumns().size()-1 != firstCell.getColumn()){
+                            table.getSelectionModel().selectRightCell();
+                            if(table.getSelectionModel().isSelected(row, column)){
+                                    table.getSelectionModel().clearSelection(row, column);
+                            }
+                    }
+                    t.consume(); // do nothing
+    	        }
+                else if (t.getCode() == KeyCode.ENTER){
+                    TablePosition firstCell = cells.get(0);
+                    int column = firstCell.getColumn();
+                    int row = firstCell.getRow();
+                    if(column == table.getColumns().size()-1){
+                        table.getSelectionModel().select(row+1, table.getColumns().get(1));
+                        table.getSelectionModel().clearSelection(row, firstCell.getTableColumn());
+                    }
+                }
+    	    }
+    	});*/
+    }
+    
+    public void setTableKeyListeners(final TableView<Record> table){
+    		FXKeyListener kl = new FXKeyListener();
+    		kl.addGroupListener(table, this);
+    }
+
+    public void addRecordsFromExcelString(String str, TableView<Record> t){
+    	try{
+    		Record rec = t.getItems().get(t.getSelectionModel().getSelectedIndex());
+        	final int currentSelectedIndex = rec.getId()-1;
+        	ArrayList<Record> records = Record.generateRecordsFromExcelString(str, currentSelectedIndex);
+	    	int size = records.size();
+                ObservableList<Record> tableItems = t.getItems();
+                int noOfItems = tableItems.size();
+	    	for (int i = 0; i < size; i++ ){
+	    		if (noOfItems > (currentSelectedIndex + i)){
+	    			tableItems.set(currentSelectedIndex + i , records.get(i));
+	    		}
+	    		else {
+	    			tableItems.add(records.get(i));
+	    		}
+	    	}
+    	}
+    	catch(Exception e){
+    		String message = "Clipboard paste failed";
+    		String details = "Clipboard String: \"" + str + "\"\n"
+					+ "\nNot in the format: "
+					+ "\nEMAIL\tPASSWORD\tSERVERURL"
+    				+ "\nEMAIL\tPASSWORD\tSERVERURL";
+    		startError(message, details);
+    	}
+    }
+    
+    @FXML
+    public void addRecord(){
+    	SuperTableColumn temp = new SuperTableColumn(srcTable.getColumns().get(0));
+    	SuperTableColumn temp2 = new SuperTableColumn(destTable.getColumns().get(0));
+    	int newIndex = temp.getNoOfRows() + 1;
+    	int newIndex2 = temp2.getNoOfRows() + 1;
+    	int newIndexFinal = Integer.min(newIndex, newIndex2);
+    	if(srcTable.getItems().size() < newIndexFinal){
+    		srcTable.getItems().add(new Record(newIndexFinal));
+    	}
+    	if(destTable.getItems().size() < newIndexFinal){
+    		destTable.getItems().add(new Record(newIndexFinal));
+    	}
+    	
+    }
+    
+    public void setStage(Stage stage){
+    	this.stage = stage;
+    }
+    
+    public Stage getStage(){
+    	return this.stage;
+    }
+
+    //Methods to open up new portions of the GUI
+    @FXML
+    public void startSettingsGUI(){
+    	//new FXSettings();
+    	try {
+			new FXSetting(this.getStage());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public void startError(String message, String details){
+    	try {
+			new FXError(this.stage, "IMAP Migration Program - Error", message, details);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+    }
+    
+    @FXML
+    public void startAbout(){
+    	System.out.println("about started");
+		try {
+			new FXAbout(this.stage);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    @FXML
+    public void comingSoon(){
+        try {
+            new FXError(this.stage, "IMAP Mail Migration - Coming soon", "Coming soon", "This feature hasn't quite been developed yet."
+                    + "\nTo import from an excel sheet, just copy the rows (email address, password and server url) and paste in to a cell."
+                    + "\nThe program will take care of the rest for you.");
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+    
+    
+}

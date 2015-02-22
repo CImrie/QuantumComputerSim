@@ -1,0 +1,161 @@
+package FXLogic;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Record {
+	private int id;
+	private String idString;
+	private String username;
+	private String password;
+	private String host;
+	private String tempEditingValue;
+	private int tempEditingColumn;
+	
+	public Record(int i){
+		this.id = i;
+		this.idString = ""+id;
+		this.username = "";
+		this.password = "";
+		this.host = "";
+	}
+	
+	public Record(int id, String user, String pass, String host){
+		this.id = id;
+		this.idString = ""+id;
+		this.username = user;
+		this.password = pass;
+		this.host = host;
+	}
+        
+        public boolean isEmpty(){
+            if(this.username.equals("") || this.password.equals("") || this.host.equals("")){
+                return true;
+            }
+            return false;
+        }
+	
+	public String getUsername(){
+		return this.username;
+	}
+	
+	public String getPassword(){
+		return this.password;
+	}
+	
+	public String getHost(){
+		return this.host;
+	}
+	
+	public int getId(){
+		return this.id;
+	}
+	
+	public void setId(int id){
+		this.id = id;
+		this.idString = ""+id;
+	}
+	
+	public void setUsername(String username){
+		this.username = username;
+	}
+	
+	public void setPassword(String password){
+		this.password = password;
+	}
+	
+	public void setHost(String url){
+		this.host = url;
+	}
+	
+	public String getEditingValue(){
+		return this.tempEditingValue;
+	}
+	
+	public void setEditingValue(String s){
+		this.tempEditingValue = s;
+	}
+	
+	public int getEditingColumn(){
+		return this.tempEditingColumn;
+	}
+	
+	public void setEditingColumn(int i){
+		this.tempEditingColumn = i;
+	}
+	
+	public static boolean checkIfEmpty(Record r){
+		if(r.getUsername() == "" || r.getPassword() == "" || r.getHost() == ""){
+			return true;
+		}
+		return false;
+	}
+	
+	public Record eraseCellFromRecord(int columnIndex){
+    	switch(columnIndex){
+	    	case 0: this.setUsername(""); this.setPassword(""); this.setHost("");
+	    			break;
+	    	case 1: this.setUsername("");
+	    			break;
+	    	case 2: this.setPassword("");
+	    			break;
+	    	case 3: this.setHost("");
+	    			break;
+    	}
+    	
+    	return this;
+    }
+	
+	public Record getReplacementRecordForEdit(){
+		return null;
+		
+	}
+	
+	public Record editCellWithString(int column, String str){
+		switch(column){
+    	case 0: break;
+    	case 1: this.setUsername(str);
+    			break;
+    	case 2: this.setPassword(str);
+    			break;
+    	case 3: this.setHost(str);
+    			break;
+		}
+		return this;
+	}
+	
+	public static ArrayList<Record> generateRecordsFromExcelString(String str, int currentSelectedIndex){
+    	ArrayList<Record> records = new ArrayList<Record>();
+    	
+    	String[] lines = str.split("\n");
+    	ArrayList<String[]> recordsStrings = new ArrayList<String[]>();
+    	for (int i = 0; i < lines.length; i++){
+    		String[] record = lines[i].split("\t");    		
+    		
+    			System.out.println("new loop");
+				String username = record[0];
+				String password = record[1];
+				String server = record[2];
+				System.out.println("HERE" + username + password + server);
+				
+				if (username != null && password != null && server != null){
+	    			records.add(new Record((currentSelectedIndex+i+1), username, password, server));
+	    		}
+    	}
+    	return records;
+	}
+	
+	public String getIdString(){
+		return this.idString;
+	}
+	
+	public String returnStringFromIndex(int columnIndex){
+		switch(columnIndex){
+		case 0: return this.idString;
+		case 1: return this.getUsername();
+		case 2: return this.getPassword();
+		case 3: return this.getHost();
+		}
+		return null;
+	}
+}

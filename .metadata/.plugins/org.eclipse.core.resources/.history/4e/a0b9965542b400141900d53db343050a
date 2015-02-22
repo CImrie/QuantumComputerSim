@@ -1,0 +1,32 @@
+package mailFX.Controller;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.application.Application;
+import javafx.fxml.Initializable;
+import javafx.stage.Stage;
+
+public class FXSettingController implements Initializable {
+	private Stage stage;
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		
+	}
+	
+	public void setStage(Stage stage){
+		this.stage = stage;
+	}
+	
+	public Stage getStage(){
+		return this.stage;
+	}
+	
+	public void discardChanges(){
+		this.stage.close();
+	}
+	
+
+}
