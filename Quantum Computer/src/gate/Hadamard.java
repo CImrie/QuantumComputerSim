@@ -24,4 +24,9 @@ public class Hadamard implements Gate{
 		State newS = h.actOn(new Qubit(0, 1));
 		System.out.println(newS.get0() + "|0> " + newS.get1() + "|1> ");
 	}
+
+	@Override
+	public State actOn(Qubit q, double parameter) {
+		return actOn(q);
+	}
 }
