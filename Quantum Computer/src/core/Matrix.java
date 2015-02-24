@@ -1,5 +1,147 @@
 package core;
-
+// @author Ben Crabbe
 public class Matrix {
+	// class containing the methods required for matrix calculations
 
-}
+	    //Print the matrix in row/col format on the terminal
+	    static void Print(double[][] grid) {
+		for(int r=0; r<grid.length; r++) {
+		    for(int c=0; c<grid[r].length; c++)
+			System.out.print(grid[r][c] + " ");
+		    System.out.println();
+		}
+	    }
+	    //Take the tensor product of two matrices
+	    public static double[][] product(double[][] A, double[][] B) {
+
+		int rowA = A.length;
+		int colA = A[0].length;
+		int rowB = B.length;
+		int colB = B[0].length;
+
+		double[][] out = new double[rowA*rowB][colA*colB];
+
+		for (int i = 0; i < rowA; i++) {
+
+		    int rowO = i*rowB;
+
+		    for (int j = 0; j < colA; j++) {
+
+			int colO = j*colB;
+			double aij = A[i][j];
+
+			for (int k = 0; k < rowB; k++) {
+			    for (int l = 0; l < colB; l++) {
+
+				out[rowO+k][colO+l] = aij*B[k][l];
+			    }
+			}
+		    }
+		}
+		return out;
+
+	    }
+	    //Create an nxn identity matrix given an nxn matrix
+	    public static double[][] Iden(double[][] A) {
+
+		int row = A.length;
+		int column =A[0].length;
+
+		double[][] Iden = new double[row][column];
+
+		for (int i=0; i < row; i++) {
+		    for (int j = 0; j < column; j++) {
+
+			if (i == j) { Iden[i][j] = 1.0; }
+			else { Iden[i][j] = 0.0; }
+
+		    }
+		}
+
+		return Iden;
+	    }
+	    public static double[][] trans(double[][] A) {
+
+		int column = A.length;
+		int row = A[0].length;
+
+		double[][] B = new double[row][column];
+
+		for( int i = 0; i < column; i++) 
+		    for( int j = 0; j < row; j++) 
+
+			B[j][i] = A[i][j];
+	      
+		return B;
+	    }
+	    // Add two same dimensional matrices C = A + B
+	    public static double[][] add(double[][] a, double[][] b) {
+
+		int row = a.length;
+		int column = a[0].length;
+
+		double[][] c = new double[row][column];
+
+		for(int i = 0; i < row; i++) 
+		    for(int j = 0; j < column; j++) 
+
+			c[i][j] = a[i][j] + b[i][j];
+
+		return c;
+	    }
+	    // Subtract two same dimensional matrices C = A - B
+	public static double[][] subtract(double[][] a, double[][] b) {
+
+		int row = a.length;
+		int column = a[0].length;
+
+		double[][] c = new double[row][column];
+
+		for(int i = 0; i < row; i++) 
+		    for(int j = 0; j < column; j++) 
+
+			c[i][j] = a[i][j] - b[i][j];
+
+		return c;
+	    }
+
+	public static double[][] mult(double[][] A, double[][] B) {
+	        int rowA = A.length;
+	        int columnA = A[0].length;
+	        int rowB = B.length;
+	        int columnB = B[0].length;
+	        if (columnA != rowB) throw new RuntimeException("Illegal matrix dimensions.");
+	        double[][] C = new double[rowA][columnB];
+	        for (int i = 0; i < rowA; i++)
+	            for (int j = 0; j < columnB; j++)
+	                for (int k = 0; k < columnA; k++)
+	                    C[i][j] += (A[i][k] * B[k][j]);
+	        return C;
+	    }
+
+	    // y = A*x
+	public static double[] mult(double[][] A, double[] x) {
+	        int row = A.length;
+	        int column = A[0].length;
+	        if (x.length != column) throw new RuntimeException("Illegal matrix dimensions.");
+	        double[] y = new double[row];
+	        for (int i = 0; i < row; i++)
+	            for (int j = 0; j < column; j++)
+	                y[i] += (A[i][j] * x[j]);
+	        return y;
+	    }
+
+	    // y = x^T * A
+	public static double[] mult(double[] x, double[][] A) {
+	        int row = A.length;
+	        int column = A[0].length;
+	        if (x.length != row) throw new RuntimeException("Illegal matrix dimensions.");
+	        double[] y = new double[column];
+	        for (int j = 0; j < column; j++)
+	            for (int i = 0; i < row; i++)
+	                y[j] += (A[i][j] * x[i]);
+	        return y;
+	    }
+	}
+
+
