@@ -1,0 +1,19 @@
+package core;
+
+// @author Ben Crabbe
+public class Qubit extends Complex {
+
+	private Complex a, b;
+
+	
+
+	@Override
+	public String toString() {
+		Complex up = this.getUp();
+		Complex down = this.getDown();
+
+		return "(" + up + ")| 0 > + (" + down + ")| 1 >";
+	}
+
+	
+}

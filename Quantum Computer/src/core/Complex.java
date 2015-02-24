@@ -1,114 +1,127 @@
 package core;
+
 // @author Ben Crabbe
 public class Complex {
 
-    private double realPart;
-    private double imagPart;
+	private double realPart;
+	private double imagPart;
 
-    //Constructor
+	// Constructor
 
-    public Complex() {
+	public Complex() {
+		this.setComplex(Double.NaN, Double.NaN);
+	}
 
-	this.setComplex(Double.NaN, Double.NaN);
+	public Complex(Complex original) {
 
-    }
-
-    public Complex (Complex original) {
-
-	this.setComplex(original.getRealPart(), original.getImagPart());
-
-    }
-
-    public Complex(double real, double imag) {
-
-	this.setComplex(real, imag);
-
-    }
-
-    public void setComplex(double real, double imag) {
-
-	this.setRealPart(real);
-	this.setImagPart(imag);
-
-    }
-
-    //Setters
-    public void setRealPart(double real) { this.realPart = real; }
-    public void setImagPart(double imag) { this.imagPart = imag; }
-
-    //Getters
-    public double getRealPart() {return this.realPart; }
-    public double getImagPart() {return this.imagPart; }
-
-    public String toString() {
-
-	double real = this.getRealPart();
-	double imag = this.getImagPart();
-
-	if (imag >= 0.0) {
-
-	    return real + " + " + imag + "i";
-
-	} else { 
-	    
-	    return real + " - " + Math.abs(imag) + "i";
+		this.setComplex(original.getRealPart(), original.getImagPart());
 
 	}
-    }
 
-    //Calculate Square Modulus 
-    public double normSquared() {
+	public Complex(double real, double imag) {
 
-	return this.getRealPart() * this.getRealPart() + this.getImagPart() * this.getImagPart();
+		this.setComplex(real, imag);
 
-    }
+	}
 
-    //Calculate Modulus
-    public double norm() { return Math.sqrt(this.normSquared()); }
+	public void setComplex(double real, double imag) {
 
-    //Conjugate
-    public Complex conj() { 
+		this.setRealPart(real);
+		this.setImagPart(imag);
 
-	return new Complex(this.getRealPart(),-this.getImagPart());
+	}
 
-    }
+	// Setters
+	public void setRealPart(double real) {
+		this.realPart = real;
+	}
 
-    //static methods
-    public static Complex add(Complex a, Complex b) {
+	public void setImagPart(double imag) {
+		this.imagPart = imag;
+	}
 
-	return new Complex(a.getRealPart()+b.getRealPart(), 
-			   a.getImagPart()+b.getImagPart());
+	// Getters
+	public double getRealPart() {
+		return this.realPart;
+	}
 
-    }
+	public double getImagPart() {
+		return this.imagPart;
+	}
 
-    public static Complex subtract(Complex a, Complex b) {
+	public String toString() {
 
-	return new Complex(a.getRealPart() - b.getRealPart(),
-			   a.getImagPart() - b.getImagPart());
+		double real = this.getRealPart();
+		double imag = this.getImagPart();
 
-    }
+		if (imag >= 0.0) {
 
-    public static Complex multiply(Complex a, Complex b) {
+			return "(" + real + " + " + imag + "i)";
 
-	return new Complex(a.getRealPart() * b.getRealPart() - a.getImagPart() * b.getImagPart(),
-			   a.getRealPart() * b.getImagPart() + a.getImagPart() * b.getRealPart());
+		} else {
 
-    }
+			return "(" + real + " - " + Math.abs(imag) + "i)";
 
-    public static Complex multiply(Complex a, double b) { 
+		}
+	}
 
-	return new Complex(a.getRealPart()*b, a.getImagPart()*b);
+	// Calculate Square Modulus
+	public double normSquared() {
 
-    }
+		return this.getRealPart() * this.getRealPart() + this.getImagPart()
+				* this.getImagPart();
 
-    public static Complex divide(Complex a, double b) {
+	}
 
-	return new Complex(a.getRealPart()/b, a.getImagPart()/b);
+	// Calculate Modulus
+	public double getNorm() {
+		return Math.sqrt(this.normSquared());
+	}
 
-    }
+	// Conjugate
+	public Complex conj() {
 
-    //  public static Complex divide(Complex a, Complex b) {
+		return new Complex(this.getRealPart(), -this.getImagPart());
 
-    //	return  divide(multiply(a,b.conj()), b.
+	}
+
+	// static methods
+	public static Complex add(Complex a, Complex b) {
+
+		return new Complex(a.getRealPart() + b.getRealPart(), a.getImagPart()
+				+ b.getImagPart());
+
+	}
+
+	public static Complex subtract(Complex a, Complex b) {
+
+		return new Complex(a.getRealPart() - b.getRealPart(), a.getImagPart()
+				- b.getImagPart());
+
+	}
+
+	public static Complex multiply(Complex a, Complex b) {
+
+		return new Complex(a.getRealPart() * b.getRealPart() - a.getImagPart()
+				* b.getImagPart(), a.getRealPart() * b.getImagPart()
+				+ a.getImagPart() * b.getRealPart());
+
+	}
+
+	public static Complex multiply(Complex a, double b) {
+
+		return new Complex(a.getRealPart() * b, a.getImagPart() * b);
+
+	}
+
+	public static Complex divide(Complex a, double b) {
+
+		return new Complex(a.getRealPart() / b, a.getImagPart() / b);
+
+	}
+
+	// public static Complex divide(Complex a, Complex b) {
+
+	// return divide(multiply(a,b.conj()), b.
 
 }

@@ -1,0 +1,58 @@
+package core;
+/**The State class represents a linear superposition of qubits
+ * @author Connor Imrie
+ * 
+ **/
+public class State {
+	Complex a;
+	Complex b;
+	
+	public State(Complex a, Complex b){
+		this.a = a;
+		this.b = b;
+		this.normalise();
+	}
+	
+	/**
+	 * normalise() manipulates the current qubit coefficients and ensures they are normalised.
+	 * If the qubits are already normalised then they are not affected by this.
+	 */
+	public void normalise(){
+		/*double normFactor = Math.sqrt(this.a*this.a + this.b*this.b);
+		this.a = this.a/normFactor;
+		this.b = this.b/normFactor;*/
+	}
+
+	public Matrix tensorProduct(Matrix matrix) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Matrix getMatrix() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public Complex get0(){
+		return this.a;
+	}
+	
+	public Complex get1(){
+		return this.b;
+	}
+	
+	public static Qubit add(Qubit a, Qubit b) {
+		Complex up = add(a.getUp(), b.getUp());
+		Complex down = add(a.getDown(), b.getDown());
+
+		return new Qubit(up, down);
+	}
+
+	public static Qubit subtract(Qubit a, Qubit b) {
+		Complex up = subtract(a.getUp(), b.getUp());
+		Complex down = subtract(a.getDown(), b.getDown());
+
+		return new Qubit(up, down);
+	}
+	
+}

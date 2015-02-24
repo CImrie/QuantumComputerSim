@@ -1,11 +1,11 @@
 package gate;
 
-import core.State;
+import core.*;
 
 
 
 public interface Gate {
-	public State actOn(State s);
+	public State actOn(Qubit q);
 	
 	//public Register actOnRegister(Register r);
 }

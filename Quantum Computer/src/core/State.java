@@ -4,10 +4,10 @@ package core;
  * 
  **/
 public class State {
-	double a;
-	double b;
+	Complex a;
+	Complex b;
 	
-	public State(double a, double b){
+	public State(Complex a, Complex b){
 		this.a = a;
 		this.b = b;
 		this.normalise();
@@ -18,9 +18,9 @@ public class State {
 	 * If the qubits are already normalised then they are not affected by this.
 	 */
 	public void normalise(){
-		double normFactor = Math.sqrt(this.a*this.a + this.b*this.b);
+		/*double normFactor = Math.sqrt(this.a*this.a + this.b*this.b);
 		this.a = this.a/normFactor;
-		this.b = this.b/normFactor;
+		this.b = this.b/normFactor;*/
 	}
 
 	public Matrix tensorProduct(Matrix matrix) {
@@ -33,11 +33,11 @@ public class State {
 		return null;
 	}
 	
-	public double get0(){
+	public Complex get0(){
 		return this.a;
 	}
 	
-	public double get1(){
+	public Complex get1(){
 		return this.b;
 	}
 	
