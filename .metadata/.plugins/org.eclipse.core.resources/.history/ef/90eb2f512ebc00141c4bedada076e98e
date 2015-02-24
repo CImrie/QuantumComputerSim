@@ -29,4 +29,9 @@ public class Hadamard implements Gate{
 	public State actOn(Qubit q, double parameter) {
 		return actOn(q);
 	}
+
+	@Override
+	public State actOn(Qubit q, double parameter) {
+		return actOn(q);
+	}
 }
