@@ -1,0 +1,11 @@
+package gate;
+import core.State;
+
+public class Hadamard implements Gate{
+
+	@Override
+	public State actOn(State s) {
+		return null;
+	}
+
+}

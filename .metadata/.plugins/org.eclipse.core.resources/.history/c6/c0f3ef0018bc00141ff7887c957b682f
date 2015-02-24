@@ -1,0 +1,25 @@
+package gate;
+import core.*;
+
+public class Hadamard implements Gate{
+
+	@Override
+	public State actOn(State s) {
+		//ensure the state has only one qubit (no superposition):
+		if (s.get0() > 0 && s.get1() > 0){
+			try {
+				throw new Exception("State given to Hadamard is not a single qubit. Only a single qubit can be accepted");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		//check coefficients to each qubit
+		if (s.get0() > 0){
+			return (new State(0, 1));
+		}
+		else if(s.get1() > 0){
+			return (new State(-1, 0));
+		}
+		return null;
+	}
+}

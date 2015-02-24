@@ -1,0 +1,4 @@
+
+public interface Gate {
+	public State actOn(State s);
+}
