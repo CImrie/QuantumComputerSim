@@ -55,7 +55,6 @@ public class Complex {
 		double imag = this.getImagPart();
 
 		if (imag >= 0.0) {
-
 			return "(" + real + " + " + imag + "i)";
 
 		} else {
@@ -68,8 +67,7 @@ public class Complex {
 	// Calculate Square Modulus
 	public double normSquared() {
 
-		return this.getRealPart() * this.getRealPart() + this.getImagPart()
-				* this.getImagPart();
+		return this.getRealPart()*this.getRealPart() + this.getImagPart()*this.getImagPart();
 
 	}
 

@@ -4,6 +4,7 @@ package core;
  * 
  **/
 public class State {
+	double magnitude;
 	Complex a;
 	Complex b;
 	
@@ -18,9 +19,7 @@ public class State {
 	 * If the qubits are already normalised then they are not affected by this.
 	 */
 	public void normalise(){
-		/*double normFactor = Math.sqrt(this.a*this.a + this.b*this.b);
-		this.a = this.a/normFactor;
-		this.b = this.b/normFactor;*/
+		this.magnitude = Math.sqrt(a.getNorm()*a.getNorm() + b.getNorm()*b.getNorm());
 	}
 
 	public Matrix tensorProduct(Matrix matrix) {
@@ -39,6 +38,10 @@ public class State {
 	
 	public Complex get1(){
 		return this.b;
+	}
+	
+	public double getMagnitude(){
+		return this.magnitude;
 	}
 	
 }
