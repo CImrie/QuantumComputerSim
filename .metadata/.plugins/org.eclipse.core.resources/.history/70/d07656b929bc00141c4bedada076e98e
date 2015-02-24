@@ -56,7 +56,7 @@ public class Matrix {
 			for (int k = 0; k < rowB; k++) {
 			    for (int l = 0; l < colB; l++) {
 
-				out[rowO+k][colO+l] = aij*B.getElement(k, l);
+				out[rowO+k][colO+l] = aij*B[k][l];
 			    }
 			}
 		    }

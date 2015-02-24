@@ -12,8 +12,8 @@ public class Qubit{
 
 	@Override
 	public String toString() {
-		int a = this.get0();
-		int b = this.get1();
+		Complex a = this.get0();
+		Complex b = this.get1();
 
 		return "(" + a + ")| 0 > + (" + b + ")| 1 >";
 	}

@@ -12,17 +12,17 @@ public class Qubit{
 
 	@Override
 	public String toString() {
-		int a = this.get0();
-		int b = this.get1();
+		Complex a = this.get0();
+		Complex b = this.get1();
 
 		return "(" + a + ")| 0 > + (" + b + ")| 1 >";
 	}
 	
-	public int get0(){
+	public Complex get0(){
 		return this.a;
 	}
 	
-	public int get1(){
+	public Complex get1(){
 		return this.b;
 	}
 

@@ -7,23 +7,6 @@ public class Matrix {
 	public Matrix(double[][] elements){
 		this.elements = elements;
 	}
-	
-	public int getRowLength(){
-		return this.elements.length;
-	}
-	
-	public int getColLength(){
-		if (this.elements.length > 0){
-			return this.elements[0].length;
-		}
-		else {
-			return 0;
-		}
-	}
-	
-	public double getElement(int row, int col){
-		return this.elements[row][col];
-	}
 	// class containing the methods required for matrix calculations
 
 	    //Print the matrix in row/col format on the terminal
@@ -35,12 +18,12 @@ public class Matrix {
 		}
 	    }
 	    //Take the tensor product of two matrices
-	    public Matrix getTensorProduct(Matrix B) {
+	    public Matrix getTensorProduct(double[][] A, double[][] B) {
 
-		int rowA = this.getRowLength();
-		int colA = this.getColLength();
-		int rowB = B.getRowLength();
-		int colB = B.getColLength();
+		int rowA = A.length;
+		int colA = A[0].length;
+		int rowB = B.length;
+		int colB = B[0].length;
 
 		double[][] out = new double[rowA*rowB][colA*colB];
 
@@ -51,17 +34,17 @@ public class Matrix {
 		    for (int j = 0; j < colA; j++) {
 
 			int colO = j*colB;
-			double aij = this.elements[i][j];
+			double aij = A[i][j];
 
 			for (int k = 0; k < rowB; k++) {
 			    for (int l = 0; l < colB; l++) {
 
-				out[rowO+k][colO+l] = aij*B.getElement(k, l);
+				out[rowO+k][colO+l] = aij*B[k][l];
 			    }
 			}
 		    }
 		}
-		return new Matrix(out);
+		return out;
 
 	    }
 	    //Create an nxn identity matrix given an nxn matrix

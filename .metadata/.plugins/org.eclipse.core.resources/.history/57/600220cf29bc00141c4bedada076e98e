@@ -25,7 +25,8 @@ public class State {
 
 	public Matrix tensorProduct(Matrix matrix) {
 		Matrix me = this.getMatrix();
-		return me.getTensorProduct(matrix);
+		me.getTensorProduct(B);
+		return null;
 	}
 
 	public Matrix getMatrix() {
