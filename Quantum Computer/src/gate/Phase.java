@@ -4,21 +4,13 @@ import core.*;
 public class Phase implements Gate{
 
 	@Override
-	public State actOn(State s) {
-		//ensure the state has only one qubit (no superposition):
-		if (s.get0() > 0 && s.get1() > 0){
-			try {
-				throw new Exception("State given to Hadamard is not a single qubit. Only a single qubit can be accepted");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+	public State actOn(Qubit q) {
 		//check coefficients to each qubit
-		if (s.get0() > 0){
-			return (new State(1, 0));
+		if (q.get0().getNorm() > 0){
+			return (new State(new Complex(0, 0), new Complex(1,0)));
 		}
-		else if(s.get1() > 0){
-			return (new State(0,1));
+		else if(q.get1().getNorm() > 0){
+			return (new State(new Complex(1,0), new Complex(-1, 0)));
 		}
 		return null;
 	}
@@ -28,8 +20,8 @@ public class Phase implements Gate{
 	 * @param args
 	 */
 	public static void main(String[] args){
-		Phase p = new Phase();
-		State newS = p.actOn(new State(1, 0));
+		Hadamard h = new Hadamard();
+		State newS = h.actOn(new Qubit(new Complex(0, 0), new Complex(1, 0)));
 		System.out.println(newS.get0() + "|0> " + newS.get1() + "|1> ");
 	}
 
