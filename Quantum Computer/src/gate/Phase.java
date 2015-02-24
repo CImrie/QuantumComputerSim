@@ -11,7 +11,9 @@ public class Phase implements Gate{
 		}
 		else if(q.get1() > 0){
 			Complex i = new Complex(0,1);
-			return (new State(new Complex(0,0), new Complex(0,0)));
+			Complex phaseComplex = new Complex(phase,0);
+			Complex multiplied  = Complex.multiply(i, phaseComplex);
+			return (new State(new Complex(0,0), multiplied));
 		}
 		return null;
 	}
