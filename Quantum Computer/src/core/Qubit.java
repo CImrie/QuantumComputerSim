@@ -46,6 +46,8 @@ public class Qubit{
 		return this.b;
 	}
 	
+
+	
 public static void main(String[] args){
 	Qubit q = new Qubit(0,1);
 	System.out.println(q);
