@@ -3,7 +3,7 @@ package core;
 public class Matrix {
 	
 	private double[][] elements;
-	
+
 	public Matrix(double[][] elements){
 		this.elements = elements;
 	}
@@ -27,10 +27,10 @@ public class Matrix {
 	// class containing the methods required for matrix calculations
 
 	    //Print the matrix in row/col format on the terminal
-	    static void Print(double[][] grid) {
-		for(int r=0; r<grid.length; r++) {
-		    for(int c=0; c<grid[r].length; c++)
-			System.out.print(grid[r][c] + " ");
+	    static void Print(Matrix grid) {
+		for(int r=0; r<grid.getRowLength(); r++) {
+		    for(int c=0; c<grid.getColLength(); c++)
+			System.out.print(grid.getElement(r,c) + " ");
 		    System.out.println();
 		}
 	    }
@@ -65,7 +65,7 @@ public class Matrix {
 
 	    }
 	    //Create an nxn identity matrix given an nxn matrix
-	    public static double[][] Iden(double[][] A) {
+	    public static Matrix Iden(double[][] A) {
 
 		int row = A.length;
 		int column =A[0].length;
@@ -81,9 +81,10 @@ public class Matrix {
 		    }
 		}
 
-		return Iden;
+		return new Matrix(Iden);
 	    }
-	    public static double[][] trans(double[][] A) {
+	    
+	    public static Matrix trans(double[][] A) {
 
 		int column = A.length;
 		int row = A[0].length;
@@ -95,28 +96,32 @@ public class Matrix {
 
 			B[j][i] = A[i][j];
 	      
-		return B;
+		return new Matrix(B);
 	    }
 	    // Add two same dimensional matrices C = A + B
-	    public static double[][] add(double[][] a, double[][] b) {
+	    public static Matrix add(double[][] a, double[][] b) {
 
 		int row = a.length;
 		int column = a[0].length;
 
-		double[][] c = new double[row][column];
+		if( row != b.length || column != b[0].length) throw new RuntimeException ("Wrong dimensions");
 
+		double[][] c = new double[row][column];
+		
 		for(int i = 0; i < row; i++) 
 		    for(int j = 0; j < column; j++) 
 
 			c[i][j] = a[i][j] + b[i][j];
 
-		return c;
+		return new Matrix(c);
 	    }
 	    // Subtract two same dimensional matrices C = A - B
-	public static double[][] subtract(double[][] a, double[][] b) {
+	public static Matrix subtract(double[][] a, double[][] b) {
 
 		int row = a.length;
 		int column = a[0].length;
+		
+		if( row != b.length || column != b[0].length) throw new RuntimeException ("Wrong dimensions");
 
 		double[][] c = new double[row][column];
 
@@ -125,46 +130,52 @@ public class Matrix {
 
 			c[i][j] = a[i][j] - b[i][j];
 
-		return c;
+		return new Matrix(c);
 	    }
 
-	public static double[][] mult(double[][] A, double[][] B) {
-	        int rowA = A.length;
-	        int columnA = A[0].length;
-	        int rowB = B.length;
-	        int columnB = B[0].length;
+	public static Matrix mult(Matrix A, Matrix B) {
+	
+	        int rowA = A.getRowLength();
+	        int columnA = A.getColLength();
+	        int rowB = B.getRowLength();
+	        int columnB = B.getColLength();
+	        
 	        if (columnA != rowB) throw new RuntimeException("Illegal matrix dimensions.");
 	        double[][] C = new double[rowA][columnB];
 	        for (int i = 0; i < rowA; i++)
 	            for (int j = 0; j < columnB; j++)
 	                for (int k = 0; k < columnA; k++)
-	                    C[i][j] += (A[i][k] * B[k][j]);
-	        return C;
+	                    C[i][j] += (A.getElement(i, k) * B.getElement(k, j));
+	        return new Matrix(C);
 	    }
 
 	    // y = A*x
-	public static double[] mult(double[][] A, double[] x) {
-	        int row = A.length;
-	        int column = A[0].length;
+	public static double[] mult(Matrix A, double[] x) {
+		
+	        int row = A.getRowLength();
+	        int column = A.getColLength();
+	        
 	        if (x.length != column) throw new RuntimeException("Illegal matrix dimensions.");
+	        
 	        double[] y = new double[row];
 	        for (int i = 0; i < row; i++)
 	            for (int j = 0; j < column; j++)
-	                y[i] += (A[i][j] * x[j]);
+	                y[i] += (A.getElement(i, j) * x[j]);
 	        return y;
 	    }
 
 	    // y = x^T * A
-	public static double[] mult(double[] x, double[][] A) {
-	        int row = A.length;
-	        int column = A[0].length;
+	public static double[] mult(double[] x, Matrix A) {
+		
+	        int row = A.getRowLength();
+	        int column = A.getColLength();
+	        
 	        if (x.length != row) throw new RuntimeException("Illegal matrix dimensions.");
+	        
 	        double[] y = new double[column];
 	        for (int j = 0; j < column; j++)
 	            for (int i = 0; i < row; i++)
-	                y[j] += (A[i][j] * x[i]);
+	                y[j] += (A.getElement(i, j) * x[i]);
 	        return y;
 	    }
-	}
-
-
+}
