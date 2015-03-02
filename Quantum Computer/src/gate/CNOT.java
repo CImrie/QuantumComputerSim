@@ -1,5 +1,4 @@
 package gate;
-import core.Complex;
 import core.Qubit;
 import core.State;
 
@@ -43,6 +42,12 @@ public class CNOT implements TwoQubitGate{
 		for(State state: states){
 			System.out.println(state.toString());
 		}
+	}
+
+	@Override
+	public State actOn(Qubit q1, Qubit q2, double phase) {
+		new Exception("CNOT can only act on two Qubits. Do not use phase");
+		return null;
 	}
 	
 }
