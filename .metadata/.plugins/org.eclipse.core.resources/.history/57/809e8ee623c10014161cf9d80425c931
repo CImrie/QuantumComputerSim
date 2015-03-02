@@ -14,16 +14,16 @@ public class CNOT implements TwoQubitGate{
 	@Override
 	public State[] actOn(Qubit x, Qubit y) {
 		Qubit newY;
-		if (x.getQubitType() == 1){
+		if (x.getQubitType() == 0){
 			if (y.getQubitType() == 0){
-				newY = new Qubit(1);
+				newY = new Qubit(0);
 			}
 			else {
-				newY = new Qubit(0);
+				newY = new Qubit(1);
 			}
 		}
 		else {
-			newY = y;
+			newY = new Qubit(1);
 		}
 		
 		State xState = new State(x);
