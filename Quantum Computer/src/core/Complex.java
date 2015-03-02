@@ -84,25 +84,25 @@ public class Complex {
 	}
 
 	// static methods
-	public static Complex add(Complex a, Complex b) {
+	public Complex add(Complex b) {
 
-		return new Complex(a.getRealPart() + b.getRealPart(), a.getImagPart()
+		return new Complex(this.getRealPart() + b.getRealPart(), this.getImagPart()
 				+ b.getImagPart());
 
 	}
 
-	public static Complex subtract(Complex a, Complex b) {
+	public Complex subtract(Complex b) {
 
-		return new Complex(a.getRealPart() - b.getRealPart(), a.getImagPart()
+		return new Complex(this.getRealPart() - b.getRealPart(), this.getImagPart()
 				- b.getImagPart());
 
 	}
 
-	public static Complex multiply(Complex a, Complex b) {
+	public Complex multiply(Complex b) {
 
-		return new Complex(a.getRealPart() * b.getRealPart() - a.getImagPart()
-				* b.getImagPart(), a.getRealPart() * b.getImagPart()
-				+ a.getImagPart() * b.getRealPart());
+		return new Complex(this.getRealPart() * b.getRealPart() - this.getImagPart()
+				* b.getImagPart(), this.getRealPart() * b.getImagPart()
+				+ this.getImagPart() * b.getRealPart());
 
 	}
 
