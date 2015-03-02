@@ -4,11 +4,15 @@ import core.*;
 public class ControlledPhase implements TwoQubitGate {
 
 	@Override
-	public State actOn(Qubit q1, Qubit q2, double phase) {
-		double realPart = Math.cos(q1.getQubitType()*phase);
-		double complexPart = Math.sin(q1.getQubitType()*phase);
-		Complex toOutput = new Complex(realPart,complexPart);
-		return (new State(new Complex(0,0), toOutput));
+	public State[] actOn(Qubit x, Qubit y, double phase) {
+		
+		Phase phaseGate = new Phase();
+		
+		State xState = phaseGate.actOn(x, phase);
+		State yState = phaseGate.actOn(y, phase);
+		
+		State[] returnStates = {xState, yState};
+		return returnStates;
 	}
 	
 	/**
@@ -16,10 +20,17 @@ public class ControlledPhase implements TwoQubitGate {
 	 * @param args
 	 */
 	public static void main(String[] args){
-		ControlledPhase p = new ControlledPhase();
 		double phaseShift = 45;
-		State newS = p.actOn(new Qubit(0, 1),new Qubit(1,0),phaseShift);
-		System.out.println(newS.toString());
+		
+		Qubit x = new Qubit(1);
+		Qubit y = new Qubit(1);
+		
+		ControlledPhase gate = new ControlledPhase();
+		
+		State[] states = gate.actOn(x, y, phaseShift);
+		for(State state: states){
+			System.out.println(state.toString());
+		}
 	}
 
 	@Override
