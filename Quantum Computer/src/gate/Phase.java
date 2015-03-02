@@ -33,7 +33,6 @@ public class Phase implements OneQubitGate{
 
 	@Override
 	public State actOn(Qubit q) {
-		// TODO Auto-generated method stub
 		new Exception("Phase gate must have parameter 'phase' of type double.");
 		return null;
 	}
