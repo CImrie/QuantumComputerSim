@@ -1,0 +1,16 @@
+package core;
+
+import gate.Hadamard;
+
+public class main {
+	public static void main(String[] args){
+		Register r = new Register(2);
+		r.setState(new State(new Qubit(0)), 0);
+		r.setState(new State(new Qubit(1)), 1);
+		
+		Hadamard h = new Hadamard();
+		r.setState(h.actOn(new Qubit((int)r.getState(0).get0().getRealPart())), 0);
+		
+		r.toString();
+	}
+}

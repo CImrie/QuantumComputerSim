@@ -6,10 +6,10 @@ public class Hadamard implements OneQubitGate{
 	@Override
 	public State actOn(Qubit q) {
 		//check coefficients to each qubit
-		if (q.get0() > 0){
-			return (new State(new Complex(0, 0), new Complex(1,0)));
+		if (q.getQubitType() == 0){
+			return (new State(new Complex(1, 0), new Complex(1,0)));
 		}
-		else if(q.get1() > 0){
+		else if(q.getQubitType() == 1){
 			return (new State(new Complex(1,0), new Complex(-1, 0)));
 		}
 		return null;

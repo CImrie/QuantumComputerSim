@@ -27,15 +27,23 @@ public class State {
 	public void normalise(){
 		this.magnitude = Math.sqrt(a.getNorm()*a.getNorm() + b.getNorm()*b.getNorm());
 	}
-
+	
+	/**
+	 * tensorProduct takes the tensor product between this state and another state
+	 * i.e. (this) (x) (matrix), where (x) is the tensor product operator
+	 * @param matrix
+	 * @return
+	 */
 	public Matrix tensorProduct(Matrix matrix) {
 		Matrix me = this.getMatrix();
 		return me.getTensorProduct(matrix);
 	}
 
 	public Matrix getMatrix() {
-		// TODO Auto-generated method stub
-		return null;
+		Matrix m = new Matrix(2, 1);
+		m.SetElement(this.get0(), 0, 0);
+		m.SetElement(this.get1(), 1, 0);
+		return m;
 	}
 	
 	public Complex get0(){
