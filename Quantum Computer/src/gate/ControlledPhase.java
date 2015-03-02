@@ -5,7 +5,10 @@ public class ControlledPhase implements TwoQubitGate {
 
 	@Override
 	public State actOn(Qubit q1, Qubit q2, double phase) {
-		return null;
+		double realPart = Math.cos(q1.getQubitType()*phase);
+		double complexPart = Math.sin(q1.getQubitType()*phase);
+		Complex toOutput = new Complex(realPart,complexPart);
+		return (new State(new Complex(0,0), toOutput));
 	}
 	
 	/**
@@ -16,13 +19,12 @@ public class ControlledPhase implements TwoQubitGate {
 		ControlledPhase p = new ControlledPhase();
 		double phaseShift = 45;
 		State newS = p.actOn(new Qubit(0, 1),new Qubit(1,0),phaseShift);
-		//State s = new State(new Complex(1/newS.getMagnitude(),0),new Complex(1/newS.getMagnitude(),0));
-		System.out.println((1/newS.getMagnitude()) + "[ " + newS.get0() + "|0> +  " + newS.get1() + "|1> ]");
+		System.out.println(newS.toString());
 	}
 
 	@Override
-	public State actOn(Qubit q1, Qubit q2) {
-		new Exception("Phase gate must have parameter 'phase' of type double.");
+	public State[] actOn(Qubit q1, Qubit q2) {
+		new Exception("Controlled Phase gate must have parameter 'phase' of type double.");
 		return null;
 	}
 	
