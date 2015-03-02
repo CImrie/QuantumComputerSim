@@ -34,8 +34,8 @@ public class CNOT implements TwoQubitGate{
 	
 	//Test
 	public static void main(String[] args){
-		Qubit x = new Qubit(1,0);
-		Qubit y = new Qubit(0,1);
+		Qubit x = new Qubit(1);
+		Qubit y = new Qubit(1);
 		CNOT gate = new CNOT();
 		
 		State[] states = gate.actOn(x, y);
@@ -45,7 +45,7 @@ public class CNOT implements TwoQubitGate{
 	}
 
 	@Override
-	public State actOn(Qubit q1, Qubit q2, double phase) {
+	public State[] actOn(Qubit q1, Qubit q2, double phase) {
 		new Exception("CNOT can only act on two Qubits. Do not use phase");
 		return null;
 	}
