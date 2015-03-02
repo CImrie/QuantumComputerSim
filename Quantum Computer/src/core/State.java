@@ -14,6 +14,12 @@ public class State {
 		this.normalise();
 	}
 	
+	public State(Qubit q){
+		this.a = new Complex(q.get0(), 0);
+		this.b = new Complex(q.get1(), 0);
+		this.normalise();
+	}
+	
 	/**
 	 * normalise() manipulates the current qubit coefficients and ensures they are normalised.
 	 * If the qubits are already normalised then they are not affected by this.
