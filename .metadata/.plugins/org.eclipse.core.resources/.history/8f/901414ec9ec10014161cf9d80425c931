@@ -26,8 +26,8 @@ public class State {
 	 */
 	public void normalise(){
 		this.magnitude = Math.sqrt(a.getNorm()*a.getNorm() + b.getNorm()*b.getNorm());
-		this.a = this.a.divideBy(this.magnitude);
-		this.b = this.b.divideBy(this.magnitude);
+		this.a = this.a/this.magnitude;
+		this.b = this.b/this.magnitude;
 	}
 	
 	/**

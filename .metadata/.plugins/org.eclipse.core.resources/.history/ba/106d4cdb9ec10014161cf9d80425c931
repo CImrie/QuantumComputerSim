@@ -112,8 +112,10 @@ public class Complex {
 
 	}
 
-	public Complex divideBy(double b) {
-		return new Complex(this.getRealPart() / b, this.getImagPart() / b);
+	public static Complex divide(Complex a, double b) {
+
+		return new Complex(a.getRealPart() / b, a.getImagPart() / b);
+
 	}
 
 	// public static Complex divide(Complex a, Complex b) {

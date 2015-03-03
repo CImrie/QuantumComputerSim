@@ -12,6 +12,6 @@ public class main {
 		r.setState(h.actOn(new Qubit(0)), 0);
 		
 		System.out.println(r.getMatrix().toString());
-		System.out.println(r.getState(0).prob1());
+		System.out.println(r.getState(1).prob1());
 	}
 }
