@@ -11,6 +11,19 @@ public class Phase implements OneQubitGate{
 		double imagPart = Math.sin(phase);
 		Complex e = new Complex(realPart, imagPart);
 		return new Qubit(a, b.multiply(e));
+		//check coefficients to each qubit
+		
+		/*if (q.getStateType() == 0){
+			return (new Qubit(new Complex(1, 0), new Complex(0,0)));
+		}
+		else if(q.getStateType() == 1){
+			// Use Euler
+			double realPart = Math.cos(phase);
+			double complexPart = Math.sin(phase);
+			Complex toOutput = new Complex(realPart,complexPart);
+			return (new Qubit(new Complex(0,0), toOutput));
+		}
+		return null;*/
 	}
 	
 	/**
@@ -19,7 +32,7 @@ public class Phase implements OneQubitGate{
 	 */
 	public static void main(String[] args){
 		Phase p = new Phase();
-		double phaseShift = Math.PI/4;
+		double phaseShift = Math.PI/2;
 		Qubit newS = p.actOn(new Qubit(new State(1)),phaseShift);
 		System.out.println(newS.toString());
 	}
