@@ -35,7 +35,7 @@ public class Matrix {
 	// class containing the methods required for ComplexMatrix calculations
 
 	    //Print the ComplexMatrix in row/col format on the terminal
-	    static void Print(ComplexMatrix grid) {
+	    static void Print(Matrix grid) {
 		for(int r=0; r<grid.getRowLength(); r++) {
 		    for(int c=0; c<grid.getColLength(); c++)
 			System.out.print(grid.getElement(r,c) + " ");
@@ -79,7 +79,7 @@ public class Matrix {
 	    }
 	    
 	    //Create an nxn identity ComplexMatrix given an nxn matrix
-	    public static ComplexMatrix Iden(Complex[][] A) {
+	    public static Matrix Iden(Complex[][] A) {
 
 		int row = A.length;
 		int column =A[0].length;
@@ -95,10 +95,10 @@ public class Matrix {
 		    }
 		}
 
-		return new ComplexMatrix(Iden);
+		return new Matrix(Iden);
 	    }
 	    
-	    public static ComplexMatrix trans(Complex[][] A) {
+	    public static Matrix trans(Complex[][] A) {
 
 		int column = A.length;
 		int row = A[0].length;
@@ -110,10 +110,10 @@ public class Matrix {
 
 			B[j][i] = A[i][j];
 	      
-		return new ComplexMatrix(B);
+		return new Matrix(B);
 	    }
 	    // Add two same dimensional matrices C = A + B
-	    public static ComplexMatrix add(Complex[][] a, Complex[][] b) {
+	    public static Matrix add(Complex[][] a, Complex[][] b) {
 
 		int row = a.length;
 		int column = a[0].length;
@@ -127,10 +127,10 @@ public class Matrix {
 
 			c[i][j] = a[i][j].add(b[i][j]);
 
-		return new ComplexMatrix(c);
+		return new Matrix(c);
 	    }
 	    // Subtract two same dimensional matrices C = A - B
-	public static ComplexMatrix subtract(Complex[][] a, Complex[][] b) {
+	public static Matrix subtract(Complex[][] a, Complex[][] b) {
 
 		int row = a.length;
 		int column = a[0].length;
@@ -144,10 +144,10 @@ public class Matrix {
 
 			c[i][j] = a[i][j].subtract(b[i][j]);
 
-		return new ComplexMatrix(c);
+		return new Matrix(c);
 	    }
 
-	public static ComplexMatrix mult(ComplexMatrix A, ComplexMatrix B) {
+	public static Matrix mult(Matrix A, Matrix B) {
 	
 	        int rowA = A.getRowLength();
 	        int columnA = A.getColLength();
@@ -160,11 +160,11 @@ public class Matrix {
 	            for (int j = 0; j < columnB; j++)
 	                for (int k = 0; k < columnA; k++)
 	                    C[i][j] = C[i][j].add((A.getElement(i, k).multiply(B.getElement(k, j))));
-	        return new ComplexMatrix(C);
+	        return new Matrix(C);
 	    }
 
 	    // y = A*x
-	public static Complex[] mult(ComplexMatrix A, Complex[] x) {
+	public static Complex[] mult(Matrix A, Complex[] x) {
 		
 	        int row = A.getRowLength();
 	        int column = A.getColLength();
@@ -179,7 +179,7 @@ public class Matrix {
 	    }
 
 	    // y = x^T * A
-	public static Complex[] mult(Complex[] x, ComplexMatrix A) {
+	public static Complex[] mult(Complex[] x, Matrix A) {
 		
 	        int row = A.getRowLength();
 	        int column = A.getColLength();
