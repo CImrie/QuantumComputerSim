@@ -9,7 +9,7 @@ public class main {
 		r.setState(new State(new Qubit(1)), 1);
 		
 		Hadamard h = new Hadamard();
-		r.setState(h.actOn(r.getQubit(0)), 0);
+		r.setState(h.actOn(new Qubit(0)), 0);
 		
 		System.out.println(r.getMatrix().toString());
 		System.out.println(r.getState(0).prob1());

@@ -68,15 +68,6 @@ public class State {
 	return a + "|0> + " + b + "|1>";
 		
 	}
-	
-	public Qubit getQubit(int offset){
-		if (offset == 0){
-			return new Qubit(0);
-		}
-		else {
-			return new Qubit(1);
-		}
-	}
 		
 	
 	// Method to calculate the probability of a qubit being in either up or down
