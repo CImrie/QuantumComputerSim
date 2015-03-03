@@ -41,6 +41,12 @@ public class Qubit {
 		return me.getTensorProduct(matrix);
 	}
 
+	public Matrix tensorProduct(Qubit qubit) {
+		Matrix me = this.getMatrix();
+		Matrix stateMatrix = qubit.getMatrix();
+		return me.getTensorProduct(stateMatrix);
+	}
+	
 	public Matrix getMatrix() {
 		Matrix m = new Matrix(2, 1);
 		m.SetElement(this.get0(), 0, 0);
