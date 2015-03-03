@@ -11,7 +11,8 @@ public class ControlledPhase implements TwoQubitGate {
 		State xState = phaseGate.actOn(x, phase);
 		State yState = phaseGate.actOn(y, phase);
 		
-		
+		Matrix tensorMatrix = xState.tensorProduct(yState);
+		System.out.println(tensorMatrix.toString());
 		
 		State[] returnStates = {xState, yState};
 		return returnStates;
@@ -31,7 +32,7 @@ public class ControlledPhase implements TwoQubitGate {
 		
 		State[] states = gate.actOn(x, y, phaseShift);
 		for(State state: states){
-			System.out.println(state.toString());
+			System.out.println("State: " + state.toString());
 		}
 	}
 
