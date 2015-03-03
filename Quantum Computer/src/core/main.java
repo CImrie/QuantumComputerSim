@@ -5,13 +5,13 @@ import gate.Hadamard;
 public class main {
 	public static void main(String[] args){
 		Register r = new Register(2);
-		r.setState(new State(new Qubit(0)), 0);
-		r.setState(new State(new Qubit(1)), 1);
+		r.setState(new Qubit(new State(0)), 0);
+		r.setState(new Qubit(new State(1)), 1);
 		
 		Hadamard h = new Hadamard();
 		r.setState(h.actOn(r.getQubit(0)), 0);
 		
 		System.out.println(r.getMatrix().toString());
-		System.out.println(r.getState(0).prob1());
+		System.out.println(r.getQubit(0).prob1());
 	}
 }

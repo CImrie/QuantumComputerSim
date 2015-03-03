@@ -10,9 +10,9 @@ import core.*;
  *
  */
 public interface OneQubitGate {
-	public State actOn(Qubit q);
+	public Qubit actOn(Qubit q);
 
-	State actOn(Qubit q, double parameter);
+	Qubit actOn(Qubit q, double parameter);
 	
 	//public Register actOnRegister(Register r);
 }

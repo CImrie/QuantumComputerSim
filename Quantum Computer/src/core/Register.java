@@ -3,7 +3,7 @@ package core;
  * @author Connor Imrie
  * 
  * The register is stored as an array of states. 
- * These quantum states are a superposition of qubits and handle their own behaviour 
+ * These quantum qubits are a superposition of states and handle their own behaviour 
  * relating to normalisation etc.
  * 
  * To get a meaningful result out of the register, 
@@ -11,10 +11,10 @@ package core;
  * in the array (i.e. counting down the array)
  **/
 public class Register {
-	State[] states;
+	Qubit[] states;
 	
 	public Register(int n){
-		this.states = new State[n];
+		this.states = new Qubit[n];
 	}
 	
 	public Matrix getMatrix(){
@@ -31,17 +31,17 @@ public class Register {
 		return currentTensorMatrix;
 	}
 	
-	public State getState(int index){
+	public Qubit getQubit(int index){
 		return this.states[index];
 	}
 	
-	public Qubit getQubit(int index){
+	public State getState(int index){
 		int stateIndex = index/2;
 		int offset = index%2;
-		return this.getState(stateIndex).getQubit(offset);
+		return this.getQubit(stateIndex).getState(offset);
 	}
 	
-	public void setState(State s, int index){
+	public void setState(Qubit s, int index){
 		this.states[index] = s;
 	}
 }

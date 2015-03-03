@@ -1,104 +1,86 @@
 package core;
-/**The State class represents a linear superposition of qubits
- * @author Connor Imrie
- * 
- **/
-public class State {
-	double magnitude;
-	Complex a;
-	Complex b;
-	
-	public State(Complex a, Complex b){
+
+// @author Ben Crabbe
+public class State{
+
+	private int a, b;
+
+	public State(int a, int b){
 		this.a = a;
 		this.b = b;
-		this.normalise();
-	}
-	
-	public State(Qubit q){
-		this.a = new Complex(q.get0(), 0);
-		this.b = new Complex(q.get1(), 0);
-		this.normalise();
 	}
 	
 	/**
-	 * normalise() manipulates the current qubit coefficients and ensures they are normalised.
-	 * If the qubits are already normalised then they are not affected by this.
+	 * Creates a |0> or |1> qubit 
 	 */
-	public void normalise(){
-		this.magnitude = Math.sqrt(a.getNorm()*a.getNorm() + b.getNorm()*b.getNorm());
-		this.a = this.a.divideBy(this.magnitude);
-		this.b = this.b.divideBy(this.magnitude);
-	}
-	
-	/**
-	 * tensorProduct takes the tensor product between this state and another state
-	 * i.e. (this) (x) (matrix), where (x) is the tensor product operator
-	 * @param matrix
-	 * @return
-	 */
-	public Matrix tensorProduct(Matrix matrix) {
-		Matrix me = this.getMatrix();
-		return me.getTensorProduct(matrix);
+	public State(int type){
+		if (type == 0){
+			this.a = 1;
+			this.b = 0;
+		}
+		else if (type == 1){
+			this.a = 0;
+			this.b = 1;
+		}
 	}
 
-	public Matrix getMatrix() {
-		Matrix m = new Matrix(2, 1);
-		m.SetElement(this.get0(), 0, 0);
-		m.SetElement(this.get1(), 1, 0);
-		return m;
+	@Override
+	public String toString() {
+		int a = this.get0();
+		int b = this.get1();
+
+		String s = "";
+		if (a > 0){
+			if (a > 1){
+				s += "(" + a + ")| 0 >";
+			}
+			else {
+				s += "| 0 >";
+			}
+		}
+		if (a > 0 && b > 0){
+			s += " + ";
+		}
+		if (b > 0){
+			if (b > 1){
+				s += "(" + b + ")| 1 >";
+			}
+			else {
+				s += "| 1 >";
+			}
+		}
+		return s;
 	}
 	
-	public Complex get0(){
+	public int get0(){
 		return this.a;
 	}
 	
-	public Complex get1(){
+	public int get1(){
 		return this.b;
 	}
 	
-	public double getMagnitude(){
-		return this.magnitude;
-	}
-	
-	public String toString() { 
-		
-		Complex a = this.get0();
-		Complex b = this.get1();
-		
-	return a + "|0> + " + b + "|1>";
-		
-	}
-	
-	public Qubit getQubit(int offset){
-		if (offset == 0){
-			return new Qubit(0);
+	/**
+	 * Returns the integer value corresponding to whether the qubit is a |0> or |1> qubit
+	 */
+	public int getQubitType(){
+		if (this.get0() == 1){
+			return 0;
+		}
+		else if (this.get1() == 1){
+			return 1;
 		}
 		else {
-			return new Qubit(1);
+			new Exception("Qubit is not properly formed. Can only have 1 integer component. Q = " + this.toString());
 		}
+		return 0;
 	}
-		
-	
-	// Method to calculate the probability of a qubit being in either up or down
-	public double prob0() {
-	
-		double prob = 0;
 
-		Complex up = new Complex(this.get0());
-		prob = up.normSquared();
-
-		return prob;
-	}
 	
-	public double prob1() {
-		
-		double prob = 0;
-		
-		Complex down = new Complex(this.get1());
-		prob = down.normSquared();
-		
-		return prob;
-		
-	}
+public static void main(String[] args){
+	State q = new State(0,1);
+	System.out.println(q);
+}
+
 	
 }

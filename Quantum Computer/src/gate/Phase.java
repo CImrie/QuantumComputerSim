@@ -4,18 +4,20 @@ import core.*;
 public class Phase implements OneQubitGate{
 
 	@Override
-	public State actOn(Qubit q, double phase) {
+	public Qubit actOn(Qubit q, double phase) {
 		//check coefficients to each qubit
-		if (q.getQubitType() == 0){
-			return (new State(new Complex(1, 0), new Complex(0,0)));
+		
+		/*if (q.getStateType() == 0){
+			return (new Qubit(new Complex(1, 0), new Complex(0,0)));
 		}
-		else if(q.getQubitType() == 1){
+		else if(q.getStateType() == 1){
 			// Use Euler
 			double realPart = Math.cos(phase);
 			double complexPart = Math.sin(phase);
 			Complex toOutput = new Complex(realPart,complexPart);
-			return (new State(new Complex(0,0), toOutput));
+			return (new Qubit(new Complex(0,0), toOutput));
 		}
+		return null;*/
 		return null;
 	}
 	
@@ -26,12 +28,12 @@ public class Phase implements OneQubitGate{
 	public static void main(String[] args){
 		Phase p = new Phase();
 		double phaseShift = 45;
-		State newS = p.actOn(new Qubit(1),phaseShift);
+		Qubit newS = p.actOn(new Qubit(new State(1)),phaseShift);
 		System.out.println(newS.toString());
 	}
 
 	@Override
-	public State actOn(Qubit q) {
+	public Qubit actOn(Qubit q) {
 		new Exception("Phase gate must have parameter 'phase' of type double.");
 		return null;
 	}

@@ -1,0 +1,17 @@
+package core;
+
+import gate.Hadamard;
+
+public class main {
+	public static void main(String[] args){
+		Register r = new Register(2);
+		r.setState(new Qubit(new QubitNOTQUBIT(0)), 0);
+		r.setState(new Qubit(new QubitNOTQUBIT(1)), 1);
+		
+		Hadamard h = new Hadamard();
+		r.setState(h.actOn(r.getQubit(0)), 0);
+		
+		System.out.println(r.getMatrix().toString());
+		System.out.println(r.getState(0).prob1());
+	}
+}

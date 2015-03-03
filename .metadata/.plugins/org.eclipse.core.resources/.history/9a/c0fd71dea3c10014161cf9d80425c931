@@ -1,0 +1,10 @@
+package gate;
+import core.*;
+
+public interface TwoQubitGate {
+	
+	public State[] actOn(QubitNOTQUBIT q1, QubitNOTQUBIT q2);
+
+	public State[] actOn(QubitNOTQUBIT q1, QubitNOTQUBIT q2, double phase);
+
+}
