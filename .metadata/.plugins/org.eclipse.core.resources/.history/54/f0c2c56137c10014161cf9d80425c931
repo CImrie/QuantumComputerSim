@@ -11,7 +11,6 @@ public class main {
 		Hadamard h = new Hadamard();
 		r.setState(h.actOn(new Qubit(0)), 0);
 		
-		//System.out.println(r.getMatrix().toString());
-		System.out.println(r.getState(0).prob0());
+		System.out.println(r.getMatrix().toString());
 	}
 }
