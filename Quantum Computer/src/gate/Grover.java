@@ -17,8 +17,8 @@ public class Grover {
 		Qubit newtwo = h.actOn(new Qubit(new State(0)));
 		
 		Register r = new Register(2);
-		r.setState(newone, 0);
-		r.setState(newtwo, 1);
+		r.setQubit(newone, 0);
+		r.setQubit(newtwo, 1);
 		
 		return r;
 	}
@@ -28,17 +28,35 @@ public class Grover {
 		Register r = new Register(2);
 		r = turnOn();
 		Phase p = new Phase();
-		r.setState(p.actOn(r.getQubit(1),Math.PI),1);
+		r.setQubit(p.actOn(r.getQubit(1),Math.PI),1);
 		
 		System.out.println(r.getMatrix());
 		//System.out.println(r.getQubit(1).getMatrix());
 		
-	r.setState(H.actOn(r.getQubit(0)), 0);
-	r.setState(H.actOn(r.getQubit(1)), 1);
+	r.setQubit(H.actOn(r.getQubit(0)), 0);
+	r.setQubit(H.actOn(r.getQubit(1)), 1);
 		
 		// TODO there is a problem with the tensor priduct
 		
 		System.out.println(r.getMatrix());
 		//System.out.println(r.getQubit(1).getMatrix());
+		
+		//connor's example
+		Hadamard h = new Hadamard();
+		Register r2 = new Register(2);
+		Qubit q1 = new Qubit(new State(0));
+		Qubit q2 = new Qubit(new State(0));
+		r2.setQubit(h.actOn(q1), 0);
+		r2.setQubit(h.actOn(q2), 1);
+		
+		Phase p2 = new Phase();
+		r2.setQubit(p2.actOn(r2.getQubit(1), Math.PI), 1);
+		System.out.println(r2.getMatrix());
+		
+		r2.setQubit(h.actOn(r2.getQubit(0)), 0);
+		r2.setQubit(h.actOn(r2.getQubit(1)), 1);
+		
+		System.out.println(r2.getMatrix());
+		
 	}
 }
