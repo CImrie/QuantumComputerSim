@@ -16,7 +16,7 @@ public class Hadamard implements OneQubitGate{
 	 */
 	public static void main(String[] args){
 		Hadamard h = new Hadamard();
-		Qubit newQ = h.actOn(new Qubit(new State(0, 1)));
+		Qubit newQ = h.actOn(new Qubit(new State(0,1)));
 		Qubit Q = new Qubit(new Complex(1/newQ.getMagnitude(),0),new Complex(1/newQ.getMagnitude(),0));
 		System.out.println((1/newQ.getMagnitude()) + "[ " + newQ.get0() + "|0> +  " + newQ.get1() + "|1> ]");
 		System.out.println(Q.prob1());

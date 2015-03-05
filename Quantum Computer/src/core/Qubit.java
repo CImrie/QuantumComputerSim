@@ -8,12 +8,20 @@ public class Qubit {
 	Complex a;
 	Complex b;
 	
+	public Qubit() {
+		this.a = new Complex(0,0);
+		this.b = new Complex(0,0);
+	}
 	public Qubit(Complex a, Complex b){
 		this.a = a;
 		this.b = b;
 		this.normalise();
 	}
-	
+	public Qubit(Qubit in) {
+		this.a = in.get0();
+		this.b = in.get1();
+		
+	}
 	public Qubit(State q){
 		this.a = new Complex(q.get0(), 0);
 		this.b = new Complex(q.get1(), 0);
