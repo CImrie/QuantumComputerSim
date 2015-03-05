@@ -11,28 +11,28 @@ package core;
  * in the array (i.e. counting down the array)
  **/
 public class Register {
-	Qubit[] states;
+	Qubit[] qubits;
 	
 	public Register(int n){
-		this.states = new Qubit[n];
+		this.qubits = new Qubit[n];
 	}
 	
 	public Matrix getMatrix(){
 		//go through each state in the array and take the tensor product with the element to its right:
-		int length = this.states.length;
+		int length = this.qubits.length;
 		//start with the last two elements:
-		Matrix currentTensorMatrix = this.states[length-2].tensorProduct(this.states[length-1].getMatrix());
+		Matrix currentTensorMatrix = this.qubits[length-2].tensorProduct(this.qubits[length-1].getMatrix());
 		//Then loop through the remaining elements and take the tensor product with a matrix
-		if (this.states.length > 2){
-			for (int i = this.states.length-3; i > 0 ; i--){
-				currentTensorMatrix = this.states[i].tensorProduct(currentTensorMatrix);
+		if (this.qubits.length > 2){
+			for (int i = this.qubits.length-3; i > 0 ; i--){
+				currentTensorMatrix = this.qubits[i].tensorProduct(currentTensorMatrix);
 			}
 		}
 		return currentTensorMatrix;
 	}
 	
 	public Qubit getQubit(int index){
-		return this.states[index];
+		return this.qubits[index];
 	}
 	
 	public State getState(int index){
@@ -41,7 +41,7 @@ public class Register {
 		return this.getQubit(stateIndex).getState(offset);
 	}
 	
-	public void setState(Qubit s, int index){
-		this.states[index] = s;
+	public void setQubit(Qubit q, int index){
+		this.qubits[index] = q;
 	}
 }

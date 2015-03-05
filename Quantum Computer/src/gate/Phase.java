@@ -18,10 +18,22 @@ public class Phase implements OneQubitGate{
 	 * @param args
 	 */
 	public static void main(String[] args){
-		Phase p = new Phase();
+		/*Phase p = new Phase();
 		double phaseShift = Math.PI/4;
 		Qubit newS = p.actOn(new Qubit(new State(1)),phaseShift);
 		System.out.println(newS.toString());
+		*/
+		Qubit q1 = new Qubit(new Complex(1,0), new Complex(1,0));
+		Qubit q2 = new Qubit(new Complex(1,0), new Complex(1,0));
+		
+		Register r = new Register(2);
+		r.setQubit(q1, 0);
+		r.setQubit(q2, 1);
+		
+		Phase p = new Phase();
+		Qubit result = p.actOn(r.getQubit(1), Math.PI);
+		r.setQubit(result, 1);
+		System.out.println(r.getMatrix());
 	}
 
 	@Override
