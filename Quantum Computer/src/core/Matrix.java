@@ -4,6 +4,14 @@ public class Matrix {
 	
 	private Complex[][] elements;
 
+	public Matrix(int a) {
+		this.elements = new Complex[a][a];
+		for(int i = 0; i < a; i++) {
+			for(int j = 0; j < a; j ++) {
+				this.SetElement(new Complex(0.0,0.0),i,j);
+			}
+		}
+	}
 	public Matrix(Complex[][] elements){
 		this.elements = elements;
 	}
@@ -32,18 +40,15 @@ public class Matrix {
 	public void SetElement(Complex val, int row, int col){
 		this.elements[row][col] = val;
 	}
-	// class containing the methods required for ComplexMatrix calculations
 
-	    //Print the ComplexMatrix in row/col format on the terminal
-	    static void Print(Matrix grid) {
+	    //Print the Matrix in row/col format on the terminal
+	   public static void Print(Matrix grid) {
 		for(int r=0; r<grid.getRowLength(); r++) {
 		    for(int c=0; c<grid.getColLength(); c++)
 			System.out.print(grid.getElement(r,c) + " ");
 		    System.out.println();
-		}
-	    }
-
-	    
+			}
+	    }	    
 	    /**
 	     * Gets the tensor product with another matrix (Complex Version)
 	     * @param matrix ComplexMatrix B
@@ -55,7 +60,7 @@ public class Matrix {
 		int rowB = matrix.getRowLength();
 		int colB = matrix.getColLength();
 
-		Complex[][] out = new Complex[rowA*rowB][colA*colB];
+		Matrix out = new Matrix(rowA*rowB,colA*colB);
 
 		for (int i = 0; i < rowA; i++) {
 
@@ -69,99 +74,107 @@ public class Matrix {
 			for (int k = 0; k < rowB; k++) {
 			    for (int l = 0; l < colB; l++) {
 
-				out[rowO+k][colO+l] = aij.multiply(matrix.getElement(k, l));
+				out.SetElement(aij.multiply(matrix.getElement(k, l)),rowO+k,colO+l);
 			    }
 			}
 		    }
 		}
-		return new Matrix(out);
+		return out;
 
 	    }
 	    
 	    //Create an nxn identity ComplexMatrix given an nxn matrix
-	    public static Matrix Iden(Complex[][] A) {
+	    public static Matrix Iden(Matrix A) {
 
-		int row = A.length;
-		int column =A[0].length;
+		int row = A.getRowLength();
+		int column =A.getColLength();
 
-		Complex[][] Iden = new Complex[row][column];
+		Matrix Iden = new Matrix(row,column);
 
 		for (int i=0; i < row; i++) {
 		    for (int j = 0; j < column; j++) {
 
-			if (i == j) { Iden[i][j] = new Complex(1.0,0.0); }
-			else { Iden[i][j] = new Complex(0.0,0.0); }
+			if (i == j) { Iden.SetElement(new Complex(1.0,0.0),i,j); }
+			else { Iden.SetElement(new Complex(0.0,0.0),i,j); }
 
 		    }
 		}
 
-		return new Matrix(Iden);
+		return Iden;
 	    }
 	    
-	    public static Matrix trans(Complex[][] A) {
+	    public static Matrix trans(Matrix A) {
 
-		int column = A.length;
-		int row = A[0].length;
+		int column = A.getRowLength();
+		int row = A.getColLength();
 
-		Complex[][] B = new Complex[row][column];
+		Matrix B = new Matrix(row, column);
 
 		for( int i = 0; i < column; i++) 
 		    for( int j = 0; j < row; j++) 
 
-			B[j][i] = A[i][j];
+			B.SetElement(A.getElement(i,j),j,i);
 	      
-		return new Matrix(B);
+		return B;
 	    }
 	    // Add two same dimensional matrices C = A + B
-	    public static Matrix add(Complex[][] a, Complex[][] b) {
+	    public Matrix add(Matrix b) {
 
-		int row = a.length;
-		int column = a[0].length;
+		int row = this.getRowLength();
+		int column = this.getColLength();
 
-		if( row != b.length || column != b[0].length) throw new RuntimeException ("Wrong dimensions");
+		if( row != b.getRowLength() || column != b.getColLength()) throw new RuntimeException ("Wrong dimensions");
 
-		Complex[][] c = new Complex[row][column];
+		Matrix c = new Matrix(row,column);
 		
 		for(int i = 0; i < row; i++) 
 		    for(int j = 0; j < column; j++) 
 
-			c[i][j] = a[i][j].add(b[i][j]);
+			c.SetElement(this.getElement(i, j).add(b.getElement(i,j)),i,j);
 
-		return new Matrix(c);
+		return c;
 	    }
 	    // Subtract two same dimensional matrices C = A - B
-	public static Matrix subtract(Complex[][] a, Complex[][] b) {
+	public Matrix subtract(Matrix b) {
 
-		int row = a.length;
-		int column = a[0].length;
+		int row = this.getRowLength();
+		int column = this.getColLength();
 		
-		if( row != b.length || column != b[0].length) throw new RuntimeException ("Wrong dimensions");
+		if( row != b.getRowLength() || column != b.getColLength()) throw new RuntimeException ("Wrong dimensions");
 
-		Complex[][] c = new Complex[row][column];
-
+Matrix c = new Matrix(row,column);
+		
 		for(int i = 0; i < row; i++) 
 		    for(int j = 0; j < column; j++) 
 
-			c[i][j] = a[i][j].subtract(b[i][j]);
+			c.SetElement(this.getElement(i, j).subtract(b.getElement(i,j)),i,j);
 
-		return new Matrix(c);
+		return c;
 	    }
 
-	public static Matrix mult(Matrix A, Matrix B) {
+	public Matrix mult(Matrix B) {
 	
-	        int rowA = A.getRowLength();
-	        int columnA = A.getColLength();
+	        int rowA = this.getRowLength();
+	        int columnA = this.getColLength();
 	        int rowB = B.getRowLength();
 	        int columnB = B.getColLength();
 	        
 	        if (columnA != rowB) throw new RuntimeException("Illegal ComplexMatrix dimensions.");
-	        Complex[][] C = new Complex[rowA][columnB];
-	        for (int i = 0; i < rowA; i++)
-	            for (int j = 0; j < columnB; j++)
-	                for (int k = 0; k < columnA; k++)
-	                    C[i][j] = C[i][j].add((A.getElement(i, k).multiply(B.getElement(k, j))));
-	        return new Matrix(C);
+	        Matrix C = new Matrix(rowA, columnB);
+	       
+	        for (int i = 0; i < rowA; i++) {
+	            for (int j = 0; j < columnB; j++) {
+	            	Complex partij = new Complex(0);
+	                for (int k = 0; k < columnA; k++) {
+	                	partij = partij.add(this.getElement(i, k).multiply(B.getElement(k, j)));
+	                	C.SetElement(partij,i,j);
+	                //    C[i][j] += (A[i][k] * B[k][j]);
+	                }
+	            }
+	        }
+	        return C;
 	    }
+	
 
 	    // y = A*x
 	public static Complex[] mult(Matrix A, Complex[] x) {
