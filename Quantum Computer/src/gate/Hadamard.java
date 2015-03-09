@@ -9,7 +9,30 @@ public class Hadamard implements OneQubitGate{
 		Complex b = qubit.get1();
 		return new Qubit((a.add(b)), (a.subtract(b)));
 	}
+	// Method that acts the Hadamard gate on all the qubits of a register
+	public Register actOn(Register r) {
+		Hadamard h = new Hadamard();
+		int n = r.getLength();
+		Register r2 =  new Register(n);
+		
+		for(int i = 0; i < n; i++) {
+		r2.setQubit(h.actOn(r.getQubit(i)), i);
+		}
+		return r2;
+	}
+	public static Matrix HadamardTensor(int a) {
+		Matrix h = createHadamard(1);
+		Matrix H = h.getTensorProduct(h);
+		return H;
+	}
+	//Matrix rep for Hadamard
 	
+	public static Matrix createHadamard(int d) {
+		Complex[][] c = {{new Complex(1/Math.sqrt(2)),new Complex(1/Math.sqrt(2))},{new Complex(1/Math.sqrt(2)),new Complex(-1/Math.sqrt(2))}};
+		Matrix h1 = new Matrix(c);
+		return h1;
+		
+	}
 	/**
 	 * This is a test main method to check that hadamard gives appropriate state output.
 	 * @param args

@@ -16,7 +16,9 @@ public class Register {
 	public Register(int n){
 		this.qubits = new Qubit[n];
 	}
-	
+	public int getLength() {
+		return this.qubits.length;
+	}
 	public Matrix getMatrix(){
 		//go through each state in the array and take the tensor product with the element to its right:
 		int length = this.qubits.length;
@@ -43,5 +45,10 @@ public class Register {
 	
 	public void setQubit(Qubit q, int index){
 		this.qubits[index] = q;
+	}
+	
+	public void setQubit(State s, int index) {
+		this.qubits[index] = new Qubit(s);
+		
 	}
 }

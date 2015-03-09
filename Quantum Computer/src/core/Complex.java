@@ -17,7 +17,9 @@ public class Complex {
 		this.setComplex(original.getRealPart(), original.getImagPart());
 
 	}
-
+	public Complex(double real) {
+		this.setComplex(real,  0.0);
+	}
 	public Complex(double real, double imag) {
 
 		this.setComplex(real, imag);
