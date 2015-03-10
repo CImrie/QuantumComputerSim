@@ -2,4 +2,7 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="com.sun.xml.internal.bind.v2.runtime.output.ForkXmlOutput"/>
+<fullyQualifiedTypeName name="core.State"/>
+<fullyQualifiedTypeName name="core.Complex"/>
+<fullyQualifiedTypeName name="gate.Hadamard"/>
 </qualifiedTypeNameHistroy>

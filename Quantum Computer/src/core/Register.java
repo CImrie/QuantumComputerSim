@@ -10,30 +10,35 @@ package core;
  * each element must be taken by the tensor product of the element to its 'right' 
  * in the array (i.e. counting down the array)
  **/
-public class Register {
-	Qubit[] qubits;
+public class Register extends Matrix {
 	
-	public Register(int n){
-		this.qubits = new Qubit[n];
+	public Register(Matrix m){
+		super(m);
 	}
+	
+	public Register(Qubit[] qubits){
+		this.setElements(this.getRegisterFromQubits(qubits).getElements());
+	}
+
 	public int getLength() {
-		return this.qubits.length;
+		return this.getRowLength();
 	}
-	public Matrix getMatrix(){
+	
+	public Matrix getRegisterFromQubits(Qubit[] qubits){
 		//go through each state in the array and take the tensor product with the element to its right:
-		int length = this.qubits.length;
+		int length = qubits.length;
 		//start with the last two elements:
-		Matrix currentTensorMatrix = this.qubits[length-2].tensorProduct(this.qubits[length-1].getMatrix());
+		Matrix currentTensorMatrix = qubits[length-2].getTensorProduct(qubits[length-1]);
 		//Then loop through the remaining elements and take the tensor product with a matrix
-		if (this.qubits.length > 2){
-			for (int i = this.qubits.length-3; i > 0 ; i--){
-				currentTensorMatrix = this.qubits[i].tensorProduct(currentTensorMatrix);
+		if (qubits.length > 2){
+			for (int i = qubits.length-3; i > 0 ; i--){
+				currentTensorMatrix = qubits[i].getTensorProduct(currentTensorMatrix);
 			}
 		}
 		return currentTensorMatrix;
 	}
 	
-	public Qubit getQubit(int index){
+	/*public Qubit getQubit(int index){
 		return this.qubits[index];
 	}
 	
@@ -50,5 +55,5 @@ public class Register {
 	public void setQubit(State s, int index) {
 		this.qubits[index] = new Qubit(s);
 		
-	}
+	}*/
 }

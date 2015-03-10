@@ -3,25 +3,26 @@ package core;
  * @author Connor Imrie
  * 
  **/
-public class Qubit {
+public class Qubit extends Matrix {
 	double magnitude;
-	Complex a;
-	Complex b;
 	
 	public Qubit() {
-		this.a = new Complex(0,0);
-		this.b = new Complex(0,0);
-	}
-	public Qubit(Complex a, Complex b){
-		this.a = a;
-		this.b = b;
-		this.normalise();
-	}
-	public Qubit(Qubit in) {
-		this.a = in.get0();
-		this.b = in.get1();
 		
 	}
+	
+	public Qubit(Matrix m){
+		if (m.getRowLength() == 2 && m.getColLength() == 1){
+			this.setElements(m.getElements());
+		}
+		new Exception("THATS NOT A QUBIT");
+	}
+	
+	public Qubit(Complex a, Complex b){
+		this.setElement(a, 1, 1);
+		this.setElement(b, 2, 1);
+		this.normalise();
+	}
+
 	public Qubit(State q){
 		this.a = new Complex(q.get0(), 0);
 		this.b = new Complex(q.get1(), 0);
@@ -36,30 +37,6 @@ public class Qubit {
 		this.magnitude = Math.sqrt(a.getNorm()*a.getNorm() + b.getNorm()*b.getNorm());
 		this.a = this.a.divideBy(this.magnitude);
 		this.b = this.b.divideBy(this.magnitude);
-	}
-	
-	/**
-	 * tensorProduct takes the tensor product between this state and another state
-	 * i.e. (this) (x) (matrix), where (x) is the tensor product operator
-	 * @param matrix
-	 * @return
-	 */
-	public Matrix tensorProduct(Matrix matrix) {
-		Matrix me = this.getMatrix();
-		return me.getTensorProduct(matrix);
-	}
-
-	public Matrix tensorProduct(Qubit qubit) {
-		Matrix me = this.getMatrix();
-		Matrix stateMatrix = qubit.getMatrix();
-		return me.getTensorProduct(stateMatrix);
-	}
-	
-	public Matrix getMatrix() {
-		Matrix m = new Matrix(2, 1);
-		m.SetElement(this.get0(), 0, 0);
-		m.SetElement(this.get1(), 1, 0);
-		return m;
 	}
 	
 	public Complex get0(){
@@ -105,14 +82,12 @@ public class Qubit {
 	}
 	
 	public double prob1() {
-		
 		double prob = 0;
 		
 		Complex down = new Complex(this.get1());
 		prob = down.normSquared();
 		
 		return prob;
-		
 	}
 	
 }

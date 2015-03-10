@@ -1,0 +1,90 @@
+package core;
+/**The State class represents a linear superposition of qubits
+ * @author Connor Imrie
+ * 
+ **/
+public class Qubit extends Matrix {
+	double magnitude;
+	
+	public Qubit() {
+		
+	}
+	
+	public Qubit(Matrix m){
+		super(m);
+	}
+	
+	public Qubit(Complex a, Complex b){
+		this.setElement(a, 1, 1);
+		this.setElement(b, 2, 1);
+		this.normalise();
+	}
+
+	public Qubit(State q){
+		this.a = new Complex(q.get0(), 0);
+		this.b = new Complex(q.get1(), 0);
+		this.normalise();
+	}
+	
+	/**
+	 * normalise() manipulates the current qubit coefficients and ensures they are normalised.
+	 * If the qubits are already normalised then they are not affected by this.
+	 */
+	public void normalise(){
+		this.magnitude = Math.sqrt(a.getNorm()*a.getNorm() + b.getNorm()*b.getNorm());
+		this.a = this.a.divideBy(this.magnitude);
+		this.b = this.b.divideBy(this.magnitude);
+	}
+	
+	public Complex get0(){
+		return this.a;
+	}
+	
+	public Complex get1(){
+		return this.b;
+	}
+	
+	public double getMagnitude(){
+		return this.magnitude;
+	}
+	
+	public String toString() { 
+		
+		Complex a = this.get0();
+		Complex b = this.get1();
+		
+	return a + "|0> + " + b + "|1>";
+		
+	}
+	
+	public State getState(int offset){
+		if (offset == 0){
+			return new State(0);
+		}
+		else {
+			return new State(1);
+		}
+	}
+		
+	
+	// Method to calculate the probability of a qubit being in either up or down
+	public double prob0() {
+	
+		double prob = 0;
+
+		Complex up = new Complex(this.get0());
+		prob = up.normSquared();
+
+		return prob;
+	}
+	
+	public double prob1() {
+		double prob = 0;
+		
+		Complex down = new Complex(this.get1());
+		prob = down.normSquared();
+		
+		return prob;
+	}
+	
+}
