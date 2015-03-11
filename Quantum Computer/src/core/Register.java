@@ -21,17 +21,22 @@ public class Register extends Matrix {
 	}
 
 	public int getLength() {
-		return this.getRowLength();
+		return this.getRowLength()/2;
+	}
+	public Matrix getMatrix() {
+		Matrix m = new Matrix(2,1);
+		m.setElements(this.getElements());
+		return m;
 	}
 	
 	public Matrix getRegisterFromQubits(Qubit[] qubits){
 		//go through each state in the array and take the tensor product with the element to its right:
 		int length = qubits.length;
 		//start with the last two elements:
-		Matrix currentTensorMatrix = qubits[0].getTensorProduct(identity(2));
+		Matrix currentTensorMatrix = qubits[0].getMatrix().getTensorProduct(identity(1));
 		//Then loop through the remaining elements and take the tensor product with a matrix
 		if (qubits.length > 2){
-			for (int i = 2; i < length ; i++){
+			for (int i = 1; i < length ; i++){
 				currentTensorMatrix = qubits[i].getTensorProduct(currentTensorMatrix);
 			}
 		}

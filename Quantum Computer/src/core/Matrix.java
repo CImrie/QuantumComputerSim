@@ -17,14 +17,14 @@ public class Matrix extends Complex {
 		}
 	}
 	
-//	public Matrix(int a, int b) {
-//		this.elements = new Complex[a][b];
-//		for(int i = 0; i < a; i++) {
-//			for(int j = 0; j < b; j++) {
-//				this.setElement(new Complex(0), i, j);
-//			}
-//		}
-//	}
+	public Matrix(int a, int b) {
+		this.elements = new Complex[a][b];
+		for(int i = 0; i < a; i++) {
+			for(int j = 0; j < b; j++) {
+				this.setElement(new Complex(0), i, j);
+			}
+		}
+	}
 	
 	public Matrix(Matrix m){
 		this.elements = m.getElements().clone();
@@ -34,9 +34,9 @@ public class Matrix extends Complex {
 		this.elements = elements;
 	}
 	
-	public Matrix(int rows, int columns){
-		this.elements = new Complex[rows][columns];
-	}
+//	public Matrix(int rows, int columns){
+//		this.elements = new Complex[rows][columns];
+//	}
 	
 	public int getRowLength(){
 		return this.elements.length;
@@ -242,5 +242,22 @@ Matrix c = new Matrix(row,column);
 		}
 		
 		return str;
+	}
+	
+	public static void main(String[] args) {
+		
+		Matrix A = new Matrix(2);
+		A.setElement(new Complex(1), 0, 0);
+		A.setElement(new Complex(1), 0, 1);
+		A.setElement(new Complex(1), 1, 0);
+		A.setElement(new Complex(-1), 1, 1);
+	System.out.println(A);
+		A = A.getTensorProduct(A);
+		System.out.println(A);
+		
+		Qubit q = new Qubit(new Complex(1), new Complex(0));
+		System.out.println(q.getMatrix());
+		
+		
 	}
 }

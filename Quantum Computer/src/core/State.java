@@ -3,7 +3,6 @@ package core;
 // @author Ben Crabbe
 public class State extends Matrix{
 
-	private int a, b;
 public State(Matrix m) {
 	if (m.getRowLength() == 2 && m.getColLength() == 1){
 		this.setElements(m.getElements());
@@ -16,13 +15,14 @@ public State(Matrix m) {
 	 * Creates a |0> or |1> qubit 
 	 */
 	public State(int type){
+		this.elements = new Complex[2][1];
 		if (type == 0){
-			this.a = 1;
-			this.b = 0;
+			this.elements[0][0] = new Complex(1);
+			this.elements[1][0] = new Complex(0);
 		}
 		else if (type == 1){
-			this.a = 0;
-			this.b = 1;
+			this.elements[0][0] = new Complex(0);
+			this.elements[1][0] = new Complex(1);
 		}
 	}
 
@@ -53,7 +53,14 @@ public State(Matrix m) {
 //		}
 //		return s;
 //	}
+//	
+	public Complex get0() {
+		return this.elements[0][0];
+	}
 	
+	public Complex get1() {
+		return this.elements[1][0];
+	}
 	/**
 	 * Returns the integer value corresponding to whether the qubit is a |0> or |1> qubit
 	 */
@@ -69,10 +76,15 @@ public State(Matrix m) {
 		}
 		return 0;
 	}
-
+	public Matrix getMatrix() {
+		Matrix m = new Matrix(2,1);
+		m.setElements(this.getElements());
+		return m;
+	}
 	
 public static void main(String[] args){
 	State q = new State(0);
+	System.out.println(q);
 
 }
 

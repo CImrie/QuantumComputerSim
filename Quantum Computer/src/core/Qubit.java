@@ -19,25 +19,30 @@ public class Qubit extends Matrix {
 	}
 	
 	public Qubit(Complex a, Complex b){
-		super(2,1);
-		this.setElement(a, 0, 0);
-		this.setElement(b, 1, 0);
+		this.elements = new Complex[2][1];
+		this.elements[0][0] = a;
+		this.elements[1][0] = b;
 		this.normalise();
+
 	}
 
 	public Qubit(State q){
-		super(2,1);
-		super.setElements(q.getElements().clone());
-	//	super.setElement(q.getElement(1,0), 1, 0);
-		this.normalise();
+		super.elements = new Qubit[2][1];
+		this.setElements(q.getElements());
+	//	this.setElement(q.getElement(1,0), 1, 0);
+	//	this.normalise();
 	}
-	
+	public Matrix getMatrix() {
+		Matrix m = new Matrix(2,1);
+		m.setElements(this.getElements());
+		return m;
+	}
 	/**
 	 * normalise() manipulates the current qubit coefficients and ensures they are normalised.
 	 * If the qubits are already normalised then they are not affected by this.
 	 */
 	public void normalise(){
-		this.magnitude = Math.sqrt(this.get0().getNorm()*this.get0().getNorm() + this.get1().getNorm()*this.get1().getNorm());
+		this.magnitude = Math.sqrt(this.get0().normSquared() + this.get1().normSquared());
 		this.setElement(this.get0().divideBy(this.magnitude), 0, 0);
 		this.setElement(this.get1().divideBy(this.magnitude), 1, 0);
 	}
@@ -51,7 +56,11 @@ public class Qubit extends Matrix {
 	}
 	
 	public double getMagnitude(){
-		return this.magnitude;
+		Complex a = this.elements[0][0];
+		Complex b = this.elements[1][0];
+		
+		double out = a.getNorm() + b.getNorm();
+		return out;
 	}
 	
 	public String toString() { 

@@ -28,8 +28,9 @@ public class Hadamard implements OneQubitGate{
 			else {
 				m = m.getTensorProduct(Matrix.identity(2));
 			}
+	m = this.matrix.mult(r.getMatrix());
 		}
-		return (new Register(m));
+		return new Register(m) ;
 	}
 	
 	public Qubit actOn(Qubit q){
@@ -62,10 +63,13 @@ public class Hadamard implements OneQubitGate{
 	 */
 	public static void main(String[] args){
 		Hadamard h = new Hadamard();
-		Qubit newQ = h.actOn(new Qubit(new Complex(0),new Complex(1)));
-		Qubit Q = new Qubit(new Complex(1/newQ.getMagnitude(),0),new Complex(1/newQ.getMagnitude(),0));
+		Qubit[] qubits = new Qubit[1];
+		qubits[0] = new Qubit(new State(0));
+		Register r = new Register(qubits);
+				
+		Register newr = h.actOn(r, 0);
 	//	System.out.println((1/newQ.getMagnitude()) + "[ " + newQ.get0() + "|0> +  " + newQ.get1() + "|1> ]");
-		System.out.println(Q.prob1());
+		System.out.println(newr);
 	}
 
 	@Override
