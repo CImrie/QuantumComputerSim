@@ -1,8 +1,8 @@
 package core;
 
-public class Matrix {
+public class Matrix extends Complex {
 	
-	private Complex[][] elements;
+ Complex[][] elements;
 	
 	public Matrix(){
 		
@@ -16,6 +16,15 @@ public class Matrix {
 			}
 		}
 	}
+	
+//	public Matrix(int a, int b) {
+//		this.elements = new Complex[a][b];
+//		for(int i = 0; i < a; i++) {
+//			for(int j = 0; j < b; j++) {
+//				this.setElement(new Complex(0), i, j);
+//			}
+//		}
+//	}
 	
 	public Matrix(Matrix m){
 		this.elements = m.getElements().clone();

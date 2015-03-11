@@ -7,7 +7,7 @@ public class Qubit extends Matrix {
 	double magnitude;
 	
 	public Qubit() {
-		
+		super(2,1);
 	}
 	
 	public Qubit(Matrix m){
@@ -15,17 +15,20 @@ public class Qubit extends Matrix {
 			this.setElements(m.getElements());
 		}
 		new Exception("THATS NOT A QUBIT");
+		
 	}
 	
 	public Qubit(Complex a, Complex b){
-		this.setElement(a, 1, 1);
-		this.setElement(b, 2, 1);
+		super(2,1);
+		this.setElement(a, 0, 0);
+		this.setElement(b, 1, 0);
 		this.normalise();
 	}
 
 	public Qubit(State q){
-		this.a = new Complex(q.get0(), 0);
-		this.b = new Complex(q.get1(), 0);
+		super(2,1);
+		super.setElements(q.getElements().clone());
+	//	super.setElement(q.getElement(1,0), 1, 0);
 		this.normalise();
 	}
 	
@@ -34,17 +37,17 @@ public class Qubit extends Matrix {
 	 * If the qubits are already normalised then they are not affected by this.
 	 */
 	public void normalise(){
-		this.magnitude = Math.sqrt(a.getNorm()*a.getNorm() + b.getNorm()*b.getNorm());
-		this.a = this.a.divideBy(this.magnitude);
-		this.b = this.b.divideBy(this.magnitude);
+		this.magnitude = Math.sqrt(this.get0().getNorm()*this.get0().getNorm() + this.get1().getNorm()*this.get1().getNorm());
+		this.setElement(this.get0().divideBy(this.magnitude), 0, 0);
+		this.setElement(this.get1().divideBy(this.magnitude), 1, 0);
 	}
 	
 	public Complex get0(){
-		return this.a;
+		return this.getElement(0,0);
 	}
 	
 	public Complex get1(){
-		return this.b;
+		return this.getElement(1,0);
 	}
 	
 	public double getMagnitude(){

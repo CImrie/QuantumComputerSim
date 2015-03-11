@@ -28,17 +28,17 @@ public class Register extends Matrix {
 		//go through each state in the array and take the tensor product with the element to its right:
 		int length = qubits.length;
 		//start with the last two elements:
-		Matrix currentTensorMatrix = qubits[length-2].getTensorProduct(qubits[length-1]);
+		Matrix currentTensorMatrix = qubits[0].getTensorProduct(identity(2));
 		//Then loop through the remaining elements and take the tensor product with a matrix
 		if (qubits.length > 2){
-			for (int i = qubits.length-3; i > 0 ; i--){
+			for (int i = 2; i < length ; i++){
 				currentTensorMatrix = qubits[i].getTensorProduct(currentTensorMatrix);
 			}
 		}
 		return currentTensorMatrix;
 	}
 	
-	/*public Qubit getQubit(int index){
+	/* public Qubit getQubit(int index){
 		return this.qubits[index];
 	}
 	

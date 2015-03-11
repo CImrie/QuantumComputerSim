@@ -8,10 +8,10 @@ public class Hadamard implements OneQubitGate{
 		Matrix m = new Matrix(2);
 		Complex c1 = new Complex(1/Math.sqrt(2));
 		Complex c2 = new Complex(-1/Math.sqrt(2));
-		m.setElement(c1,1,1);
-		m.setElement(c1,1,2);
-		m.setElement(c1,2,1);
-		m.setElement(c2, 2, 2);
+		m.setElement(c1, 0, 0);
+		m.setElement(c1, 0, 1);
+		m.setElement(c1, 1, 0);
+		m.setElement(c2, 1, 1);
 		this.matrix = m;
 	}
 
@@ -20,7 +20,7 @@ public class Hadamard implements OneQubitGate{
 		int rSize = r.getLength();
 
 		Matrix m = new Matrix(1);
-		m.setElement(new Complex(1), 1, 1);
+		m.setElement(new Complex(1), 0, 0);
 		for (int i = 0; i < rSize; i++){
 			if (i == qubitIndex){
 				m = m.getTensorProduct(this.matrix);
@@ -40,32 +40,31 @@ public class Hadamard implements OneQubitGate{
 		return newQ;
 	}
 	
-	/*// Method that acts the Hadamard gate on all the qubits of a register
+	// Method that acts the Hadamard gate on all the qubits of a register
 	public Register actOn(Register r) {
-		Hadamard h = new Hadamard();
-		int n = r.getLength();
-		Register r2 =  new Register(n);
-		
-		for(int i = 0; i < n; i++) {
-		r2.setQubit(h.actOn(r.getQubit(i)), i);
+		int rSize = r.getLength();
+		Matrix m = new Matrix(1);
+		m.setElement(new Complex(1), 0, 0);
+		for(int i = 0; i < rSize; i++) {
+		m = m.getTensorProduct(this.matrix);
 		}
-		return r2;
+		return new Register(m);
 	}
-	public static Matrix HadamardTensor(int a) {
+/*	public static Matrix HadamardTensor(int a) {
 		Matrix h = createHadamard(1);
 		Matrix H = h.getTensorProduct(h);
 		return H;
-	}*/
-	
+	}
+	*/
 	/**
 	 * This is a test main method to check that hadamard gives appropriate state output.
 	 * @param args
 	 */
 	public static void main(String[] args){
 		Hadamard h = new Hadamard();
-		Qubit newQ = h.actOn(new Qubit(new State(0,1)));
+		Qubit newQ = h.actOn(new Qubit(new Complex(0),new Complex(1)));
 		Qubit Q = new Qubit(new Complex(1/newQ.getMagnitude(),0),new Complex(1/newQ.getMagnitude(),0));
-		System.out.println((1/newQ.getMagnitude()) + "[ " + newQ.get0() + "|0> +  " + newQ.get1() + "|1> ]");
+	//	System.out.println((1/newQ.getMagnitude()) + "[ " + newQ.get0() + "|0> +  " + newQ.get1() + "|1> ]");
 		System.out.println(Q.prob1());
 	}
 

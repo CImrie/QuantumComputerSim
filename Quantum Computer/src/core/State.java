@@ -1,14 +1,16 @@
 package core;
 
 // @author Ben Crabbe
-public class State{
+public class State extends Matrix{
 
 	private int a, b;
-
-	public State(int a, int b){
-		this.a = a;
-		this.b = b;
+public State(Matrix m) {
+	if (m.getRowLength() == 2 && m.getColLength() == 1){
+		this.setElements(m.getElements());
 	}
+	new Exception("THATS NOT A QUBIT");
+	//super(m);
+}
 	
 	/**
 	 * Creates a |0> or |1> qubit 
@@ -24,50 +26,42 @@ public class State{
 		}
 	}
 
-	@Override
-	public String toString() {
-		int a = this.get0();
-		int b = this.get1();
-
-		String s = "";
-		if (a > 0){
-			if (a > 1){
-				s += "(" + a + ")| 0 >";
-			}
-			else {
-				s += "| 0 >";
-			}
-		}
-		if (a > 0 && b > 0){
-			s += " + ";
-		}
-		if (b > 0){
-			if (b > 1){
-				s += "(" + b + ")| 1 >";
-			}
-			else {
-				s += "| 1 >";
-			}
-		}
-		return s;
-	}
-	
-	public int get0(){
-		return this.a;
-	}
-	
-	public int get1(){
-		return this.b;
-	}
+//	@Override
+//	public String toString() {
+//		int a = this.get0();
+//		int b = this.get1();
+//
+//		String s = "";
+//		if (a > 0){
+//			if (a > 1){
+//				s += "(" + a + ")| 0 >";
+//			}
+//			else {
+//				s += "| 0 >";
+//			}
+//		}
+//		if (a > 0 && b > 0){
+//			s += " + ";
+//		}
+//		if (b > 0){
+//			if (b > 1){
+//				s += "(" + b + ")| 1 >";
+//			}
+//			else {
+//				s += "| 1 >";
+//			}
+//		}
+//		return s;
+//	}
 	
 	/**
 	 * Returns the integer value corresponding to whether the qubit is a |0> or |1> qubit
 	 */
-	public int getQubitType(){
-		if (this.get0() == 1){
+	public int getStateType(){
+		if (this.getElement(0,0) == new Complex(1)){
 			return 0;
 		}
-		else if (this.get1() == 1){
+		else if (this.getElement(1,0) == new Complex(1)){
 			return 1;
 		}
 		else {
@@ -78,8 +72,8 @@ public class State{
 
 	
 public static void main(String[] args){
-	State q = new State(0,1);
-	System.out.println(q);
+	State q = new State(0);
+
 }
 
 	
