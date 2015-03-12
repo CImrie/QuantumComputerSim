@@ -15,7 +15,7 @@ public interface OneQubitGate {
 
 	public Qubit actOn(Qubit q);
 
-	Qubit actOn(Qubit q, double parameter);
+	public Qubit actOn(Qubit q, double parameter);
 
-	public Register actOnRegister(Register r);
+	public Register actOn(Register r);
 }

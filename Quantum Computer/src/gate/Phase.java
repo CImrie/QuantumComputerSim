@@ -2,6 +2,16 @@ package gate;
 import core.*;
 
 public class Phase implements OneQubitGate{
+	private final Matrix matrix;
+
+	public Phase(double phase) {
+		Matrix p = new Matrix(2);
+		Complex c1 = new Complex(1);
+		Complex c4 = new Complex(Math.cos(phase), Math.sin(phase));
+		p.setElement(c1, 0, 0);
+		p.setElement(c4, 1, 1);
+		this.matrix = p;
+	}
 
 	@Override
 	public Qubit actOn(Qubit q, double phase) {
@@ -23,16 +33,15 @@ public class Phase implements OneQubitGate{
 		Qubit newS = p.actOn(new Qubit(new State(1)),phaseShift);
 		System.out.println(newS.toString());
 		*/
-		Qubit q1 = new Qubit(new Complex(1,0), new Complex(1,0));
-		Qubit q2 = new Qubit(new Complex(1,0), new Complex(1,0));
+		Qubit[] q = new Qubit[2];
+		q[0] = new Qubit(new Complex(1,0), new Complex(1,0));
+		q[1] = new Qubit(new Complex(1,0), new Complex(1,0));
 		
-		Register r = new Register(2);
-		r.setQubit(q1, 0);
-		r.setQubit(q2, 1);
+		Register r = new Register(q);
 		
-		Phase p = new Phase();
-		Qubit result = p.actOn(r.getQubit(1), Math.PI);
-		r.setQubit(result, 1);
+		Phase p = new Phase(Math.PI/2);
+
+//		r.setQubit(result, 1);
 		System.out.println(r.getMatrix());
 	}
 

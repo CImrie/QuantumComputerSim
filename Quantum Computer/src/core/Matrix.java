@@ -126,7 +126,7 @@ public class Matrix extends Complex {
 		return identity;
 	    }
 	    
-	    public static Matrix trans(Matrix A) {
+	    public static Matrix getTranspose(Matrix A) {
 
 		int column = A.getRowLength();
 		int row = A.getColLength();
@@ -182,7 +182,7 @@ Matrix c = new Matrix(row,column);
 	        int rowB = B.getRowLength();
 	        int columnB = B.getColLength();
 	        
-	        if (columnA != rowB) throw new RuntimeException("Illegal ComplexMatrix dimensions.");
+	        if (columnA != rowB) throw new RuntimeException("Illegal Matrix dimensions.");
 	        Matrix C = new Matrix(rowA, columnB);
 	       
 	        for (int i = 0; i < rowA; i++) {

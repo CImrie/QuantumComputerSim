@@ -3,7 +3,7 @@ import core.*;
 
 public class Hadamard implements OneQubitGate{
 	private final Matrix matrix;
-	
+
 	public Hadamard(){
 		Matrix m = new Matrix(2);
 		Complex c1 = new Complex(1/Math.sqrt(2));
@@ -18,62 +18,61 @@ public class Hadamard implements OneQubitGate{
 	@Override
 	public Register actOn(Register r, int qubitIndex) {
 		int rSize = r.getLength();
-
+		if(qubitIndex >= rSize) throw new RuntimeException("Register incorrect size. Register has " + rSize + " qubits");
 		Matrix m = new Matrix(1);
 		m.setElement(new Complex(1), 0, 0);
 		for (int i = 0; i < rSize; i++){
 			if (i == qubitIndex){
-				m = m.getTensorProduct(this.matrix);
+				m = this.matrix.getTensorProduct(m);
 			}
 			else {
-				m = m.getTensorProduct(Matrix.identity(2));
+				m = Matrix.identity(2).getTensorProduct(m);
 			}
-	m = this.matrix.mult(r.getMatrix());
 		}
-		return new Register(m) ;
+			m = m.mult(r.getMatrix());
+		//return new Register(m) ;
+			return new Register(m);
 	}
-	
-	public Qubit actOn(Qubit q){
-		Qubit[] qubits = {q};
-		Register r = new Register(qubits);
-		r = this.actOn(r, 0);
-		Qubit newQ = new Qubit(new Matrix(r.getElements()));
-		return newQ;
-	}
-	
+
+		public Qubit actOn(Qubit q){
+			Qubit[] qubits = {q};
+			Register r = new Register(qubits);
+			r = this.actOn(r, 0);
+			Qubit newQ = new Qubit(new Matrix(r.getElements()));
+			return newQ;
+		}
+
 	// Method that acts the Hadamard gate on all the qubits of a register
 	public Register actOn(Register r) {
 		int rSize = r.getLength();
 		Matrix m = new Matrix(1);
 		m.setElement(new Complex(1), 0, 0);
 		for(int i = 0; i < rSize; i++) {
-		m = m.getTensorProduct(this.matrix);
+			m = m.getTensorProduct(this.matrix);
 		}
+		m = m.mult(r.getMatrix());
 		return new Register(m);
 	}
-/*	public static Matrix HadamardTensor(int a) {
-		Matrix h = createHadamard(1);
-		Matrix H = h.getTensorProduct(h);
-		return H;
-	}
-	*/
 	/**
 	 * This is a test main method to check that hadamard gives appropriate state output.
 	 * @param args
 	 */
 	public static void main(String[] args){
 		Hadamard h = new Hadamard();
-		Qubit[] qubits = new Qubit[1];
+		Qubit[] qubits = new Qubit[5];
 		qubits[0] = new Qubit(new State(0));
+		qubits[1] = new Qubit(new State(0));
+		qubits[2] = new Qubit(new State(0));
+		qubits[3] = new Qubit(new State(0));
+		qubits[4] = new Qubit(new State(0));
 		Register r = new Register(qubits);
-				
-		Register newr = h.actOn(r, 0);
-	//	System.out.println((1/newQ.getMagnitude()) + "[ " + newQ.get0() + "|0> +  " + newQ.get1() + "|1> ]");
-		System.out.println(newr);
+
+		Register m = h.actOn(r);
+		System.out.println(m);
 	}
 
-	@Override
-	public Qubit actOn(Qubit q, double parameter) {
-		return actOn(q);
-	}
+		@Override
+		public Qubit actOn(Qubit q, double parameter) {
+			return actOn(q);
+		}
 }
