@@ -19,7 +19,8 @@ public class OneQubitGate {
 	public Register actOn(Register r, int qubitIndex) {
 		int rSize = r.getLength();
 		if (qubitIndex >= rSize)
-			throw new RuntimeException("Register incorrect size. Register has " + rSize + " qubits");
+			throw new RuntimeException("Register incorrect size. Register has "
+					+ rSize + " qubits");
 		Matrix m = new Matrix(1);
 		m.setElement(new Complex(1), 0, 0);
 		for (int i = 0; i < rSize; i++) {

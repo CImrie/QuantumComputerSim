@@ -1,0 +1,11 @@
+package gate;
+import core.*;
+
+public class TwoQubitGate {
+	private Matrix matrix;
+	
+	public Register actOn(Qubit q1, Qubit q2){
+		return null;
+		
+	}
+}
