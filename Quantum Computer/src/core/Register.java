@@ -38,11 +38,11 @@ public class Register extends Matrix {
 		return length;
 		//return this.getRowLength();
 	}
-	public Matrix getMatrix() {
+	/*public Matrix getMatrix() {
 		Matrix m = new Matrix(this.getLength(),1);
 		m.setElements(this.getElements());
 		return m;
-	}
+	}*/
 
 	public Matrix getRegisterFromQubits(Qubit[] qubits){
 		//go through each state in the array and take the tensor product with the element to its right:

@@ -1,0 +1,30 @@
+package gate;
+import core.*;
+
+public class TwoQubitGate {
+	private Matrix matrix;
+	
+	public Register actOn(Register r){
+		if(r.getLength() % 2 == 0){
+			Matrix tensored = new Matrix(1);
+			for (int i = 0; i < r.getLength()/2; i++){
+				tensored = tensored.getTensorProduct(this.matrix);
+			}
+			r.setElements(tensored.mult(r).getElements());
+		}
+		else {
+			new Exception("Pair(s) of Qubits must be given to two qubit gate, '" + r.getLength() + "' Qubits were given");
+		}
+		return r;
+	}
+	
+	public Register actOn(Register r, int qubitIndex){
+		if(r.getLength() % 2 == 0){
+			
+		}
+		else {
+			new Exception("Method: actOn(Register r, int qubitIndex) -> Pair(s) of Qubits must be given to two qubit gate, '" + r.getLength() + "' Qubits were given");
+		}
+	}
+
+}

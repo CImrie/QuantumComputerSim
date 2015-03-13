@@ -1,0 +1,16 @@
+package gate;
+import core.*;
+
+public class TwoQubitGate {
+	private Matrix matrix;
+	
+	public Register actOn(Register r){
+		if (r.getLength() == 2){
+			this.matrix.mult(r);
+		}
+		else {
+			new Exception("Pair of Qubits must be given to two qubit gate, '" + r.getLength() + "' Qubits were given");
+		}
+	}
+
+}

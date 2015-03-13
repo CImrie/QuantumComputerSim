@@ -29,7 +29,7 @@ public class OneQubitGate {
 				m = Matrix.identity(2).getTensorProduct(m);
 			}
 		}
-		m = m.mult(r.getMatrix());
+		m = m.mult(r);
 		return new Register(m);
 	}
 
@@ -46,9 +46,9 @@ public class OneQubitGate {
 		Matrix m = new Matrix(1);
 		m.setElement(new Complex(1), 0, 0);
 		for (int i = 0; i < rSize; i++) {
-			m = m.getTensorProduct(this.matrix);
+			m = this.matrix.getTensorProduct(m);
 		}
-		m = m.mult(r.getMatrix());
+		m = m.mult(r);
 		return new Register(m);
 	}
 }

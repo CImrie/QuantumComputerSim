@@ -1,0 +1,46 @@
+package gate;
+import core.*;
+
+public class TwoQubitGate {
+	private Matrix matrix;
+	
+	public Register actOn(Register r){
+		if(r.getLength() % 2 == 0){
+			Matrix tensored = new Matrix(1);
+			tensored.setElement(new Complex(1), 0, 0);
+			for (int i = 0; i < r.getLength()/2; i++){
+				tensored = tensored.getTensorProduct(this.matrix);
+			}
+			r.setElements(tensored.mult(r).getElements());
+		}
+		else {
+			new Exception("Method: actOn(Register r) -> Pair(s) of Qubits must be given to two qubit gate, '" + r.getLength() + "' Qubits were given");
+		}
+		return r;
+	}
+	
+	public Register actOn(Register r, int pairIndex){
+		if(r.getLength() % 2 == 0){
+			Matrix tensored = new Matrix(1);
+			int rSize = r.getLength();
+			if (pairIndex >= rSize){
+				throw new RuntimeException("Register incorrect size. Register has " + rSize + " qubits");
+			}
+			Matrix m = new Matrix(1);
+			m.setElement(new Complex(1), 0, 0);
+			for (int i = 0; i < rSize; i++) {
+				if (i == qubitIndex) {
+					m = this.matrix.getTensorProduct(m);
+				} else {
+					m = Matrix.identity(2).getTensorProduct(m);
+				}
+			}
+			m = m.mult(r);
+			return new Register(m);
+		}
+		else {
+			new Exception("Method: actOn(Register r, int qubitIndex) -> Pair(s) of Qubits must be given to two qubit gate, '" + r.getLength() + "' Qubits were given");
+		}
+	}
+
+}

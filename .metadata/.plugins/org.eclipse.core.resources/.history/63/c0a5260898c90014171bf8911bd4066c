@@ -1,0 +1,29 @@
+package gate;
+import core.*;
+
+/**
+ * The C-NOT gate is a 2-qubit gate.
+ * It can be represented as a pair of 1 qubit applications
+ * @author Connor Imrie
+ *
+ */
+public class CNOT extends TwoQubitGate{
+	
+	public CNOT(){
+		Matrix m = new Matrix(4);
+		
+	}
+	
+	//Test
+	public static void main(String[] args){
+		State x = new State(1);
+		State y = new State(1);
+		CNOT gate = new CNOT();
+		
+		Qubit[] states = gate.actOn(x, y);
+		for(Qubit state: states){
+			System.out.println(state.toString());
+		}
+	}
+	
+}
