@@ -26,11 +26,11 @@ public class Qubit extends Matrix {
 
 	}
 
-	public Qubit(State s){
-		//super.elements = new Qubit[2][1];
-		//this.setElements(s.getElements());
-		this.setElements(s.getElements());
-		this.normalise();
+	public Qubit(State q){
+		super.elements = new Qubit[2][1];
+		this.setElements(q.getElements());
+	//	this.setElement(q.getElement(1,0), 1, 0);
+	//	this.normalise();
 	}
 	public Matrix getMatrix() {
 		Matrix m = new Matrix(2,1);

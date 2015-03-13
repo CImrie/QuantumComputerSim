@@ -27,10 +27,10 @@ public class Qubit extends Matrix {
 	}
 
 	public Qubit(State s){
-		//super.elements = new Qubit[2][1];
-		//this.setElements(s.getElements());
+		super.elements = new Qubit[2][1];
 		this.setElements(s.getElements());
-		this.normalise();
+	//	this.setElement(q.getElement(1,0), 1, 0);
+	//	this.normalise();
 	}
 	public Matrix getMatrix() {
 		Matrix m = new Matrix(2,1);
