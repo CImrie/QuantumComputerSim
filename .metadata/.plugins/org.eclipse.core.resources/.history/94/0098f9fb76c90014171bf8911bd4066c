@@ -1,0 +1,52 @@
+package gate;
+
+import core.*;
+
+
+/**
+ * Interface for a one-qubit gate. It takes either a qubit or a qubit and an extra parameter,
+ * and returns a state as a result. Example: Hadamard gate.
+ * @author Connor Imrie
+ *
+ */
+public class OneQubitGate {
+	protected Matrix matrix;
+	
+	public OneQubitGate(){
+		
+	}
+
+	public Matrix actOn(Register r, int qubitIndex){
+		int rSize = r.getLength();
+		if(qubitIndex >= rSize) throw new RuntimeException("Register incorrect size. Register has " + rSize + " qubits");
+		Matrix m = new Matrix(1);
+		m.setElement(new Complex(1), 0, 0);
+		for (int i = 0; i < rSize; i++){
+			if (i == qubitIndex){
+				m = this.matrix.getTensorProduct(m);
+			}
+			else {
+				m = Matrix.identity(2).getTensorProduct(m);
+			}
+		}
+			m = m.mult(r.getMatrix());
+		//return new Register(m) ;
+			return new Register(m);
+	}
+
+	public Qubit actOn(Qubit q){
+		Qubit[] qubits = {q};
+		Register r = new Register(qubits);
+		r = this.actOn(r, 0);
+		Qubit newQ = new Qubit(new Matrix(r.getElements()));
+		return newQ;
+	}
+
+	public Qubit actOn(Qubit q, double parameter){
+		
+	}
+
+	public Register actOn(Register r){
+		
+	}
+}

@@ -55,15 +55,33 @@ public class Complex {
 
 		double real = this.getRealPart();
 		double imag = this.getImagPart();
-
-		if (imag >= 0.0) {
-			return "(" + real + " + " + imag + "i)";
-
-		} else {
-
-			return "(" + real + " - " + Math.abs(imag) + "i)";
-
+		
+		String before = "(";
+		String after = ")";
+		String realStr = "";
+		String imagStr = "";
+		String conjuction = "";
+		if (real != 0.0 && imag != 0.0){
+			if (imag > 0){
+				conjuction = " + ";
+			}
+			else {
+				conjuction = " - ";
+			}
 		}
+		
+		
+		if (real != 0.0){
+			realStr += real;
+		}
+		if (imag != 0.0){
+			imagStr += imag + "i";
+		}
+		if (real == 0.0 && imag == 0.0){
+			realStr += real;
+		}
+		
+		return before + realStr + conjuction + imagStr + after;
 	}
 
 	// Calculate Square Modulus

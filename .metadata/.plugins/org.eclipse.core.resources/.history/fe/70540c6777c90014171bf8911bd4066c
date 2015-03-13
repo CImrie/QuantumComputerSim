@@ -1,0 +1,69 @@
+package gate;
+import core.*;
+
+public class Phase implements OneQubitGate{
+	private final Matrix matrix;
+
+	public Phase(double phase) {
+		Matrix p = new Matrix(2);
+		Complex c1 = new Complex(1);
+		Complex c0 = new Complex(0);
+		Complex c4 = new Complex(Math.cos(phase), Math.sin(phase));
+		p.setElement(c1, 0, 0);
+		p.setElement(c0, 0, 1);
+		p.setElement(c0, 1, 0);
+		p.setElement(c4, 1, 1);
+		this.matrix = p;
+	}
+
+	@Override
+	public Qubit actOn(Qubit q, double phase) {
+		Complex a = q.get0();
+		Complex b = q.get1();
+		double realPart = Math.cos(phase);
+		double imagPart = Math.sin(phase);
+		Complex e = new Complex(realPart, imagPart);
+		return new Qubit(a, b.multiply(e));
+	}
+	
+	/**
+	 * This is a test main method to check that Phase Gate gives appropriate state output.
+	 * @param args
+	 */
+	public static void main(String[] args){
+		/*Phase p = new Phase();
+		double phaseShift = Math.PI/4;
+		Qubit newS = p.actOn(new Qubit(new State(1)),phaseShift);
+		System.out.println(newS.toString());
+		*/
+		Qubit[] q = new Qubit[2];
+		q[0] = new Qubit(new Complex(1,0), new Complex(1,0));
+		q[1] = new Qubit(new Complex(1,0), new Complex(1,0));
+		
+		Register r = new Register(q);
+		
+		Phase p = new Phase(Math.PI/2);
+
+//		r.setQubit(result, 1);
+		System.out.println(r.getMatrix());
+	}
+
+	@Override
+	public Qubit actOn(Qubit q) {
+		new Exception("Phase gate must have parameter 'phase' of type double.");
+		return null;
+	}
+
+	@Override
+	public Register actOn(Register r, int qubitIndex) {
+		Matrix 
+		return null;
+	}
+
+	@Override
+	public Register actOn(Register r) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

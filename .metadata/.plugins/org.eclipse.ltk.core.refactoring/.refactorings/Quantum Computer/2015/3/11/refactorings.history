@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 2 elements to &apos;Quantum Computer/src/algorithm&apos;&#x0A;- Original project: &apos;Quantum Computer&apos;&#x0A;- Destination element: &apos;Quantum Computer/src/algorithm&apos;&#x0A;- Original elements:&#x0A;     gate.Grover.java&#x0A;     gate.Oracle.java&#x0A;- Update references to refactored element" description="Move compilation units" destination="/src&lt;algorithm" element1="/src&lt;gate{Grover.java" element2="/src&lt;gate{Oracle.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1426249788114" units="2" version="1.0"/>
+</session>
