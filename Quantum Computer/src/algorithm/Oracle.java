@@ -1,0 +1,60 @@
+package algorithm;
+import core.*;
+import gate.Hadamard;
+
+/* Class that implements gates to perform the Grover step alogrithm
+ * @Author Ben Crabbe
+ * */
+
+public class Oracle extends Matrix {
+
+	public Oracle() {
+
+	}
+
+	public Matrix actOn(Register r, int oracle) {
+		int length = r.getLength();
+
+		Matrix O = new Matrix((int)Math.pow(2, length));
+		if(oracle > Math.pow(2, length)-1) throw new RuntimeException("Oracle index exceeds dimension of matrix");
+		for(int i = 0; i < Math.pow(2,length); i++) {
+			if(oracle == i) {
+				O.setElement(new Complex(-1.0,0.0), i, i);
+			} else { 
+				O.setElement(new Complex(1.0,0.0), i, i);
+			}
+		}
+		return O;
+	}
+	// Brute force test of Grover, need method in the Grover class
+	public static void main(String[] args) {
+		Oracle o = new Oracle();
+		Hadamard h = new Hadamard();
+
+		//Register r2 = new Register(2);
+		Qubit[] q = new Qubit[2];
+		q[0] = new Qubit(new State(0));
+		q[1] = new Qubit(new State(0));
+
+		Register r2 = new Register(q);
+		r2 = h.actOn(r2);
+
+		Matrix B = o.actOn(r2, 0);
+		Matrix A = r2.getMatrix();	
+		// Multiply by oracle
+		A = B.mult(A);
+
+		Register C = new Register(A);
+		//Multiply by Hadamard (transform)
+		C = h.actOn(C);
+
+		Matrix D = C.getMatrix();
+		//Invert about the mean
+		D = o.actOn(r2, 0).mult(D);
+		C = new Register(D);
+		//Invert transform
+		C = h.actOn(C);
+		System.out.println(C);
+
+	}
+}
