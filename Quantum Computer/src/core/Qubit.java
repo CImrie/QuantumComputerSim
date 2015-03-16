@@ -82,24 +82,4 @@ public class Qubit extends Matrix {
 	}
 		
 	
-	// Method to calculate the probability of a qubit being in either up or down
-	public double prob0() {
-	
-		double prob = 0;
-
-		Complex up = new Complex(this.get0());
-		prob = up.normSquared();
-
-		return prob;
-	}
-	
-	public double prob1() {
-		double prob = 0;
-		
-		Complex down = new Complex(this.get1());
-		prob = down.normSquared();
-		
-		return prob;
-	}
-	
 }

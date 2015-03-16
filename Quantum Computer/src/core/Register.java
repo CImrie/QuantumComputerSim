@@ -26,10 +26,10 @@ public class Register extends Matrix {
 		double size = this.getRowLength();
 		int count  = 0;
 		int length = 0;
-		for(int i = 1; i < 8; i++) {
+		for(int i = 1; i < this.getRowLength(); i++) {
 		if(found == false) {
 			
-				size = size/2;
+				size /= 2;
 				
 				if(size == 2) { found = true; count = i; }
 			}
@@ -59,23 +59,6 @@ public class Register extends Matrix {
 		//}
 		return currentTensorMatrix;
 	}
-
-	/* public Qubit getQubit(int index){
-		return this.qubits[index];
-	}
-
-	public State getState(int index){
-		int stateIndex = index/2;
-		int offset = index%2;
-		return this.getQubit(stateIndex).getState(offset);
-	}
-
-	public void setQubit(Qubit q, int index){
-		this.qubits[index] = q;
-	}
-
-	public void setQubit(State s, int index) {
-		this.qubits[index] = new Qubit(s);
-
-	}*/
+	
+	
 }

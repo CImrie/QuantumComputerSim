@@ -259,6 +259,15 @@ public class Matrix extends Complex {
 
 		return str;
 	}
+public double getProb(int index) {
+		
+		double prob = 0;
+
+		Complex up = new Complex(this.getElement(index,0));
+		prob = up.normSquared();
+
+		return prob;
+	}
 
 	public static void main(String[] args) {
 
