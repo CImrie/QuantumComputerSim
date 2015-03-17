@@ -1,0 +1,33 @@
+package gate;
+import core.*;
+
+public class Hadamard extends OneQubitGate{
+	
+	public Hadamard(){
+		Matrix m = new Matrix(2);
+		Complex c1 = new Complex(1/Math.sqrt(2));
+		Complex c2 = new Complex(-1/Math.sqrt(2));
+		m.setElement(c1, 0, 0);
+		m.setElement(c1, 0, 1);
+		m.setElement(c1, 1, 0);
+		m.setElement(c2, 1, 1);
+		this.matrix = m;
+	}
+	/**
+	 * This is a test main method to check that hadamard gives appropriate state output.
+	 * @param args
+	 */
+	public static void main(String[] args){
+		Hadamard h = new Hadamard();
+		Qubit[] qubits = new Qubit[2];
+		qubits[0] = new Qubit(new State(0));
+		qubits[1] = new Qubit(new State(0));
+		/*qubits[2] = new Qubit(new State(0));
+		qubits[3] = new Qubit(new State(0));
+		qubits[4] = new Qubit(new State(0));*/
+		Register r = new Register(qubits);
+
+		Register m = h.actOn(r);
+		System.out.println(m);
+	}
+}

@@ -5,4 +5,5 @@
 <fullyQualifiedTypeName name="core.State"/>
 <fullyQualifiedTypeName name="core.Complex"/>
 <fullyQualifiedTypeName name="gate.Hadamard"/>
+<fullyQualifiedTypeName name="core.Matrix"/>
 </qualifiedTypeNameHistroy>

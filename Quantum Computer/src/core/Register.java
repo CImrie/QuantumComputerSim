@@ -21,8 +21,8 @@ public class Register extends Matrix {
 	}
 
 	public int getLength() {
-
-		boolean found = false;
+	
+		/*boolean found = false;
 		double size = this.getRowLength();
 		int count  = 0;
 		int length = 0;
@@ -35,7 +35,8 @@ public class Register extends Matrix {
 			}
 		}
 		length = count+1; 
-		return length;
+		return length;*/
+		return (int)(Math.log(this.getRowLength()) / Math.log(2));
 		//return this.getRowLength();
 	}
 	/*public Matrix getMatrix() {

@@ -1,0 +1,35 @@
+package algorithm;
+import gate.Hadamard;
+import core.*;
+
+public class Grover {
+	private Register r;
+	private int index;
+	
+	public Grover(Register r, int qubitIndex){
+		this.r = r;
+		this.index = qubitIndex;		
+	}
+	
+	public Register act(){
+		for (int i = 0; i < (int) Math.PI/4*Math.sqrt(r.getLength()); i++){
+			this.r = this.groverStep();
+		}
+		return this.r;
+	}
+	
+	public Register groverStep(){
+		Hadamard h = new Hadamard();
+		Oracle o = new Oracle(r.getLength(), this.index);
+		Matrix inverter = new Matrix(r.getLength());
+		inverter.setElement(new Complex(-1), 0, 0);
+		
+		Register out = o.actOn(r);
+		out = h.actOn(out);
+		out = new Register(inverter.mult(out));
+		out = h.actOn(out);
+		
+		return out;
+	}
+
+}

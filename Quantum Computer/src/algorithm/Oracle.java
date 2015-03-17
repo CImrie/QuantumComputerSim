@@ -1,14 +1,21 @@
 package algorithm;
 import core.*;
+import gate.*;
 
 /* Class that implements gates to perform the Grover step alogrithm
  * @Author Ben Crabbe
  * */
 
-public class Oracle extends Matrix {
+public class Oracle extends OneQubitGate {
+	
+	public Oracle(int size, int index){
+		Matrix m = Matrix.identity(size);
+		m.setElement(new Complex(-1), index, index);
+		this.matrix = m;
+	}
 
-	public Matrix actOn(Register r, int oracle) {
-		int length = r.getLength();
+	public Register actOn(Register r) {
+		/*int length = r.getLength();
 
 		Matrix O = new Matrix((int)Math.pow(2, length));
 		if(oracle > Math.pow(2, length)-1) throw new RuntimeException("Oracle index exceeds dimension of matrix");
@@ -19,6 +26,8 @@ public class Oracle extends Matrix {
 				O.setElement(new Complex(1.0,0.0), i, i);
 			}
 		}
-		return O;
+		return O;*/
+		
+		return new Register(this.matrix.mult(r));
 	}
 }
