@@ -4,10 +4,17 @@ public class Matrix extends Complex {
 
 	Complex[][] elements;
 
+	/**
+	 * Empty constructor for a matrix
+	 */
 	public Matrix() {
 
 	}
 
+	/**
+	 * Constructs a square matrix of the given size. The complex elements are set with 0 real and imaginary parts
+	 * @param a the size of the square matrix
+	 */
 	public Matrix(int a) {
 		this.elements = new Complex[a][a];
 		for (int i = 0; i < a; i++) {
@@ -17,6 +24,11 @@ public class Matrix extends Complex {
 		}
 	}
 
+	/**
+	 * Constructs a matrix of a given size. The complex elements are set with 0 real and imaginary parts
+	 * @param a the number of rows in the matrix
+	 * @param b the number of columns in the matrix
+	 */
 	public Matrix(int a, int b) {
 		this.elements = new Complex[a][b];
 		for (int i = 0; i < a; i++) {
@@ -26,22 +38,34 @@ public class Matrix extends Complex {
 		}
 	}
 
+	/**
+	 * Constructs a matrix using another matrix
+	 * @param m the input matrix
+	 */
 	public Matrix(Matrix m) {
 		this.elements = m.getElements().clone();
 	}
 
+	/**
+	 * Constructs a matrix from an array of complex numbers
+	 * @param elements the array of complex numbers
+	 */
 	public Matrix(Complex[][] elements) {
 		this.elements = elements;
 	}
 
-	// public Matrix(int rows, int columns){
-	// this.elements = new Complex[rows][columns];
-	// }
-
+	/**
+	 * Gets the row length of the matrix
+	 * @return the length of a row in the matrix
+	 */
 	public int getRowLength() {
 		return this.elements.length;
 	}
 
+	/**
+	 * Gets the column length of the matrix
+	 * @return the length of the column in the matrix
+	 */
 	public int getColLength() {
 		if (this.elements.length > 0) {
 			return this.elements[0].length;
@@ -50,18 +74,38 @@ public class Matrix extends Complex {
 		}
 	}
 
+	/**
+	 * Gets a complex number at a specific index in the matrix
+	 * @param row the row index
+	 * @param col the column index
+	 * @return the complex number at the index
+	 */
 	public Complex getElement(int row, int col) {
 		return this.elements[row][col];
 	}
 
+	/**
+	 * Gets all complex numbers in the matrix
+	 * @return the array of complex numbers from the matrix
+	 */
 	public Complex[][] getElements() {
 		return this.elements;
 	}
 
+	/**
+	 * Sets a complex number inside the matrix
+	 * @param val the complex number to be set
+	 * @param row the row index
+	 * @param col the column index
+	 */
 	public void setElement(Complex val, int row, int col) {
 		this.elements[row][col] = val;
 	}
 
+	/**
+	 * Sets the elements of the matrix using another array of complex numbers
+	 * @param elements the array of complex numbers
+	 */
 	public void setElements(Complex[][] elements) {
 		this.elements = elements;
 	}
