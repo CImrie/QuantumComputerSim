@@ -1,8 +1,14 @@
 package gate;
 import core.*;
 
+/**
+ * Class representing a Hadamard gate. The Hadamard gate is a 1-qubit gate.
+ */
 public class Hadamard extends OneQubitGate{
 	
+	/**
+	 * Constructor for a Hadamard gate
+	 */
 	public Hadamard(){
 		Matrix m = new Matrix(2);
 		Complex c1 = new Complex(1/Math.sqrt(2));
@@ -13,6 +19,7 @@ public class Hadamard extends OneQubitGate{
 		m.setElement(c2, 1, 1);
 		this.matrix = m;
 	}
+	
 	/**
 	 * This is a test main method to check that hadamard gives appropriate state output.
 	 * @param args

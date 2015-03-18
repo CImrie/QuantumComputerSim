@@ -1,5 +1,8 @@
 package core;
 
+/**
+ * The matrix class represents a matrix of complex numbers
+ */
 public class Matrix extends Complex {
 
 	Complex[][] elements;
@@ -120,11 +123,9 @@ public class Matrix extends Complex {
 	}
 
 	/**
-	 * Gets the tensor product with another matrix (Complex Version)
-	 * 
-	 * @param matrix
-	 *            ComplexMatrix B
-	 * @return
+	 * Gets the tensor product with another matrix
+	 * @param matrix the matrix to take the tensor product with
+	 * @return the tensor product of the matrix
 	 */
 	public Matrix getTensorProduct(Matrix matrix) {
 		int rowA = this.getRowLength();
@@ -156,7 +157,11 @@ public class Matrix extends Complex {
 
 	}
 
-	// Create an nxn identity ComplexMatrix given an nxn matrix
+	/**
+	 * Creates an Identity matrix of a given size
+	 * @param size the size of the matrix to be created
+	 * @return the identity matrix
+	 */
 	public static Matrix identity(int size) {
 
 		Matrix identity = new Matrix(size, size);
@@ -176,6 +181,11 @@ public class Matrix extends Complex {
 		return identity;
 	}
 
+	/**
+	 * Gets the transpose of a matrix
+	 * @param A the matrix to take the transpose of
+	 * @return the transposed matrix
+	 */
 	public static Matrix getTranspose(Matrix A) {
 
 		int column = A.getRowLength();
@@ -191,7 +201,11 @@ public class Matrix extends Complex {
 		return B;
 	}
 
-	// Add two same dimensional matrices C = A + B
+	/**
+	 * Adds another matrix to the current matrix
+	 * @param b the matrix to be added
+	 * @return the resulting matrix after addition
+	 */
 	public Matrix add(Matrix b) {
 
 		int row = this.getRowLength();
@@ -211,7 +225,11 @@ public class Matrix extends Complex {
 		return c;
 	}
 
-	// Subtract two same dimensional matrices C = A - B
+	/**
+	 * Subtracts another matrix from the current matrix
+	 * @param b the matrix to be subtracted
+	 * @return the resulting matrix after subtraction
+	 */
 	public Matrix subtract(Matrix b) {
 
 		int row = this.getRowLength();
@@ -232,6 +250,11 @@ public class Matrix extends Complex {
 		return c;
 	}
 
+	/**
+	 * Multiplies the current matrix with another matrix
+	 * @param B the matrix to multiply with
+	 * @return the resulting matrix after multiplication
+	 */
 	public Matrix mult(Matrix B) {
 
 		int rowA = this.getRowLength();
@@ -288,7 +311,11 @@ public class Matrix extends Complex {
 				y[j] = y[j].add((A.getElement(i, j).multiply(x[i])));
 		return y;
 	}
-
+	
+	/**
+	 * Converts the matrix to a string representation
+	 * @return the string representation of the matrix
+	 */
 	public String toString() {
 		String str = "";
 		for (int i = 0; i < this.getRowLength(); i++) {
@@ -303,7 +330,8 @@ public class Matrix extends Complex {
 
 		return str;
 	}
-public double getProb(int index) {
+	
+	public double getProb(int index) {
 		
 		double prob = 0;
 
@@ -313,6 +341,10 @@ public double getProb(int index) {
 		return prob;
 	}
 
+	/**
+	 * Main class to test matrices
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		Matrix A = new Matrix(2);

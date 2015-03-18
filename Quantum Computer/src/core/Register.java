@@ -11,53 +11,46 @@ package core;
  * in the array (i.e. counting down the array)
  **/
 public class Register extends Matrix {
-
+	
+	/**
+	 * Constructor for a register using another matrix
+	 * @param m the matrix used to construct the register
+	 */
 	public Register(Matrix m){
 		super(m);
 	}
 
+	/**
+	 * Constructor for a register using an array of Qubits
+	 * @param qubits the array of Qubits used to construct the register
+	 */
 	public Register(Qubit[] qubits){
 		this.setElements(this.getRegisterFromQubits(qubits).getElements());
 	}
 
+	/**
+	 * Gets the length of a register
+	 * @return the length of a register
+	 */
 	public int getLength() {
-	
-		/*boolean found = false;
-		double size = this.getRowLength();
-		int count  = 0;
-		int length = 0;
-		for(int i = 1; i < this.getRowLength(); i++) {
-		if(found == false) {
-			
-				size /= 2;
-				
-				if(size == 2) { found = true; count = i; }
-			}
-		}
-		length = count+1; 
-		return length;*/
 		return (int)(Math.log(this.getRowLength()) / Math.log(2));
-		//return this.getRowLength();
 	}
-	/*public Matrix getMatrix() {
-		Matrix m = new Matrix(this.getLength(),1);
-		m.setElements(this.getElements());
-		return m;
-	}*/
 
+	/**
+	 * Gets the tensored matrix from an array of Qubits
+	 * @param qubits the array of Qubits
+	 * @return the matrix of Qubits tensored together
+	 */
 	public Matrix getRegisterFromQubits(Qubit[] qubits){
 		//go through each state in the array and take the tensor product with the element to its right:
 		int length = qubits.length;
 		//start with the last two elements:
 		Matrix currentTensorMatrix = new Matrix(1);
 		currentTensorMatrix.setElement(new Complex(1), 0, 0);
-		//Matrix currentTensorMatrix = qubits[0].getMatrix().getTensorProduct(identity(1));
 		//Then loop through the remaining elements and take the tensor product with a matrix
-		//if (qubits.length > 2){
 		for (int i = 0; i < length ; i++){
 			currentTensorMatrix = currentTensorMatrix.getTensorProduct(qubits[i]);
 		}
-		//}
 		return currentTensorMatrix;
 	}
 	

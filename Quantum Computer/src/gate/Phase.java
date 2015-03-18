@@ -1,8 +1,15 @@
 package gate;
 import core.*;
 
+/**
+ * Class representing a phase gate.
+ */
 public class Phase extends OneQubitGate{
 
+	/**
+	 * Constructor for a phase gate
+	 * @param phase the phase to be used in the gate
+	 */
 	public Phase(double phase) {
 		Matrix p = new Matrix(2);
 		Complex c1 = new Complex(1);

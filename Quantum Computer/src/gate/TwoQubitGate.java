@@ -1,9 +1,17 @@
 package gate;
 import core.*;
 
+/**
+ * Class representing a two qubit gate.
+ */
 public class TwoQubitGate {
 	protected Matrix matrix;
 	
+	/**
+	 * Acts the gate on an entire register
+	 * @param r the register to act the gate on
+	 * @return the resulting register after being acted on by the gate
+	 */
 	public Register actOn(Register r){
 		if(r.getLength() % 2 == 0){
 			Matrix m = new Matrix(1);
@@ -19,6 +27,12 @@ public class TwoQubitGate {
 		return null;
 	}
 	
+	/**
+	 * Acts the gate on a specific pair of qubits in the register
+	 * @param r the register
+	 * @param pairIndex the index of the pair of qubits within the register
+	 * @return the resulting register after acting the gate on a pair of qubits in the original register
+	 */
 	public Register actOn(Register r, int pairIndex){
 		if(r.getLength() % 2 == 0){
 			int rSize = r.getLength();

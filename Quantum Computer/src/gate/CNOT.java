@@ -2,13 +2,13 @@ package gate;
 import core.*;
 
 /**
- * The C-NOT gate is a 2-qubit gate.
- * It can be represented as a pair of 1 qubit applications
- * @author Connor Imrie
- *
+ * The class representing a CNOT gate. The C-NOT gate is a 2-qubit gate.
  */
 public class CNOT extends TwoQubitGate{
 	
+	/**
+	 * Constructs a CNOT gate
+	 */
 	public CNOT(){
 		Matrix m = new Matrix(4);
 		for(int i = 0; i < m.getRowLength(); i++){
@@ -24,7 +24,10 @@ public class CNOT extends TwoQubitGate{
 		this.matrix = m;
 	}
 	
-	//Test
+	/**
+	 * Main method to test a CNOT gate
+	 * @param args
+	 */
 	public static void main(String[] args){
 		Qubit x = new Qubit(new State(1));
 		Qubit y = new Qubit(new State(0));

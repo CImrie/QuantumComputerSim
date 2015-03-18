@@ -1,18 +1,24 @@
 package core;
 
-// @author Ben Crabbe
+/**
+ * The state class represents an individual state in the form of a matrix
+ */
 public class State extends Matrix{
 
-public State(Matrix m) {
-	if (m.getRowLength() == 2 && m.getColLength() == 1){
-		this.setElements(m.getElements());
+	/**
+	 * Constructs a state using a matrix
+	 * @param m the matrix used to construct the state
+	 */
+	public State(Matrix m) {
+		if (m.getRowLength() == 2 && m.getColLength() == 1){
+			this.setElements(m.getElements());
+		}
+		new Exception("THATS NOT A QUBIT");
 	}
-	new Exception("THATS NOT A QUBIT");
-	//super(m);
-}
 	
 	/**
-	 * Creates a |0> or |1> qubit 
+	 * Creates a |0> or |1> state
+	 * @param type a number 0 or 1 representing their respective states
 	 */
 	public State(int type){
 		this.elements = new Complex[2][1];
@@ -26,43 +32,23 @@ public State(Matrix m) {
 		}
 	}
 
-//	@Override
-//	public String toString() {
-//		int a = this.get0();
-//		int b = this.get1();
-//
-//		String s = "";
-//		if (a > 0){
-//			if (a > 1){
-//				s += "(" + a + ")| 0 >";
-//			}
-//			else {
-//				s += "| 0 >";
-//			}
-//		}
-//		if (a > 0 && b > 0){
-//			s += " + ";
-//		}
-//		if (b > 0){
-//			if (b > 1){
-//				s += "(" + b + ")| 1 >";
-//			}
-//			else {
-//				s += "| 1 >";
-//			}
-//		}
-//		return s;
-//	}
-//	
+	/**
+	 * Gets the first complex number of a state
+	 * @return the first complex number of a state
+	 */
 	public Complex get0() {
 		return this.elements[0][0];
 	}
 	
+	/**
+	 * Gets the second complex number of a state
+	 * @return the second complex number of a state
+	 */
 	public Complex get1() {
 		return this.elements[1][0];
 	}
 	/**
-	 * Returns the integer value corresponding to whether the qubit is a |0> or |1> qubit
+	 * Returns the integer value corresponding to the state, this is either 0 or 1
 	 */
 	public int getStateType(){
 		if (this.getElement(0,0) == new Complex(1)){
@@ -76,17 +62,25 @@ public State(Matrix m) {
 		}
 		return 0;
 	}
+	
+	/**
+	 * Gets the matrix which represents a state
+	 * @return the matrix of the state
+	 */
 	public Matrix getMatrix() {
 		Matrix m = new Matrix(2,1);
 		m.setElements(this.getElements());
 		return m;
 	}
 	
-public static void main(String[] args){
-	State q = new State(0);
-	System.out.println(q);
-
-}
-
+	/**
+	 * Main method for testing states
+	 * @param args
+	 */
+	public static void main(String[] args){
+		State q = new State(0);
+		System.out.println(q);
+	
+	}
 	
 }

@@ -3,19 +3,36 @@ package gate;
 import core.*;
 
 /**
- * Interface for a one-qubit gate. It takes either a qubit or a qubit and an
- * extra parameter, and returns a state as a result. Example: Hadamard gate.
- * 
- * @author Connor Imrie
- *
+ * Class representing a one-qubit gate.
  */
 public class OneQubitGate {
 	protected Matrix matrix;
 
+	/**
+	 * Empty constructor for a one qubit gate
+	 */
 	public OneQubitGate() {
-
+	}
+	
+	/**
+	 * Acts the gate on an individual qubit
+	 * @param q the qubit to act on
+	 * @return the resulting qubit after being acted on by the gate
+	 */
+	public Qubit actOn(Qubit q) {
+		Qubit[] qubits = { q };
+		Register r = new Register(qubits);
+		r = this.actOn(r, 0);
+		Qubit newQ = new Qubit(new Matrix(r.getElements()));
+		return newQ;
 	}
 
+	/**
+	 * Acts the gate on a specific qubit in the register
+	 * @param r the register
+	 * @param qubitIndex the qubit to act on
+	 * @return the resulting register after acting on a specific qubit in the original register
+	 */
 	public Register actOn(Register r, int qubitIndex) {
 		int rSize = r.getLength();
 		if (qubitIndex >= rSize)
@@ -33,14 +50,11 @@ public class OneQubitGate {
 		return new Register(m);
 	}
 
-	public Qubit actOn(Qubit q) {
-		Qubit[] qubits = { q };
-		Register r = new Register(qubits);
-		r = this.actOn(r, 0);
-		Qubit newQ = new Qubit(new Matrix(r.getElements()));
-		return newQ;
-	}
-
+	/**
+	 * Acts the gate on an entire register
+	 * @param r the register to act the gate on
+	 * @return the resulting register after being acted on by the gate
+	 */
 	public Register actOn(Register r) {
 		int rSize = r.getLength();
 		Matrix m = new Matrix(1);

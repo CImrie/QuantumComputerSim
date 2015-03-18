@@ -2,10 +2,18 @@ package algorithm;
 import gate.Hadamard;
 import core.*;
 
+/**
+ * Class representing Grover's algorithm
+ */
 public class Grover {
 	private Register r;
 	private int index;
 	
+	/**
+	 * Constructs a new Grover object
+	 * @param r the register
+	 * @param qubitIndex the index to search for
+	 */
 	public Grover(Register r, int qubitIndex){
 		this.index = qubitIndex;	
 		//prepare computational basis
@@ -13,15 +21,22 @@ public class Grover {
 		this.r = h.actOn(r);
 	}
 	
+	/**
+	 * Run Grover's algorithm
+	 * @return the resulting register after running the algorithm
+	 */
 	public Register act(){
 		for (int i = 0; i < (int) Math.round(Math.PI/4*Math.sqrt(r.getLength())); i++){
-			//System.out.println("ACTED");
 			this.r = this.groverStep();
 			System.out.println(this.r);
 		}
 		return this.r;
 	}
 	
+	/**
+	 * Takes a step in Grover's algorithm
+	 * @return the resulting register after the step
+	 */
 	public Register groverStep(){
 		Hadamard h = new Hadamard();
 		
@@ -38,6 +53,10 @@ public class Grover {
 		return out;
 	}
 	
+	/**
+	 * Main method to test Grover class
+	 * @param args
+	 */
 	public static void main(String[] args){
 		int numberOfQubits = 5;
 		int searchIndex = 0;
@@ -51,7 +70,6 @@ public class Grover {
 		Grover g = new Grover(testR, searchIndex);
 		testR = g.act();
 		//System.out.println(testR);
-		
 	}
 
 }

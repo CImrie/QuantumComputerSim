@@ -1,8 +1,15 @@
 package gate;
 import core.*;
 
+/**
+ * Class representing a controlled phase gate. The controlled phase gate is a 2-qubit gate.
+ */
 public class ControlledPhase extends TwoQubitGate {
 	
+	/**
+	 * Constructor for a phase gate
+	 * @param phase the phase of the gate
+	 */
 	public ControlledPhase(double phase){
 		Matrix m = Matrix.identity(4);
 		m.setElement(new Complex(Math.cos(phase), Math.sin(phase)), 3, 3);
@@ -10,7 +17,7 @@ public class ControlledPhase extends TwoQubitGate {
 	}
 	
 	/**
-	 * This is a test main method to check that the Controlled Phase Gate gives appropriate state output.
+	 * Main Method to test a controlled phase gate.
 	 * @param args
 	 */
 	public static void main(String[] args){
