@@ -1,0 +1,58 @@
+package algorithm;
+import gate.Hadamard;
+import core.*;
+
+public class Grover {
+	private Register r;
+	private int index;
+	
+	public Grover(Register r, int qubitIndex){
+		this.index = qubitIndex;	
+		//prepare computational basis
+		Hadamard h = new Hadamard();
+		this.r = h.actOn(r);
+	}
+	
+	public Register act(){
+		for (int i = 0; i < (int) Math.round(Math.PI/4*Math.sqrt(r.getLength())); i++){
+			//System.out.println("ACTED");
+			this.r = this.groverStep();
+			//System.out.println(this.r);
+		}
+		return this.r;
+	}
+	
+	public Register groverStep(){
+		Hadamard h = new Hadamard();
+		
+		Matrix inverter = Matrix.identity(this.r.getRowLength());
+		inverter.setElement(new Complex(-1), 0, 0);
+		
+		//filter through oracle
+		Oracle o = new Oracle(this.r.getRowLength(), this.index);
+		this.r = o.actOn(this.r);
+		
+		Register out = h.actOn(this.r);
+		out = new Register(inverter.mult(out));
+		out = h.actOn(out);
+		return out;
+	}
+	
+	public static void main(String[] args){
+		int numberOfQubits =3;
+		int searchIndex = 2;
+		
+		Qubit[] qubits = new Qubit[numberOfQubits];
+		for(int i = 0; i < numberOfQubits; i++){
+			qubits[i] = new Qubit(new State(0));
+		}
+		
+		Register testR = new Register(qubits);
+		Grover g = new Grover(testR, searchIndex);
+		testR = g.act();
+		System.out.println(testR);
+		System.out.println(testR.getProb(searchIndex));
+		
+	}
+
+}

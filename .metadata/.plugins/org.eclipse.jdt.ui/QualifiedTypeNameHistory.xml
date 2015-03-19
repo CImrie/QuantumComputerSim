@@ -6,4 +6,9 @@
 <fullyQualifiedTypeName name="core.Complex"/>
 <fullyQualifiedTypeName name="gate.Hadamard"/>
 <fullyQualifiedTypeName name="core.Matrix"/>
+<fullyQualifiedTypeName name="java.io.FileWriter"/>
+<fullyQualifiedTypeName name="java.io.BufferedWriter"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.io.FileOutputStream"/>
+<fullyQualifiedTypeName name="java.io.PrintStream"/>
 </qualifiedTypeNameHistroy>

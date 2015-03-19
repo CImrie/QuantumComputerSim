@@ -1,0 +1,74 @@
+package algorithm;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.PrintStream;
+
+import gate.Hadamard;
+import core.*;
+
+public class Grover {
+	private Register r;
+	private int index;
+	
+	public Grover(Register r, int qubitIndex){
+		this.index = qubitIndex;	
+		//prepare computational basis
+		Hadamard h = new Hadamard();
+		this.r = h.actOn(r);
+	}
+	
+	public Register act(){
+		int noOfTimesToAct = 2;
+		for (int i = 0; i < noOfTimesToAct; i++){
+			//System.out.println("ACTED");
+			this.r = this.groverStep();
+			System.out.println(this.r);
+		}
+		return this.r;
+	}
+	
+	public Register groverStep(){
+		Hadamard h = new Hadamard();
+		
+		Matrix inverter = Matrix.identity(this.r.getRowLength());
+		inverter.setElement(new Complex(-1), 0, 0);
+		
+		//filter through oracle
+		Oracle o = new Oracle(this.r.getRowLength(), this.index);
+		this.r = o.actOn(this.r);
+		
+		Register out = h.actOn(this.r);
+		out = new Register(inverter.mult(out));
+		out = h.actOn(out);
+		return out;
+	}
+	
+	public static void main(String[] args){
+		int numberOfQubits =4;
+		int searchIndex = 2;
+
+		PrintStream out;
+		try {
+			out = new PrintStream(new FileOutputStream("output.txt"));
+			System.setOut(out);
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		Qubit[] qubits = new Qubit[numberOfQubits];
+		for(int i = 0; i < numberOfQubits; i++){
+			qubits[i] = new Qubit(new State(0));
+		}
+		
+		Register testR = new Register(qubits);
+		Grover g = new Grover(testR, searchIndex);
+		testR = g.act();
+		System.out.println(testR.getProb(searchIndex));
+		
+	}
+
+}
