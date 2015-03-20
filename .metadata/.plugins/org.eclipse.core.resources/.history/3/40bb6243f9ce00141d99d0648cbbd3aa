@@ -1,5 +1,4 @@
 package core;
-import gate.*;
 
 public class ListTest {
 
@@ -10,11 +9,12 @@ public class ListTest {
 				
 				ListRegister r = new ListRegister(qubits);
 				
-				Hadamard h = new Hadamard();
-				r = h.actOn(r);
+				//Hadamard h = new Hadamard();
+				//r = h.actOn(r);
 				
 				System.out.println(r.makeString());
 				
 			}
+		
 	}
 

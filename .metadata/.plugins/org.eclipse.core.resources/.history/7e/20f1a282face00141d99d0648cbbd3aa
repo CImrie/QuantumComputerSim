@@ -172,7 +172,7 @@ public class Matrix extends Complex {
 				if (i == j) {
 					identity.setElement(new Complex(1.0, 0.0), i, j);
 				} else {
-					//identity.setElement(new Complex(0.0, 0.0), i, j);
+					identity.setElement(new Complex(0.0, 0.0), i, j);
 				}
 
 			}
@@ -270,13 +270,9 @@ public class Matrix extends Complex {
 			for (int j = 0; j < columnB; j++) {
 				Complex partij = new Complex(0);
 				for (int k = 0; k < columnA; k++) {
-					if (this.getElement(i, k) != null && B.getElement(k, j) != null){
-						partij = partij.add(this.getElement(i, k).multiply(B.getElement(k, j)));
-						C.setElement(partij, i, j);
-					}
-					else {
-						C.setElement(null, i, j);
-					}
+					partij = partij.add(this.getElement(i, k).multiply(
+							B.getElement(k, j)));
+					C.setElement(partij, i, j);
 					// C[i][j] += (A[i][k] * B[k][j]);
 				}
 			}

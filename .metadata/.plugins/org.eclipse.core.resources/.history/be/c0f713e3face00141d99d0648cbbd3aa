@@ -167,12 +167,9 @@ public class Complex {
 	 * @return the resulting complex number after the multiplication
 	 */
 	public Complex multiply(Complex b) {
-		if (b != null){
-			return new Complex(this.getRealPart() * b.getRealPart() - this.getImagPart()
-					* b.getImagPart(), this.getRealPart() * b.getImagPart()
-					+ this.getImagPart() * b.getRealPart());
-		}
-		return null;
+		return new Complex(this.getRealPart() * b.getRealPart() - this.getImagPart()
+				* b.getImagPart(), this.getRealPart() * b.getImagPart()
+				+ this.getImagPart() * b.getRealPart());
 	}
 
 	/*

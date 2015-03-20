@@ -146,10 +146,7 @@ public class Complex {
 	 * @return the resulting complex number after addition
 	 */
 	public Complex add(Complex b) {
-		if (b != null){
-			return new Complex(this.getRealPart() + b.getRealPart(), this.getImagPart() + b.getImagPart());
-		}
-		return this;
+		return new Complex(this.getRealPart() + b.getRealPart(), this.getImagPart() + b.getImagPart());
 	}
 
 	/**
@@ -167,12 +164,9 @@ public class Complex {
 	 * @return the resulting complex number after the multiplication
 	 */
 	public Complex multiply(Complex b) {
-		if (b != null){
-			return new Complex(this.getRealPart() * b.getRealPart() - this.getImagPart()
-					* b.getImagPart(), this.getRealPart() * b.getImagPart()
-					+ this.getImagPart() * b.getRealPart());
-		}
-		return null;
+		return new Complex(this.getRealPart() * b.getRealPart() - this.getImagPart()
+				* b.getImagPart(), this.getRealPart() * b.getImagPart()
+				+ this.getImagPart() * b.getRealPart());
 	}
 
 	/*
