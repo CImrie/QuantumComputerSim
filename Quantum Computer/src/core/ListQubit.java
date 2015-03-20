@@ -5,6 +5,11 @@ public class ListQubit {
 	List<ListState> qubit ;
 	double magnitude;
 	
+	public ListQubit(){
+		ListState state1 = new ListState(0, new Complex (0,0));
+		ListState state2 = new ListState(1, new Complex(0,0));
+		MakeQubit(state1, state2);}
+	
 	public ListQubit(Complex a, Complex b){
 		ListState state1 = new ListState(0,a);
 		ListState state2 = new ListState(1,b);
@@ -52,5 +57,12 @@ public int getLength(){
 public int getIndex(int a){
 	return qubit.get(a).getIndex();
 }
+
+public List<ListState> getqubit(){
+	return qubit;
+}
 	
+public void setqubit(int i, ListState state){
+qubit.set(i, state);
+}
 }
