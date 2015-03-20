@@ -1,5 +1,6 @@
 package core;
 import java.util.*;
+import java.lang.Math;
 
 /**ListRegister represents a register (column vector) as 
  * a list of indices and values (class ListState represents 
@@ -8,44 +9,54 @@ import java.util.*;
 
 
 public class ListRegister extends Matrix{
-int length;
+int matrixsize;
 ArrayList<ListState> register;	
-
+int n;
 	public ListRegister(ListQubit[] qubits){
 		int n = qubits.length;
-		this.length = 2^n;
+		this.n=n;
+		this.matrixsize = 2^n;
 		getRegisterFromQubits(qubits);
 	}
 
+	public int getn() {
+
+		
+		return n;
+		//return this.getRowLength();
+	}
+	
 	public void getRegisterFromQubits(ListQubit[] qubits){
 		int n = qubits.length;
 		
 		//list positions of nonzero elements
 		ArrayList<Integer> indices = new ArrayList<Integer>(1);
 		indices.add(0);
-		for (int i=n; i>0; i++){
-			ArrayList<Integer> newindices = new ArrayList<Integer>(1);
-				if (qubits[n].getLength()==2){//add 0, 2^n-1 to each
+		for (int i=(n-1); i>=0; i--){
+			//for (int i=0; i<=(n-1); i++){
+			ArrayList<Integer> newindices = new ArrayList<Integer>();
+		
+				if (qubits[i].getLength()==2){//add 0, 2^n-1 to each
 					
 				for (int j=0; j<indices.size(); j++){
 					newindices.add(indices.get(j));
-					newindices.add(indices.get(j)+ (2^(n-1)));
+					newindices.add(indices.get(j)+ (2^(i)));
 				}
 				}
-				else if (qubits[n].getLength()==1){
+				else if (qubits[i].getLength()==1){
 					for (int j=0; j<indices.size(); j++){
-					newindices.add(indices.get(j) + qubits[n].getIndex(0)*2^(n-1));//add 2 ^ n-1 * qubit.getindex to each}
+					newindices.add(indices.get(j) + (qubits[i].getIndex(0)*(int)(Math.pow(2,i))));
 					}
 				}
 				else{
 					indices.clear();
 					break;}
-				indices = newindices;
+				indices = newindices; 
 				}
 
 		//make register - list of liststates
 		ArrayList<ListState> register = new ArrayList<ListState>(indices.size());
-		for (int i=0; i>indices.size(); i++){
+		for (int i=0; i<indices.size(); i++){
 			Complex c= new Complex();
 			//assuming all elements were 0,1
 			c.setComplex(1,0);
@@ -59,10 +70,18 @@ ArrayList<ListState> register;
 	public int getLength() {
 
 		
-		return length;
+		return matrixsize;
 		//return this.getRowLength();
 	}
 
-	
+	public String makeString(){
+		String string= "";
+		for (int i=0; i<register.size(); i++){
+			string = string + ( register.get(i).getIndex() +" : { " + register.get(i).getValue().getRealPart() + ", " 
+		 + register.get(i).getValue().getImagPart() + "} \n");
+
+		}
+return string;		
+	}
 	
 }
