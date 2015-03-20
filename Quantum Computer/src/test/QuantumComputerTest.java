@@ -9,7 +9,7 @@ import core.Qubit;
 import core.Register;
 import core.State;
 
-public class GroverTest {
+public class QuantumComputerTest {
 
 	@Test
 	public void test() {
