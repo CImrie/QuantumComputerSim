@@ -24,6 +24,7 @@ public class main {
 			}
 		}
 		
+		/*
 		Qubit[] qubits = new Qubit[numberOfQubits];
 		for(int i = 0; i < numberOfQubits; i++){
 			Boolean stateSet = false;
@@ -37,6 +38,12 @@ public class main {
 					System.out.println("You have entered an invalid state");
 				}
 			}
+		}
+		*/
+		
+		Qubit[] qubits = new Qubit[numberOfQubits];
+		for(int i = 0; i < numberOfQubits; i++){
+			qubits[i] = new Qubit(new State(0));
 		}
 		
 		boolean searchIndexSet = false;

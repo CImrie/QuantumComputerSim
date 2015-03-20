@@ -63,12 +63,11 @@ public class Grover {
 	 * @param args
 	 */
 	
-	/*
 	public static void main(String[] args){
-		int numberOfQubits = 3;
-		int searchIndex = 0;
+		int numberOfQubits = 13;
+		int searchIndex = 367;
 		
-		
+		/*
 		PrintStream out;
 		try {
 			out = new PrintStream(new FileOutputStream("output.txt"));
@@ -77,7 +76,7 @@ public class Grover {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+		*/
 		
 		Qubit[] qubits = new Qubit[numberOfQubits];
 		for(int i = 0; i < numberOfQubits; i++){
@@ -90,6 +89,5 @@ public class Grover {
 		System.out.println(testR);
 		System.out.println(testR.getProb(searchIndex));
 	}
-	*/
 
 }
