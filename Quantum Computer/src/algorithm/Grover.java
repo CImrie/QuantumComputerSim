@@ -65,7 +65,7 @@ public class Grover {
 	
 	public static void main(String[] args){
 		int numberOfQubits = 13;
-		int searchIndex = 367;
+		int searchIndex = 5;
 		
 		/*
 		PrintStream out;
