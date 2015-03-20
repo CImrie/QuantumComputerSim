@@ -30,10 +30,10 @@ public class Grover {
 	 * @return the resulting register after running the algorithm
 	 */
 	public Register act(){
-		int noOfTimesToAct = (int) Math.round(Math.pow(2,  r.getLength()/2));
+		int noOfTimesToAct = (int) Math.round((Math.PI/4) * Math.sqrt(Math.pow(2, this.r.getLength())));
 		for (int i = 0; i < noOfTimesToAct; i++){
 			this.r = this.groverStep();
-			System.out.println(this.r);
+			//System.out.println(this.r);
 		}
 		return this.r;
 	}
@@ -62,9 +62,12 @@ public class Grover {
 	 * Main method to test Grover class
 	 * @param args
 	 */
+	
+	/*
 	public static void main(String[] args){
-		int numberOfQubits = 5;
+		int numberOfQubits = 3;
 		int searchIndex = 0;
+		
 		
 		PrintStream out;
 		try {
@@ -75,6 +78,7 @@ public class Grover {
 			e.printStackTrace();
 		}
 		
+		
 		Qubit[] qubits = new Qubit[numberOfQubits];
 		for(int i = 0; i < numberOfQubits; i++){
 			qubits[i] = new Qubit(new State(0));
@@ -83,8 +87,9 @@ public class Grover {
 		Register testR = new Register(qubits);
 		Grover g = new Grover(testR, searchIndex);
 		testR = g.act();
-		//System.out.println(testR);
+		System.out.println(testR);
 		System.out.println(testR.getProb(searchIndex));
 	}
+	*/
 
 }

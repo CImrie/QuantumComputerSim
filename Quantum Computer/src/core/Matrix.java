@@ -319,9 +319,6 @@ public class Matrix extends Complex {
 	public String toString() {
 		String str = "";
 		for (int i = 0; i < this.getRowLength(); i++) {
-			if (i == 0) {
-				// str = "[";
-			}
 			for (int j = 0; j < this.getColLength(); j++) {
 				str += this.getElement(i, j).toString();
 			}
