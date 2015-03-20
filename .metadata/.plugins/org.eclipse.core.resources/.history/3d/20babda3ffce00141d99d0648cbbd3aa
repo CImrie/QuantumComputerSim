@@ -269,18 +269,15 @@ public class Matrix extends Complex {
 		//System.out.println(B);
 		for (int i = 0; i < rowA; i++) {
 			for (int j = 0; j < columnB; j++) {
-				Complex partij = new Complex(0);
 				for (int k = 0; k < columnA; k++) {
 					//System.out.println(this.getElement(i, k));
 						if (this.getElement(i, k) !=null){
 							partij = partij.add(this.getElement(i, k).multiply(B.getElement(k, j)));
 						}
+						C.setElement(partij, i, j);
+
 					// C[i][j] += (A[i][k] * B[k][j]);
 				}
-				if (partij.getRealPart() == 0){
-					partij = null;
-				}
-				C.setElement(partij, i, j);
 			}
 		}
 		return C;

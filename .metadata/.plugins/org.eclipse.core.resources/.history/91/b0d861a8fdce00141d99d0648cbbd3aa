@@ -265,22 +265,20 @@ public class Matrix extends Complex {
 		if (columnA != rowB)
 			throw new RuntimeException("Illegal Matrix dimensions.");
 		Matrix C = new Matrix(rowA, columnB);
-		//System.out.println(this);
-		//System.out.println(B);
+
 		for (int i = 0; i < rowA; i++) {
 			for (int j = 0; j < columnB; j++) {
-				Complex partij = new Complex(0);
 				for (int k = 0; k < columnA; k++) {
-					//System.out.println(this.getElement(i, k));
-						if (this.getElement(i, k) !=null){
-							partij = partij.add(this.getElement(i, k).multiply(B.getElement(k, j)));
-						}
+					if (this.getElement(i, k) != null && B.getElement(k, j) != null){
+						Complex partij = new Complex(0);
+						partij = partij.add(this.getElement(i, k).multiply(B.getElement(k, j)));
+						C.setElement(partij, i, j);
+					}
+					else {
+						C.setElement(null, i, j);
+					}
 					// C[i][j] += (A[i][k] * B[k][j]);
 				}
-				if (partij.getRealPart() == 0){
-					partij = null;
-				}
-				C.setElement(partij, i, j);
 			}
 		}
 		return C;
@@ -310,12 +308,11 @@ public class Matrix extends Complex {
 
 		if (x.length != row)
 			throw new RuntimeException("Illegal ComplexMatrix dimensions.");
+
 		Complex[] y = new Complex[column];
-		for (int j = 0; j < column; j++){
-			for (int i = 0; i < row; i++){
+		for (int j = 0; j < column; j++)
+			for (int i = 0; i < row; i++)
 				y[j] = y[j].add((A.getElement(i, j).multiply(x[i])));
-			}
-		}
 		return y;
 	}
 	
@@ -372,7 +369,7 @@ public class Matrix extends Complex {
 		A.setElement(new Complex(1), 0, 0);
 		A.setElement(new Complex(1), 1, 1);
 		Matrix B = new Matrix(A.getElements());
-		A.mult(B);
+		System.out.println(A.mult(B));
 		
 
 	}

@@ -275,12 +275,10 @@ public class Matrix extends Complex {
 						if (this.getElement(i, k) !=null){
 							partij = partij.add(this.getElement(i, k).multiply(B.getElement(k, j)));
 						}
+						C.setElement(partij, i, j);
+
 					// C[i][j] += (A[i][k] * B[k][j]);
 				}
-				if (partij.getRealPart() == 0){
-					partij = null;
-				}
-				C.setElement(partij, i, j);
 			}
 		}
 		return C;

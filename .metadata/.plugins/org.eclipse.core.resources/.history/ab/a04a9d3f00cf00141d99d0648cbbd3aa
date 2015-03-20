@@ -9,7 +9,7 @@ public class Complex {
 	 * Constructor for a complex number
 	 */
 	public Complex() {
-		//this.setComplex(Double.NaN, Double.NaN);
+		this.setComplex(Double.NaN, Double.NaN);
 	}
 
 	/**
@@ -146,6 +146,7 @@ public class Complex {
 	 * @return the resulting complex number after addition
 	 */
 	public Complex add(Complex b) {
+		System.out.println(b);
 		if (b != null){
 			return new Complex(this.getRealPart() + b.getRealPart(), this.getImagPart() + b.getImagPart());
 		}

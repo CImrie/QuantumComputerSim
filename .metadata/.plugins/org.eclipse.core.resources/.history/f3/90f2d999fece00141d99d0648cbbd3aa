@@ -9,7 +9,7 @@ public class Complex {
 	 * Constructor for a complex number
 	 */
 	public Complex() {
-		//this.setComplex(Double.NaN, Double.NaN);
+		this.setComplex(Double.NaN, Double.NaN);
 	}
 
 	/**
