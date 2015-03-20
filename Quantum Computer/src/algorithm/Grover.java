@@ -1,8 +1,4 @@
 package algorithm;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-
 import gate.Hadamard;
 import core.*;
 
@@ -64,19 +60,8 @@ public class Grover {
 	 */
 	
 	public static void main(String[] args){
-		int numberOfQubits = 13;
-		int searchIndex = 5;
-		
-		/*
-		PrintStream out;
-		try {
-			out = new PrintStream(new FileOutputStream("output.txt"));
-			System.setOut(out);
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		*/
+		int numberOfQubits = 3;
+		int searchIndex = 4;
 		
 		Qubit[] qubits = new Qubit[numberOfQubits];
 		for(int i = 0; i < numberOfQubits; i++){
