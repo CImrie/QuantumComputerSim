@@ -1,20 +1,60 @@
 package core;
 
-import gate.Hadamard;
+import java.util.Scanner;
+
+import algorithm.Grover;
 
 public class main {
+	
 	public static void main(String[] args){
 		
-		Qubit[] qubits = new Qubit[2];
-		qubits[0] = new Qubit(new State(0));
-		qubits[1] = new Qubit(new State(1));
+		Scanner scanner = new Scanner(System.in);
+		int numberOfQubits = 0;
+		int searchIndex = 0;
 		
-		Register r = new Register(qubits);
+		Boolean qubitsSet = false;
+		while (!qubitsSet){
+			System.out.println("Please input the number of qubits in the register:");
+			int in = scanner.nextInt();
+			if (in > 0){
+				numberOfQubits = in;
+				qubitsSet = true;
+			} else {
+				System.out.println("You have entered an invalid number of qubits");
+			}
+		}
 		
-		Hadamard h = new Hadamard();
-		r = h.actOn(r);
+		Qubit[] qubits = new Qubit[numberOfQubits];
+		for(int i = 0; i < numberOfQubits; i++){
+			Boolean stateSet = false;
+			while (!stateSet){
+				System.out.println("Please input the state for qubit " + (i+1) + " of " + numberOfQubits);
+				int in = scanner.nextInt();
+				if (in == 0 || in == 1){
+					qubits[i] = new Qubit(new State(in));
+					stateSet = true;
+				} else {
+					System.out.println("You have entered an invalid state");
+				}
+			}
+		}
 		
-		System.out.println(r.toString());
-		//System.out.println(r.getQubit(0).prob1());
+		boolean searchIndexSet = false;
+		while (!searchIndexSet){
+			System.out.println("Please input the search index:");
+			int in = scanner.nextInt();
+			if (in >= 0 && in < Math.pow(2, numberOfQubits)){
+				searchIndex = in;
+				searchIndexSet = true;
+			} else {
+				System.out.println("You have entered an invalid search index");
+			}
+		}
+		
+		Register testR = new Register(qubits);
+		Grover g = new Grover(testR, searchIndex);
+		testR = g.act();
+		System.out.println(testR);
+		System.out.println(testR.getProb(searchIndex));
 	}
 }
