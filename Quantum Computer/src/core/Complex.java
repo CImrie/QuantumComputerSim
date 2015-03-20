@@ -171,8 +171,9 @@ public class Complex {
 			return new Complex(this.getRealPart() * b.getRealPart() - this.getImagPart()
 					* b.getImagPart(), this.getRealPart() * b.getImagPart()
 					+ this.getImagPart() * b.getRealPart());
+		} else {
+			return null;
 		}
-		return null;
 	}
 
 	/*
