@@ -31,7 +31,6 @@ public class Phase extends OneQubitGate implements FOneQubitGate{
 			}	
 			return newq;	
 		}
-=
 			public ListRegister actOn(ListRegister r) {return r;}
 		
 	/**
