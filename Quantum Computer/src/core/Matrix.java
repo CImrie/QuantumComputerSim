@@ -168,7 +168,6 @@ public class Matrix extends Complex {
 
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-
 				if (i == j) {
 					identity.setElement(new Complex(1.0, 0.0), i, j);
 				} 

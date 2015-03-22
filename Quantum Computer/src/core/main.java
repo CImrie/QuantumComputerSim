@@ -61,7 +61,18 @@ public class main {
 		Register testR = new Register(qubits);
 		Grover g = new Grover(testR, searchIndex);
 		testR = g.act();
-		System.out.println(testR);
-		System.out.println(testR.getProb(searchIndex));
+		//System.out.println(testR);
+		//System.out.println(testR.getProb(searchIndex));
+		//Classically search through and pick most probable answer
+		int mostProbableIndex = 0;
+		double probability = 0;
+		for (int i = 0; i < Math.pow(2, testR.getLength()); i++){
+			double tempProb = testR.getProb(i);
+			if(tempProb > probability){
+				probability = tempProb;
+				mostProbableIndex = i;
+			}
+		}
+		System.out.println("Most probable index found: " + mostProbableIndex + " with probability of: " + probability);
 	}
 }

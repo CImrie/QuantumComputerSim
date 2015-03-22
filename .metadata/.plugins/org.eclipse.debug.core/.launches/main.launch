@@ -9,5 +9,5 @@
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="core.main"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Quantum Computer"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms256m&#10;-Xmx4096m"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms256m&#10;-Xmx5020m"/>
 </launchConfiguration>
