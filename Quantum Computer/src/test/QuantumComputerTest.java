@@ -5,11 +5,28 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import algorithm.Grover;
+import core.Complex;
+import core.Matrix;
 import core.Qubit;
 import core.Register;
 import core.State;
 
 public class QuantumComputerTest {
+	
+	@Test
+	public void matrixTest(){
+		Matrix A = new Matrix(2);
+		A.setElement(new Complex(1), 0, 0);
+		A.setElement(new Complex(1), 1, 1);
+		Matrix B = new Matrix(A.getElements());
+		A.mult(B);
+		Matrix expectedMatrix = new Matrix(2);
+		expectedMatrix.setElement(new Complex(1), 0, 0);
+		expectedMatrix.setElement(null, 0, 1);
+		expectedMatrix.setElement(null, 1, 0);
+		expectedMatrix.setElement(new Complex(1), 1, 1);
+		assertEquals(A,expectedMatrix);
+	}
 
 	@Test
 	public void test() {

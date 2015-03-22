@@ -66,10 +66,4 @@ public class OneQubitGate {
 		return new Register(m);
 	}
 	
-	public ListRegister actOn(ListRegister r){
-		
-		
-		
-		return r;
-	}
 }
