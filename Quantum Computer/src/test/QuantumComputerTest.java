@@ -14,7 +14,7 @@ import core.State;
 public class QuantumComputerTest {
 	
 	@Test
-	public void matrixTest(){
+	public void matrixMultiplicationTest(){
 		Matrix A = new Matrix(2);
 		A.setElement(new Complex(1), 0, 0);
 		A.setElement(new Complex(1), 1, 1);
@@ -29,7 +29,7 @@ public class QuantumComputerTest {
 	}
 
 	@Test
-	public void test() {
+	public void groverTest1() {
 		int numberOfQubits = 3;
 		int searchIndex = 4;
 		double expected = (121.0/128.0);
@@ -48,7 +48,7 @@ public class QuantumComputerTest {
 	}
 	
 	@Test
-	public void test2() {
+	public void groverTest2() {
 		int numberOfQubits = 4;
 		int searchIndex = 12;
 		double expected = Math.pow((251.0/256.0),2);
