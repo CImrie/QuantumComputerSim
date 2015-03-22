@@ -24,23 +24,6 @@ public class main {
 			}
 		}
 		
-		/*
-		Qubit[] qubits = new Qubit[numberOfQubits];
-		for(int i = 0; i < numberOfQubits; i++){
-			Boolean stateSet = false;
-			while (!stateSet){
-				System.out.println("Please input the state for qubit " + (i+1) + " of " + numberOfQubits);
-				int in = scanner.nextInt();
-				if (in == 0 || in == 1){
-					qubits[i] = new Qubit(new State(in));
-					stateSet = true;
-				} else {
-					System.out.println("You have entered an invalid state");
-				}
-			}
-		}
-		*/
-		
 		Qubit[] qubits = new Qubit[numberOfQubits];
 		for(int i = 0; i < numberOfQubits; i++){
 			qubits[i] = new Qubit(new State(0));
