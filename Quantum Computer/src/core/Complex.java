@@ -176,14 +176,6 @@ public class Complex {
 		}
 	}
 
-	/*
-	public static Complex multiply(Complex a, double b) {
-
-		return new Complex(a.getRealPart() * b, a.getImagPart() * b);
-
-	}
-	*/
-
 	/**
 	 * Divides the current complex number by another complex number
 	 * @param b the complex number to be used in the division

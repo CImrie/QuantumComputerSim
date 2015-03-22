@@ -103,17 +103,6 @@ public class Qubit extends Matrix {
 		Complex b = this.get1();
 		
 	return a + "|0> + " + b + "|1>";
-		
-	}
-	
-	public State getState(int offset){
-		if (offset == 0){
-			return new State(0);
-		}
-		else {
-			return new State(1);
-		}
-	}
-		
+	}	
 	
 }

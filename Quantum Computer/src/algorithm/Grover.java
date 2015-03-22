@@ -34,15 +34,6 @@ public class Grover {
 		Hadamard h = new Hadamard();
 		this.r = h.actOn(r);
 	}
-	
-	private void openWriter() {
-		try {
-			writer = new FileWriter(file);
-			buffer = new BufferedWriter(writer);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Run Grover's algorithm
@@ -62,8 +53,22 @@ public class Grover {
 		closeWriter();
 		return this.r;
 	}
+	
+	/**
+	 * Open filewriter
+	 */
+	private void openWriter() {
+		try {
+			writer = new FileWriter(file);
+			buffer = new BufferedWriter(writer);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-
+	/**
+	 * Closes filewriter
+	 */
 	private void closeWriter() {
 		try {
 			writer.close();
@@ -73,6 +78,9 @@ public class Grover {
 		}
 	}
 
+	/**
+	 * Outputs values to a file
+	 */
 	private void logValues() {
 		String out = "";
 
@@ -129,6 +137,10 @@ public class Grover {
 		long duration = end - start;
 	}
 
+	/**
+	 * Gets the current array of probabilities for the chosen index
+	 * @return the array of probabilities
+	 */
 	public double[] getValues() {
 		return values;
 	}

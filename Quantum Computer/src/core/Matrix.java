@@ -15,30 +15,20 @@ public class Matrix extends Complex {
 	}
 
 	/**
-	 * Constructs a square matrix of the given size. The complex elements are set with 0 real and imaginary parts
+	 * Constructs a square matrix of the given size
 	 * @param a the size of the square matrix
 	 */
 	public Matrix(int a) {
 		this.elements = new Complex[a][a];
-		/*for (int i = 0; i < a; i++) {
-			for (int j = 0; j < a; j++) {
-				this.setElement(new Complex(0.0, 0.0), i, j);
-			}
-		}*/
 	}
 
 	/**
-	 * Constructs a matrix of a given size. The complex elements are set with 0 real and imaginary parts
+	 * Constructs a matrix of a given size
 	 * @param a the number of rows in the matrix
 	 * @param b the number of columns in the matrix
 	 */
 	public Matrix(int a, int b) {
 		this.elements = new Complex[a][b];
-		/*for (int i = 0; i < a; i++) {
-			for (int j = 0; j < b; j++) {
-				this.setElement(new Complex(0), i, j);
-			}
-		}*/
 	}
 
 	/**
@@ -113,7 +103,10 @@ public class Matrix extends Complex {
 		this.elements = elements;
 	}
 
-	// Print the Matrix in row/col format on the terminal
+	/**
+	 * Prints the Matrix in row/col format to the console
+	 * @param grid the matrix to be printed
+	 */
 	public static void Print(Matrix grid) {
 		for (int r = 0; r < grid.getRowLength(); r++) {
 			for (int c = 0; c < grid.getColLength(); c++)
@@ -336,6 +329,11 @@ public class Matrix extends Complex {
 		return str;
 	}
 	
+	/**
+	 * Gets the probability of a specific index being the correct one
+	 * @param index the index to get the probability of
+	 * @return the probability
+	 */
 	public double getProb(int index) {
 		
 		double prob = 0;
