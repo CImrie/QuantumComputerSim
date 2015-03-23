@@ -21,9 +21,6 @@ import core.State;
 import algorithm.Grover;
 
 public class GUI extends JPanel {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	public static final Dimension DEFAULT_SIZE = new Dimension(600, 230);
 	public static final int MODIFIER_MINIMUM = 0;
@@ -33,12 +30,12 @@ public class GUI extends JPanel {
 	private JFrame frame;
 
 
-	// components - 14 total
+	// components - 12 total
 	private JTextArea qubitsArea;
 	private JTextArea searchIndexArea;
 	private JButton startButton;
 	private SimpleGraph plot; // TODO update to pre-built package if need be
-	
+
 	private JLabel xAxisLabel;
 	private JLabel yAxisLabel;
 	private JLabel qubitsLabel;
@@ -54,7 +51,7 @@ public class GUI extends JPanel {
 	private Point searchIndexAreaLocation;
 	private Point startButtonLocation;
 	private Point plotLocation;
-	
+
 	private Point xAxisLabelLocation;
 	private Point yAxisLabelLocation;
 	private Point qubitsLabelLocation;
@@ -65,6 +62,9 @@ public class GUI extends JPanel {
 	private Point xMaxLabelLocation;
 
 
+	/**
+	 * Constructor
+	 */
 	public GUI() {
 		super();
 		setSize(DEFAULT_SIZE);
@@ -72,20 +72,33 @@ public class GUI extends JPanel {
 	}
 
 
+	/**
+	 * Resets component to default state
+	 */
 	public void reset() {
 		//TODO
 	}
 
+	/**
+	 * Returns parent frame
+	 * @return
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
 
-
+	/**
+	 * Sets parent frame
+	 * @param frame
+	 */
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
 
 
+	/**
+	 * Builds the GUI
+	 */
 	private void initialise() {
 		initComponents();
 		try {
@@ -96,6 +109,9 @@ public class GUI extends JPanel {
 	}
 
 
+	/**
+	 * Ensures file handlers and running threads are terminated properly.
+	 */
 	protected void exit() {
 		onExit();
 		System.exit(0);
@@ -106,6 +122,9 @@ public class GUI extends JPanel {
 	}
 
 
+	/**
+	 * Builds components to a state where they can be added to the Panel, then adds them.
+	 */
 	private void initComponents() {
 		setLayout(null);
 		buildComponents();
@@ -114,6 +133,9 @@ public class GUI extends JPanel {
 		addComponents();
 	}
 
+	/**
+	 * Adds each component to the container.
+	 */
 	private void addComponents() {
 		add(qubitsArea);
 		add(searchIndexArea);
@@ -144,6 +166,9 @@ public class GUI extends JPanel {
 		yMinLabel.setLocation(yMinLabelLocation);
 	}
 
+	/**
+	 * Determines the locations for each component.
+	 */
 	private void calculateComponentLocations() {
 		qubitsAreaLocation = new Point(150, 50); //
 		searchIndexAreaLocation = new Point(150, 10); //
@@ -160,6 +185,9 @@ public class GUI extends JPanel {
 
 	}
 
+	/**
+	 * Constructs each component and sets up the contents of each component.
+	 */
 	private void buildComponents() {
 		qubitsArea = new JTextArea();
 		qubitsArea.setSize(50, 30);
@@ -189,22 +217,22 @@ public class GUI extends JPanel {
 
 		xAxisLabel = new JLabel("Step Number");
 		xAxisLabel.setSize(200,30);
-		
+
 		yAxisLabel = new JLabel("P");
 		yAxisLabel.setSize(200,30);
-		
+
 		xMaxLabel = new JLabel("6"); //number of default simulation
 		xMaxLabel.setSize(200,30);
-		
+
 		xMinLabel = new JLabel("0");
 		xMinLabel.setSize(200,30);
-		
+
 		yMaxLabel = new JLabel("1");
 		yMaxLabel.setSize(200,30);
-		
+
 		yMinLabel = new JLabel("0");
 		yMinLabel.setSize(200,30);
-		
+
 		qubitsLabel = new JLabel("Number of Qubits");
 		qubitsLabel.setSize(200, 30);
 
@@ -214,7 +242,10 @@ public class GUI extends JPanel {
 
 
 
-
+	/**
+	 * Begins running a Grover simulation with the inputs from the appropriate Text Areas.
+	 * Updates Graph component with the results of the simulation.
+	 */
 	protected void start() {
 		boolean valid = checkArgumentValidity();
 
@@ -242,7 +273,7 @@ public class GUI extends JPanel {
 			String stepCountString = "" + values.length;
 			xMaxLabel.setText(stepCountString);
 			repaint();
-			
+
 			if (frame != null) {
 				frame.setTitle("");
 			}
@@ -281,5 +312,4 @@ public class GUI extends JPanel {
 		panel.setFrame(frame);
 		frame.setVisible(true);
 	}		
-
 }
