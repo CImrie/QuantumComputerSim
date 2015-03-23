@@ -1,5 +1,6 @@
 package graphics;
 
+
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -28,6 +29,7 @@ public class GUI extends JPanel {
 	public static final int RESOLUTION_MAXIMUM = 15;
 	private JFrame frame;
 
+
 	// components - 12 total
 	private JTextArea qubitsArea;
 	private JTextArea searchIndexArea;
@@ -42,6 +44,7 @@ public class GUI extends JPanel {
 	private JLabel yMinLabel;
 	private JLabel xMinLabel;
 	private JLabel xMaxLabel;
+
 
 	// component locations
 	private Point qubitsAreaLocation;
@@ -58,6 +61,7 @@ public class GUI extends JPanel {
 	private Point xMinLabelLocation;
 	private Point xMaxLabelLocation;
 
+
 	/**
 	 * Constructor
 	 */
@@ -67,16 +71,16 @@ public class GUI extends JPanel {
 		initialise();
 	}
 
+
 	/**
 	 * Resets component to default state
 	 */
 	public void reset() {
-		// TODO
+		//TODO
 	}
 
 	/**
 	 * Returns parent frame
-	 * 
 	 * @return
 	 */
 	public JFrame getFrame() {
@@ -85,12 +89,12 @@ public class GUI extends JPanel {
 
 	/**
 	 * Sets parent frame
-	 * 
 	 * @param frame
 	 */
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
+
 
 	/**
 	 * Builds the GUI
@@ -104,6 +108,7 @@ public class GUI extends JPanel {
 		}
 	}
 
+
 	/**
 	 * Ensures file handlers and running threads are terminated properly.
 	 */
@@ -116,9 +121,9 @@ public class GUI extends JPanel {
 		// Do nothing for now
 	}
 
+
 	/**
-	 * Builds components to a state where they can be added to the Panel, then
-	 * adds them.
+	 * Builds components to a state where they can be added to the Panel, then adds them.
 	 */
 	private void initComponents() {
 		setLayout(null);
@@ -171,12 +176,12 @@ public class GUI extends JPanel {
 		plotLocation = new Point(240, 10);
 		qubitsLabelLocation = new Point(10, 50); //
 		searchIndexLabelLocation = new Point(30, 10);
-		xAxisLabelLocation = new Point(360, 165);
-		yAxisLabelLocation = new Point(215, 65);
-		yMaxLabelLocation = new Point(230, 0);
-		yMinLabelLocation = new Point(230, 138);
-		xMaxLabelLocation = new Point(560, 150);
-		xMinLabelLocation = new Point(238, 150);
+		xAxisLabelLocation = new Point(360,165);
+		yAxisLabelLocation = new Point(215,65);
+		yMaxLabelLocation = new Point(230,0);
+		yMinLabelLocation = new Point(230,138);
+		xMaxLabelLocation = new Point(560,150);
+		xMinLabelLocation = new Point(238,150);
 
 	}
 
@@ -192,6 +197,7 @@ public class GUI extends JPanel {
 		searchIndexArea.setSize(50, 30);
 		searchIndexArea.setText("4");
 
+
 		startButton = new JButton("Start");
 		startButton.setSize(100, 30); //
 		startButton.addActionListener(new ActionListener() {
@@ -201,29 +207,31 @@ public class GUI extends JPanel {
 			}
 		});
 
+
+
 		int graphMin = 0;
 		int graphMax = 1;
 		int numberOfPoints = 64;
 		plot = new SimpleGraph(numberOfPoints, graphMin, graphMax);
-		plot.setSize(330, 145); // IRRELEVANT, WILL BE RESET ON START()
+		plot.setSize(330, 145); //IRRELEVANT, WILL BE RESET ON START()
 
 		xAxisLabel = new JLabel("Step Number");
-		xAxisLabel.setSize(200, 30);
+		xAxisLabel.setSize(200,30);
 
 		yAxisLabel = new JLabel("P");
-		yAxisLabel.setSize(200, 30);
+		yAxisLabel.setSize(200,30);
 
-		xMaxLabel = new JLabel("6"); // number of default simulation
-		xMaxLabel.setSize(200, 30);
+		xMaxLabel = new JLabel("6"); //number of default simulation
+		xMaxLabel.setSize(200,30);
 
 		xMinLabel = new JLabel("0");
-		xMinLabel.setSize(200, 30);
+		xMinLabel.setSize(200,30);
 
 		yMaxLabel = new JLabel("1");
-		yMaxLabel.setSize(200, 30);
+		yMaxLabel.setSize(200,30);
 
 		yMinLabel = new JLabel("0");
-		yMinLabel.setSize(200, 30);
+		yMinLabel.setSize(200,30);
 
 		qubitsLabel = new JLabel("Number of Qubits");
 		qubitsLabel.setSize(200, 30);
@@ -232,9 +240,11 @@ public class GUI extends JPanel {
 		searchIndexLabel.setSize(200, 20);
 	}
 
+
+
 	/**
-	 * Begins running a Grover simulation with the inputs from the appropriate
-	 * Text Areas. Updates Graph component with the results of the simulation.
+	 * Begins running a Grover simulation with the inputs from the appropriate Text Areas.
+	 * Updates Graph component with the results of the simulation.
 	 */
 	protected void start() {
 		boolean valid = checkArgumentValidity();
@@ -247,17 +257,17 @@ public class GUI extends JPanel {
 			int searchIndex = Integer.parseInt(searchIndexArea.getText());
 
 			Qubit[] qubits = new Qubit[numberOfQubits];
-			for (int i = 0; i < numberOfQubits; i++) {
+			for(int i = 0; i < numberOfQubits; i++){
 				qubits[i] = new Qubit(new State(0));
 			}
 
 			Register testR = new Register(qubits);
 			Grover g = new Grover(testR, searchIndex);
 			testR = g.act();
-			// System.out.println(testR);
-			// System.out.println(testR.getProb(searchIndex));
-			// double[] values = g.getValues();
-			// plot.setValues(values);
+			//			System.out.println(testR);
+			//			System.out.println(testR.getProb(searchIndex));
+			//double[] values = g.getValues();
+			//plot.setValues(values);
 			double[] values = g.getValues();
 			plot.setValues(values);
 			String stepCountString = "" + values.length;
@@ -273,25 +283,25 @@ public class GUI extends JPanel {
 		}
 	}
 
+
 	/**
-	 * Returns true if the limit is less than 2^n, where n is the number of
-	 * qubits.
-	 * 
+	 * Returns true if the limit is less than 2^n, where n is the number of qubits.
 	 * @return
 	 */
 	private boolean checkArgumentValidity() {
 		int numberOfQubits = Integer.parseInt(qubitsArea.getText());
 		int searchIndex = Integer.parseInt(searchIndexArea.getText());
 
-		int limit = (int) Math.pow(2, numberOfQubits);
+		int limit = (int) Math.pow(2,numberOfQubits);
 		if (searchIndex > limit) {
 			return false;
 		}
 		return true;
 	}
 
+
 	public static void main(String[] args) {
-		JFrame frame = new JFrame();
+		JFrame frame= new JFrame();
 
 		GUI panel = new GUI();
 		Dimension size = GUI.DEFAULT_SIZE;
@@ -301,5 +311,5 @@ public class GUI extends JPanel {
 		frame.setLocationRelativeTo(null);
 		panel.setFrame(frame);
 		frame.setVisible(true);
-	}
+	}		
 }

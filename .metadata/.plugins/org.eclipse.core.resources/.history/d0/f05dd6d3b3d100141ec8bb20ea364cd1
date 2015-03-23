@@ -66,10 +66,6 @@ public class Register extends Matrix {
 		return (int) (Math.log(this.getRowLength()) / Math.log(2));
 	}
 
-	/**
-	 * Test method to print out the register constructed for a given binary or decimal representation
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		Register r = new Register("0100", false, 4);
 		System.out.println(r.toString());

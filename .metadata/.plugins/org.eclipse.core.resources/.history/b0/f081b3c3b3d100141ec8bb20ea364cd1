@@ -30,13 +30,6 @@ public class Register extends Matrix {
 		this.elements = currentTensorMatrix.getElements();
 	}
 
-	/**
-	 * Constructor for a register using either a decimal or binary string input
-	 * Useful for generating large registers quickly from shorthand notation
-	 * @param reg the number in decimal or binary format for the register, i.e. |2> or |10>
-	 * @param decimal is true if using decimal input (i.e. |2>) or set to false if binary (|10>)
-	 * @param size is the size of register to represent in. This pads decimal to binary conversion with leading |0> states
-	 */
 	public Register(String reg, boolean decimal, int size) {
 		String binary = "";
 		if (decimal) {
@@ -66,10 +59,6 @@ public class Register extends Matrix {
 		return (int) (Math.log(this.getRowLength()) / Math.log(2));
 	}
 
-	/**
-	 * Test method to print out the register constructed for a given binary or decimal representation
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		Register r = new Register("0100", false, 4);
 		System.out.println(r.toString());

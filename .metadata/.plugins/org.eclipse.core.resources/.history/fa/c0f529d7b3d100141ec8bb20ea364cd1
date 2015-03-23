@@ -67,7 +67,7 @@ public class Register extends Matrix {
 	}
 
 	/**
-	 * Test method to print out the register constructed for a given binary or decimal representation
+	 * Test to print out the register constructed for a given binary or decimal representation
 	 * @param args
 	 */
 	public static void main(String[] args) {

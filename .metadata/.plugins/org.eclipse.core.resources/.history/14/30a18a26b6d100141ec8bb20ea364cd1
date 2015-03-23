@@ -137,7 +137,7 @@ public class Matrix extends Complex {
 							out.setElement(aij.multiply(matrix.getElement(k, l)),rowO + k, colO + l);
 						}
 						else {
-							out.setElement(null, rowO +k, colO +l);
+							out.setElement(null, row0 +k, col0 +l);
 						}
 					}
 				}

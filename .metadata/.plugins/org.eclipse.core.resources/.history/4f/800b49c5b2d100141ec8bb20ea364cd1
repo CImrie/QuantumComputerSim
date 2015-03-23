@@ -125,20 +125,23 @@ public class Matrix extends Complex {
 		int colA = this.getColLength();
 		int rowB = matrix.getRowLength();
 		int colB = matrix.getColLength();
+
 		Matrix out = new Matrix(rowA * rowB, colA * colB);
+
 		for (int i = 0; i < rowA; i++) {
+
 			int rowO = i * rowB;
+
 			for (int j = 0; j < colA; j++) {
+
 				int colO = j * colB;
 				Complex aij = this.elements[i][j];
+
 				for (int k = 0; k < rowB; k++) {
 					for (int l = 0; l < colB; l++) {
-						if (aij != null && matrix.getElement(k, l) != null){
+						//if(matrix.getElement(k,l) != null){
 							out.setElement(aij.multiply(matrix.getElement(k, l)),rowO + k, colO + l);
-						}
-						else {
-							out.setElement(null, rowO +k, colO +l);
-						}
+						//}
 					}
 				}
 			}
@@ -153,7 +156,9 @@ public class Matrix extends Complex {
 	 * @return the identity matrix
 	 */
 	public static Matrix identity(int size) {
+
 		Matrix identity = new Matrix(size);
+
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (i == j) {
@@ -161,6 +166,7 @@ public class Matrix extends Complex {
 				} 
 			}
 		}
+
 		return identity;
 	}
 
@@ -170,14 +176,17 @@ public class Matrix extends Complex {
 	 * @return the transposed matrix
 	 */
 	public static Matrix getTranspose(Matrix A) {
+
 		int column = A.getRowLength();
 		int row = A.getColLength();
+
 		Matrix B = new Matrix(row, column);
-		for (int i = 0; i < column; i++){
-			for (int j = 0; j < row; j++){
+
+		for (int i = 0; i < column; i++)
+			for (int j = 0; j < row; j++)
+
 				B.setElement(A.getElement(i, j), j, i);
-			}
-		}
+
 		return B;
 	}
 
@@ -187,13 +196,15 @@ public class Matrix extends Complex {
 	 * @return the resulting matrix after addition
 	 */
 	public Matrix add(Matrix b) {
+
 		int row = this.getRowLength();
 		int column = this.getColLength();
 
-		if (row != b.getRowLength() || column != b.getColLength()){
+		if (row != b.getRowLength() || column != b.getColLength())
 			throw new RuntimeException("Wrong dimensions");
-		}
+
 		Matrix c = new Matrix(row, column);
+
 		for (int i = 0; i < row; i++){
 			for (int j = 0; j < column; j++){
 				if (this.getElement(i, j) != null && b.getElement(i, j) != null){
@@ -208,8 +219,11 @@ public class Matrix extends Complex {
 				else {
 					c.setElement(null, i, j);
 				}
+				//System.out.println(c.getElement(i, j));
 			}
+			
 		}
+
 		return c;
 	}
 
@@ -219,17 +233,22 @@ public class Matrix extends Complex {
 	 * @return the resulting matrix after subtraction
 	 */
 	public Matrix subtract(Matrix b) {
+
 		int row = this.getRowLength();
 		int column = this.getColLength();
-		if (row != b.getRowLength() || column != b.getColLength()){
+
+		if (row != b.getRowLength() || column != b.getColLength())
 			throw new RuntimeException("Wrong dimensions");
-		}
+
 		Matrix c = new Matrix(row, column);
-		for (int i = 0; i < row; i++){
-			for (int j = 0; j < column; j++){
-				c.setElement(this.getElement(i, j).subtract(b.getElement(i, j)), i,j);
-			}
-		}
+
+		for (int i = 0; i < row; i++)
+			for (int j = 0; j < column; j++)
+
+				c.setElement(
+						this.getElement(i, j).subtract(b.getElement(i, j)), i,
+						j);
+
 		return c;
 	}
 
@@ -239,21 +258,26 @@ public class Matrix extends Complex {
 	 * @return the resulting matrix after multiplication
 	 */
 	public Matrix mult(Matrix B) {
+
 		int rowA = this.getRowLength();
 		int columnA = this.getColLength();
 		int rowB = B.getRowLength();
 		int columnB = B.getColLength();
-		if (columnA != rowB){
+
+		if (columnA != rowB)
 			throw new RuntimeException("Illegal Matrix dimensions.");
-		}
 		Matrix C = new Matrix(rowA, columnB);
+		//System.out.println(this);
+		//System.out.println(B);
 		for (int i = 0; i < rowA; i++) {
 			for (int j = 0; j < columnB; j++) {
 				Complex partij = new Complex(0);
 				for (int k = 0; k < columnA; k++) {
+					//System.out.println(this.getElement(i, k));
 						if (this.getElement(i, k) !=null){
 							partij = partij.add(this.getElement(i, k).multiply(B.getElement(k, j)));
 						}
+					// C[i][j] += (A[i][k] * B[k][j]);
 				}
 				if (partij.getRealPart() == 0){
 					partij = null;
@@ -262,6 +286,39 @@ public class Matrix extends Complex {
 			}
 		}
 		return C;
+	}
+
+	// y = A*x
+	public static Complex[] mult(Matrix A, Complex[] x) {
+
+		int row = A.getRowLength();
+		int column = A.getColLength();
+
+		if (x.length != column)
+			throw new RuntimeException("Illegal ComplexMatrix dimensions.");
+
+		Complex[] y = new Complex[row];
+		for (int i = 0; i < row; i++)
+			for (int j = 0; j < column; j++)
+				y[i] = y[i].add((A.getElement(i, j).multiply(x[j])));
+		return y;
+	}
+
+	// y = x^T * A
+	public static Complex[] mult(Complex[] x, Matrix A) {
+
+		int row = A.getRowLength();
+		int column = A.getColLength();
+
+		if (x.length != row)
+			throw new RuntimeException("Illegal ComplexMatrix dimensions.");
+		Complex[] y = new Complex[column];
+		for (int j = 0; j < column; j++){
+			for (int i = 0; i < row; i++){
+				y[j] = y[j].add((A.getElement(i, j).multiply(x[i])));
+			}
+		}
+		return y;
 	}
 	
 	/**
@@ -304,11 +361,26 @@ public class Matrix extends Complex {
 	 * Main class to test matrices
 	 * @param args
 	 */
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
+
+		/*Matrix A = new Matrix(2);
+		A.setElement(new Complex(1), 0, 0);
+		A.setElement(new Complex(1), 0, 1);
+		A.setElement(new Complex(1), 1, 0);
+		A.setElement(new Complex(-1), 1, 1);
+		System.out.println(A);
+		A = A.getTensorProduct(A);
+		System.out.println(A);
+
+		Qubit q = new Qubit(new Complex(1), new Complex(0));
+		System.out.println(q.getMatrix());*/
+		
 		Matrix A = new Matrix(2);
 		A.setElement(new Complex(1), 0, 0);
 		A.setElement(new Complex(1), 1, 1);
 		Matrix B = new Matrix(A.getElements());
 		A.mult(B);
+		
+
 	}
 }

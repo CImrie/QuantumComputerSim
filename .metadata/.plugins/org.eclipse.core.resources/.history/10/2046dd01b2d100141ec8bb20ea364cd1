@@ -6,10 +6,6 @@ import algorithm.Grover;
 
 public class main {
 	
-	/**
-	 * Takes console input for number of qubits and solution/search index, and then performs Grover's algorithm using these
-	 * @param args
-	 */
 	public static void main(String[] args){
 		
 		Scanner scanner = new Scanner(System.in);
@@ -44,10 +40,13 @@ public class main {
 				System.out.println("You have entered an invalid search index");
 			}
 		}
-		scanner.close();
+		
 		Register testR = new Register(qubits);
 		Grover g = new Grover(testR, searchIndex);
 		testR = g.act();
+		//System.out.println(testR);
+		//System.out.println(testR.getProb(searchIndex));
+		//Classically search through and pick most probable answer
 		int mostProbableIndex = 0;
 		double probability = 0;
 		for (int i = 0; i < Math.pow(2, testR.getLength()); i++){

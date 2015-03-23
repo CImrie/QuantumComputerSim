@@ -36,8 +36,7 @@ public class Shor {
 		Register out = new Register(r1.getTensorProduct(finalMatrix));
 	//	System.out.println(out.getRowLength());
 		out = new Register(actOnRegister(out, N));
-			Matrix newR = projection(out);
-			System.out.println(newR);
+		//	Matrix newR = projection(out);
 
 	}
 
@@ -54,7 +53,7 @@ public class Shor {
 		//	System.out.println(iden);
 		Matrix out = projection.getTensorProduct(iden);
 
-		return out;
+		return null;
 	}
 
 	public static Matrix actOnRegister(Register r, int N) {

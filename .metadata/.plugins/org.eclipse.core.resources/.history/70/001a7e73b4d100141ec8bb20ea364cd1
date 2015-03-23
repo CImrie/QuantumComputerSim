@@ -80,6 +80,7 @@ public class State extends Matrix{
 	public static void main(String[] args){
 		State q = new State(0);
 		System.out.println(q);
+	
 	}
 	
 }

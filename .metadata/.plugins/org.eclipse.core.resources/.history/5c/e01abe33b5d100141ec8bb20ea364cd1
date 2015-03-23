@@ -37,7 +37,6 @@ public class Shor {
 	//	System.out.println(out.getRowLength());
 		out = new Register(actOnRegister(out, N));
 			Matrix newR = projection(out);
-			System.out.println(newR);
 
 	}
 
@@ -53,6 +52,7 @@ public class Shor {
 		Matrix iden = Matrix.identity((int)Math.sqrt(noOfStates));
 		//	System.out.println(iden);
 		Matrix out = projection.getTensorProduct(iden);
+		System.out.println(projection);
 
 		return out;
 	}

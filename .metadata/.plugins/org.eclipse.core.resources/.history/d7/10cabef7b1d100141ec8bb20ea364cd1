@@ -9,6 +9,7 @@ public class Complex {
 	 * Constructor for a complex number
 	 */
 	public Complex() {
+		//this.setComplex(Double.NaN, Double.NaN);
 	}
 
 	/**
@@ -100,6 +101,8 @@ public class Complex {
 				conjuction = " - ";
 			}
 		}
+		
+		
 		if (real != 0.0){
 			realStr += real;
 		}
@@ -109,6 +112,7 @@ public class Complex {
 		if (real == 0.0 && imag == 0.0){
 			realStr += real;
 		}
+		
 		return before + realStr + conjuction + imagStr + after;
 	}
 
@@ -164,7 +168,9 @@ public class Complex {
 	 */
 	public Complex multiply(Complex b) {
 		if (b != null){
-			return new Complex(this.getRealPart() * b.getRealPart() - this.getImagPart() * b.getImagPart(), this.getRealPart() * b.getImagPart() + this.getImagPart() * b.getRealPart());
+			return new Complex(this.getRealPart() * b.getRealPart() - this.getImagPart()
+					* b.getImagPart(), this.getRealPart() * b.getImagPart()
+					+ this.getImagPart() * b.getRealPart());
 		} else {
 			return null;
 		}

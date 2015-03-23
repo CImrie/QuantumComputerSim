@@ -6,9 +6,6 @@ import core.*;
  * Class representing a one-qubit gate.
  */
 public class OneQubitGate {
-	/* Matrix representation of the gate that is initialised differently for each gate.
-	 * It is protected so that child classes can access the variable directly.
-	 */
 	protected Matrix matrix;
 
 	/**

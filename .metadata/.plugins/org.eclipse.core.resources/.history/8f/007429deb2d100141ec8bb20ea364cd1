@@ -125,20 +125,23 @@ public class Matrix extends Complex {
 		int colA = this.getColLength();
 		int rowB = matrix.getRowLength();
 		int colB = matrix.getColLength();
+
 		Matrix out = new Matrix(rowA * rowB, colA * colB);
+
 		for (int i = 0; i < rowA; i++) {
+
 			int rowO = i * rowB;
+
 			for (int j = 0; j < colA; j++) {
+
 				int colO = j * colB;
 				Complex aij = this.elements[i][j];
+
 				for (int k = 0; k < rowB; k++) {
 					for (int l = 0; l < colB; l++) {
-						if (aij != null && matrix.getElement(k, l) != null){
+						//if(matrix.getElement(k,l) != null){
 							out.setElement(aij.multiply(matrix.getElement(k, l)),rowO + k, colO + l);
-						}
-						else {
-							out.setElement(null, rowO +k, colO +l);
-						}
+						//}
 					}
 				}
 			}

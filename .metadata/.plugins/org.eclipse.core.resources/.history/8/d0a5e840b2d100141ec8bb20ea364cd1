@@ -44,7 +44,7 @@ public class main {
 				System.out.println("You have entered an invalid search index");
 			}
 		}
-		scanner.close();
+		
 		Register testR = new Register(qubits);
 		Grover g = new Grover(testR, searchIndex);
 		testR = g.act();

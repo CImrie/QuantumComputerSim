@@ -37,7 +37,7 @@ public class Shor {
 	//	System.out.println(out.getRowLength());
 		out = new Register(actOnRegister(out, N));
 			Matrix newR = projection(out);
-			System.out.println(newR);
+			Systme.out.println(newR);
 
 	}
 
