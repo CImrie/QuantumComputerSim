@@ -65,5 +65,7 @@ public class OneQubitGate {
 		m = m.mult(r);
 		return new Register(m);
 	}
-	
+	public Matrix getMatrix() {
+		return this.matrix;
+	}
 }

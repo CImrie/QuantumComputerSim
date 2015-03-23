@@ -205,11 +205,24 @@ public class Matrix extends Complex {
 
 		Matrix c = new Matrix(row, column);
 
-		for (int i = 0; i < row; i++)
-			for (int j = 0; j < column; j++)
-
-				c.setElement(this.getElement(i, j).add(b.getElement(i, j)), i,
-						j);
+		for (int i = 0; i < row; i++){
+			for (int j = 0; j < column; j++){
+				if (this.getElement(i, j) != null && b.getElement(i, j) != null){
+					c.setElement(this.getElement(i, j).add(b.getElement(i, j)), i,j);
+				}
+				else if(this.getElement(i, j) != null){
+					c.setElement(b.getElement(i, j), i, j);
+				}
+				else if(b.getElement(i, j) != null){
+					c.setElement(b.getElement(i, j), i, j);
+				}
+				else {
+					c.setElement(null, i, j);
+				}
+				//System.out.println(c.getElement(i, j));
+			}
+			
+		}
 
 		return c;
 	}

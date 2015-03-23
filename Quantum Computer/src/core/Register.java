@@ -47,7 +47,8 @@ public class Register extends Matrix {
 		if(decimal){
 			int intReg = Integer.parseInt(reg);
 			binary = Integer.toBinaryString(intReg);
-			for (int i = 0; i < size-binary.length(); i++){
+			int loopSize = size-binary.length();
+			for (int i = 0; i < loopSize; i++){
 				binary = "0" + binary;
 			}
 		}
