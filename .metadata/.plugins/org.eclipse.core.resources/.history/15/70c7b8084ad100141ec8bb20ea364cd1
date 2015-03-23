@@ -25,13 +25,17 @@ public class Register extends Matrix {
 	 * @param qubits the array of Qubits used to construct the register
 	 */
 	public Register(Qubit[] qubits){
+		//go through each state in the array and take the tensor product with the element to its right:
 		int length = qubits.length;
+		//start with the last two elements:
 		Matrix currentTensorMatrix = new Matrix(1);
 		currentTensorMatrix.setElement(new Complex(1), 0, 0);
+		//Then loop through the remaining elements and take the tensor product with a matrix
 		for (int i = 0; i < length ; i++){
 			currentTensorMatrix = currentTensorMatrix.getTensorProduct(qubits[i]);
 		}
 		this.elements = currentTensorMatrix.getElements();
+		//this.setElements(this.getRegisterFromQubits(qubits).getElements());
 	}
 
 	/**
@@ -41,5 +45,24 @@ public class Register extends Matrix {
 	public int getLength() {
 		return (int)(Math.log(this.getRowLength()) / Math.log(2));
 	}
+
+	/*/**
+	 * Gets the tensored matrix from an array of Qubits
+	 * @param qubits the array of Qubits
+	 * @return the matrix of Qubits tensored together
+	 */
+	/*public Matrix getRegisterFromQubits(Qubit[] qubits){
+		//go through each state in the array and take the tensor product with the element to its right:
+		int length = qubits.length;
+		//start with the last two elements:
+		Matrix currentTensorMatrix = new Matrix(1);
+		currentTensorMatrix.setElement(new Complex(1), 0, 0);
+		//Then loop through the remaining elements and take the tensor product with a matrix
+		for (int i = 0; i < length ; i++){
+			currentTensorMatrix = currentTensorMatrix.getTensorProduct(qubits[i]);
+		}
+		return currentTensorMatrix;
+	}*/
+	
 	
 }
