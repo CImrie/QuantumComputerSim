@@ -13,7 +13,7 @@ public class State extends Matrix{
 		if (m.getRowLength() == 2 && m.getColLength() == 1){
 			this.setElements(m.getElements());
 		}
-		new Exception("THATS NOT A STATE");
+		new Exception("THATS NOT A QUBIT");
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public class State extends Matrix{
 			return 1;
 		}
 		else {
-			new Exception("State is not properly formed. Can only have 1 integer component. S = " + this.toString());
+			new Exception("Qubit is not properly formed. Can only have 1 integer component. Q = " + this.toString());
 		}
 		return 0;
 	}

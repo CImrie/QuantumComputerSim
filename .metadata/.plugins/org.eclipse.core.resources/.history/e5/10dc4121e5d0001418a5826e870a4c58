@@ -25,7 +25,7 @@ public class GUI extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public static final Dimension DEFAULT_SIZE = new Dimension(600, 230);
+	public static final Dimension DEFAULT_SIZE = new Dimension(600, 210);
 	public static final int MODIFIER_MINIMUM = 0;
 	public static final int MODIFIER_MAXIMUM = 15;
 	public static final int RESOLUTION_MINIMUM = 0;
@@ -38,15 +38,9 @@ public class GUI extends JPanel {
 	private JTextArea searchIndexArea;
 	private JButton startButton;
 	private SimpleGraph plot; // TODO update to pre-built package if need be
-	
-	private JLabel xAxisLabel;
-	private JLabel yAxisLabel;
+
 	private JLabel qubitsLabel;
 	private JLabel searchIndexLabel;
-	private JLabel yMaxLabel;
-	private JLabel yMinLabel;
-	private JLabel xMinLabel;
-	private JLabel xMaxLabel;
 
 
 	// component locations
@@ -54,15 +48,9 @@ public class GUI extends JPanel {
 	private Point searchIndexAreaLocation;
 	private Point startButtonLocation;
 	private Point plotLocation;
-	
-	private Point xAxisLabelLocation;
-	private Point yAxisLabelLocation;
+
 	private Point qubitsLabelLocation;
 	private Point searchIndexLabelLocation;
-	private Point yMaxLabelLocation;
-	private Point yMinLabelLocation;
-	private Point xMinLabelLocation;
-	private Point xMaxLabelLocation;
 
 
 	public GUI() {
@@ -121,12 +109,6 @@ public class GUI extends JPanel {
 		add(plot);
 		add(qubitsLabel);
 		add(searchIndexLabel);
-		add(xAxisLabel);
-		add(yAxisLabel);
-		add(xMaxLabel);
-		add(xMinLabel);
-		add(yMaxLabel);
-		add(yMinLabel);
 	}
 
 	private void updateComponentLocations() {
@@ -136,12 +118,7 @@ public class GUI extends JPanel {
 		plot.setLocation(plotLocation);
 		qubitsLabel.setLocation(qubitsLabelLocation);
 		searchIndexLabel.setLocation(searchIndexLabelLocation);
-		xAxisLabel.setLocation(xAxisLabelLocation);
-		yAxisLabel.setLocation(yAxisLabelLocation);
-		xMaxLabel.setLocation(xMaxLabelLocation);
-		xMinLabel.setLocation(xMinLabelLocation);
-		yMaxLabel.setLocation(yMaxLabelLocation);
-		yMinLabel.setLocation(yMinLabelLocation);
+
 	}
 
 	private void calculateComponentLocations() {
@@ -151,13 +128,6 @@ public class GUI extends JPanel {
 		plotLocation = new Point(240, 10);
 		qubitsLabelLocation = new Point(10, 50); //
 		searchIndexLabelLocation = new Point(30, 10);
-		xAxisLabelLocation = new Point(360,165);
-		yAxisLabelLocation = new Point(215,65);
-		yMaxLabelLocation = new Point(230,0);
-		yMinLabelLocation = new Point(230,138);
-		xMaxLabelLocation = new Point(560,150);
-		xMinLabelLocation = new Point(238,150);
-
 	}
 
 	private void buildComponents() {
@@ -187,29 +157,12 @@ public class GUI extends JPanel {
 		plot = new SimpleGraph(numberOfPoints, graphMin, graphMax);
 		plot.setSize(330, 145); //IRRELEVANT, WILL BE RESET ON START()
 
-		xAxisLabel = new JLabel("Step Number");
-		xAxisLabel.setSize(200,30);
-		
-		yAxisLabel = new JLabel("P");
-		yAxisLabel.setSize(200,30);
-		
-		xMaxLabel = new JLabel("6"); //number of default simulation
-		xMaxLabel.setSize(200,30);
-		
-		xMinLabel = new JLabel("0");
-		xMinLabel.setSize(200,30);
-		
-		yMaxLabel = new JLabel("1");
-		yMaxLabel.setSize(200,30);
-		
-		yMinLabel = new JLabel("0");
-		yMinLabel.setSize(200,30);
-		
 		qubitsLabel = new JLabel("Number of Qubits");
 		qubitsLabel.setSize(200, 30);
 
 		searchIndexLabel = new JLabel("Search Index:");
 		searchIndexLabel.setSize(200, 20);
+
 	}
 
 
@@ -239,9 +192,8 @@ public class GUI extends JPanel {
 			//plot.setValues(values);
 			double[] values = g.getValues();
 			plot.setValues(values);
-			String stepCountString = "" + values.length;
-			xMaxLabel.setText(stepCountString);
 			repaint();
+			plot.repaint();
 			
 			if (frame != null) {
 				frame.setTitle("");
