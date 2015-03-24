@@ -2,17 +2,7 @@ package algorithm;
 import core.*;
 import gate.Hadamard;
 
-/**
- * Shor's Algorithm implementation. Still a work in progress and so comments are left in as a guide to thought-process
- * @author Connor Imrie
- *
- */
 public class Shor {
-	
-	/**
-	 * Test method for Shor's algorithm, for chosen 'random' value to be 3 and N = 15
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		int m = 3;
 		int N = 15;
@@ -49,15 +39,11 @@ public class Shor {
 			System.out.println(newR);
 
 	//	System.out.println(out);
-	}
 	
-	/**
-	 * Creates a matrix that is the tensor of two registers, and which will take a random orthonormal projection of the first register
-	 * leaving the second unaffected.
-	 * @param r is the resultant matrix of two registers tensored together
-	 * @param N is the number being factorised
-	 * @return
-	 */
+
+
+	}
+//Creates a matrix which will take a random othonormal projection of the first register leaving the second register unaffected 
 	public static Matrix projection(Register r, int N) {
 
 		int noOfQubits = r.getLength()-(int)Math.ceil(Math.log(N) / Math.log(2));
@@ -70,17 +56,14 @@ public class Shor {
 		Matrix I = Matrix.identity((int)Math.pow(2,(int)Math.ceil(Math.log(N) / Math.log(2))));
 		//	System.out.println(projection.getRowLength()*I.getRowLength());
 		Matrix out = projection.getTensorProduct(I);
+
+
 		//return out;
+
 		return out.mult(r);
 
 	}
-	
-	/**
-	 * Calculates the hadamard transform of every qubit in the first register, leaving the second register unaffected.
-	 * @param r is the resultant matrix of two registers tensored together
-	 * @param N is the number being factorised
-	 * @return
-	 */
+//Takes the hadamard tranfsorm of every qubit in the first register leaving the second unchanged
 	public static Matrix actOnRegister(Register r, int N) {
 		// Create a hadamard matrix of (size register length)/2 and and identity of same length
 		/*int sizeOfOneRegister = (int)Math.sqrt(r.getLength());
@@ -98,7 +81,7 @@ public class Shor {
 		//System.out.println(finalHadamard);
 		System.out.println("HERE");
 		return out.mult(r);*/
-		
+
 		//create hadamard that is sqrt(superimposed register) in size
 		int sizeH = r.getLength()-(int)Math.ceil(Math.log(N) / Math.log(2));
 		Hadamard h = new Hadamard();
@@ -108,14 +91,17 @@ public class Shor {
 		for (int i = 0; i < sizeH; i++){
 			tempBigH = tempBigH.getTensorProduct(H);
 		}
+		
 		H = null;
 		Matrix I = Matrix.identity((int)Math.pow(2,(int)Math.ceil(Math.log(N) / Math.log(2))));
 		//System.out.println(I);
 		tempBigH = tempBigH.getTensorProduct(I);
+		
 		I = null;
 		/*System.out.println(r.getRowLength() + "      " + r.getColLength());
 		System.out.println(tempBigH.getRowLength() + "    " + tempBigH.getColLength());
 		System.out.println(I.getRowLength() + "      " + I.getColLength());*/
 		return tempBigH.mult(r);
+
 	}
 }

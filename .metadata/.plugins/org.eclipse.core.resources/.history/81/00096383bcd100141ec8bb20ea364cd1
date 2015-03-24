@@ -2,11 +2,6 @@ package algorithm;
 import core.*;
 import gate.Hadamard;
 
-/**
- * Shor's Algorithm implementation. Still a work in progress and so comments are left in as a guide to thought-process
- * @author Connor Imrie
- *
- */
 public class Shor {
 	
 	/**
@@ -49,13 +44,16 @@ public class Shor {
 			System.out.println(newR);
 
 	//	System.out.println(out);
-	}
 	
+
+
+	}
+//Creates a matrix which will take a random othonormal projection of the first register leaving the second register unaffected 
 	/**
 	 * Creates a matrix that is the tensor of two registers, and which will take a random orthonormal projection of the first register
 	 * leaving the second unaffected.
 	 * @param r is the resultant matrix of two registers tensored together
-	 * @param N is the number being factorised
+	 * @param N is the number of basis states in each register
 	 * @return
 	 */
 	public static Matrix projection(Register r, int N) {
@@ -74,13 +72,7 @@ public class Shor {
 		return out.mult(r);
 
 	}
-	
-	/**
-	 * Calculates the hadamard transform of every qubit in the first register, leaving the second register unaffected.
-	 * @param r is the resultant matrix of two registers tensored together
-	 * @param N is the number being factorised
-	 * @return
-	 */
+//Takes the hadamard tranfsorm of every qubit in the first register leaving the second unchanged
 	public static Matrix actOnRegister(Register r, int N) {
 		// Create a hadamard matrix of (size register length)/2 and and identity of same length
 		/*int sizeOfOneRegister = (int)Math.sqrt(r.getLength());

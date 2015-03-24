@@ -2,11 +2,6 @@ package algorithm;
 import core.*;
 import gate.Hadamard;
 
-/**
- * Shor's Algorithm implementation. Still a work in progress and so comments are left in as a guide to thought-process
- * @author Connor Imrie
- *
- */
 public class Shor {
 	
 	/**
