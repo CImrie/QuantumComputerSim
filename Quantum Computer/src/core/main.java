@@ -59,6 +59,6 @@ public class main {
 				mostProbableIndex = i;
 			}
 		}
-		//System.out.println("Most probable index found: " + mostProbableIndex + " with probability of: " + probability);
+		System.out.println("Most probable index found: " + mostProbableIndex + " with probability of: " + probability);
 	}
 }
