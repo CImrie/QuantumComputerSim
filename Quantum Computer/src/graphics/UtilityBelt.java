@@ -6,6 +6,11 @@ import java.util.Date;
 
 public class UtilityBelt {
 	
+	/**
+	 * Returns the highest from an array of integers.
+	 * @param values Highest integer from the given array.
+	 * @return
+	 */
 	public static int getMaximum(int[] values) {
 		int length = values.length;
 		
@@ -24,6 +29,11 @@ public class UtilityBelt {
 		return maximum;
 	}
 	
+	/**
+	 * Returns the highest from an array of doubles.
+	 * @param values Highest double from the given array.
+	 * @return
+	 */
 	public static double getMaximum(double[] values) {
 		int length = values.length;
 		
@@ -42,6 +52,11 @@ public class UtilityBelt {
 		return maximum;
 	}
 	
+	/**
+	 * Returns the lowest from an array of integers.
+	 * @param values Lowest integer from the given array.
+	 * @return
+	 */
 	public static int getMinimum(int[] values) {
 		int length = values.length;
 		
@@ -60,6 +75,11 @@ public class UtilityBelt {
 		return minimum;
 	}
 	
+	/**
+	 * Returns the lowest from an array of doubles.
+	 * @param values Lowest double from the given array.
+	 * @return
+	 */
 	public static double getMinimum(double[] values) {
 		int length = values.length;
 		
@@ -78,6 +98,10 @@ public class UtilityBelt {
 		return minimum;
 	}
 	
+	/**
+	 * Generates a string based on the current time and date.
+	 * @return
+	 */
 	public static String getDateAndTimeString() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 		Date date = new Date();

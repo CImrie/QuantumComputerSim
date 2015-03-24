@@ -1,17 +1,14 @@
 package graphics;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.util.Timer;
-import java.util.TimerTask;
-
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-public class SimpleGraph extends Component {
+public class SimpleGraph extends JComponent {
 	public static final Dimension DEFAULT_SIZE = new Dimension(300,300);
 	private double[] values;
 	private double minimum;
@@ -20,6 +17,11 @@ public class SimpleGraph extends Component {
 	private int numberOfPoints;
 	private boolean dynamicScaling;
 
+
+	/**
+	 * Constructs a SimpleGraph for a number of points. Dynamic scaling is used so all points are displayed on the graph.
+	 * @param numberOfPoints Number of points in the graph.
+	 */
 	public SimpleGraph(int numberOfPoints) {
 		super();
 		this.numberOfPoints = numberOfPoints;
@@ -27,7 +29,13 @@ public class SimpleGraph extends Component {
 		values = new double[numberOfPoints];
 		setSize(DEFAULT_SIZE);
 	}
-	
+
+	/**
+	 * Constructs a SimpleGraph for a specified y range.
+	 * @param numberOfPoints Number of points in the graph.
+	 * @param minimum Minimum displayed y value
+	 * @param maximum Maximum displayed y value
+	 */
 	public SimpleGraph(int numberOfPoints, int minimum, int maximum) {
 		super();
 		this.numberOfPoints = numberOfPoints;
@@ -40,11 +48,19 @@ public class SimpleGraph extends Component {
 	}
 
 
+	/**
+	 * Called using dynamic scaling usually. Updates the Minimum and Maximum y values so all points are displayed.
+	 * @param values
+	 */
 	public void updateValues(double[] values) {
 		this.values = values;
 		recalculateBoundaries();
 	}
 
+	/**
+	 * Updates the Minimum and Maximum y values so all points are displayed.
+	 * @param values
+	 */
 	private void recalculateBoundaries() {
 		if (dynamicScaling) {
 			minimum = UtilityBelt.getMinimum(values);
@@ -87,6 +103,10 @@ public class SimpleGraph extends Component {
 		}
 	}
 
+	/**
+	 * Adds a single point to the graph.
+	 * @param point
+	 */
 	public void addPoint(int point) {
 		double[] newValues = new double[numberOfPoints];
 
@@ -129,6 +149,10 @@ public class SimpleGraph extends Component {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * Sets graph values.
+	 * @param values
+	 */
 	public void setValues(double[] values) {
 		this.values = values;
 		this.numberOfPoints = values.length;
@@ -136,15 +160,28 @@ public class SimpleGraph extends Component {
 		//System.out.println("setting values");
 	}
 
+	/**
+	 * Sets whether or not graph adjusts range to draw all points.
+	 * @param dynamicScaling
+	 */
 	public void setDynamicScaling(boolean dynamicScaling) {
 		this.dynamicScaling = dynamicScaling;
 	}
 
+	/**
+	 * Sets minimum and maximum displayed y values.
+	 * @param minimum Minimum displayed y value.
+	 * @param maximum Maximum displayed y value.
+	 */
 	public void setBoundaries(int minimum, int maximum) {
 		this.minimum = minimum;
 		this.maximum = maximum;
 	}
 
+	/**
+	 * Sets the number of points in the graph.
+	 * @param nextNumber
+	 */
 	public void setNumberOfPoints(int nextNumber) {
 		double[] nextValues = new double[nextNumber];
 		
