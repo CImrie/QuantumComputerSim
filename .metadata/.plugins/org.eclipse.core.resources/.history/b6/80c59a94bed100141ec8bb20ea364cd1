@@ -4,7 +4,7 @@ import java.util.Scanner;
 import algorithm.Grover;
 
 /**
- * Class to operate Grover's algorithm with console input
+ * 
  */
 public class main {
 	

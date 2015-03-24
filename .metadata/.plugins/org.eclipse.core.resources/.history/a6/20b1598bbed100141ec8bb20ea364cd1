@@ -1,8 +1,5 @@
 package core;
 
-/**
- * Class representing a complex number, with real and imaginary coefficients
- */
 public class Complex {
 
 	private double realPart;
