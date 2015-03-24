@@ -18,9 +18,7 @@ public class Shor {
 		//System.out.println(r2.getLength());
 		Hadamard h = new Hadamard();
 		r1 = h.actOn(r1);
-		Register r = new Register(r1.getTensorProduct(r2));
-
-		System.out.println(r.getRowLength());
+		
 		Matrix finalMatrix = new Matrix(r2.getRowLength(),1);
 		for(int i = 0; i < r2.getRowLength(); i++) {
 			int s = (int)(Math.pow(m, i)%N);
@@ -36,27 +34,36 @@ public class Shor {
 		Register out = new Register(r1.getTensorProduct(finalMatrix));
 	//	System.out.println(out.getRowLength());
 		out = new Register(actOnRegister(out, N));
-			Matrix newR = projection(out);
+
+			Matrix newR = projection(out, N);
 			System.out.println(newR);
 
+	//	System.out.println(out);
+	
+
+
 	}
+//Creates a matrix which will take a random othonormal projection of the first register leaving the second register unaffected 
+	public static Matrix projection(Register r, int N) {
 
-	public static Matrix projection(Register r) {
-
-		int noOfQubits = r.getLength();
+		int noOfQubits = r.getLength()-(int)Math.ceil(Math.log(N) / Math.log(2));
 		int noOfStates = r.getRowLength();
 		int random = (int)Math.round(Math.sqrt(noOfStates)*Math.random());
 		String string = "" + random;
-		Register R = new Register(string, true, noOfQubits/2);
+		Register R = new Register(string, true, noOfQubits);
 		Register RT = new Register(Matrix.getTranspose(R));
 		Matrix projection = R.mult(RT);
-		Matrix iden = Matrix.identity((int)Math.sqrt(noOfStates));
-		//	System.out.println(iden);
-		Matrix out = projection.getTensorProduct(iden);
+		Matrix I = Matrix.identity((int)Math.pow(2,(int)Math.ceil(Math.log(N) / Math.log(2))));
+		//	System.out.println(projection.getRowLength()*I.getRowLength());
+		Matrix out = projection.getTensorProduct(I);
 
-		return out;
+
+		//return out;
+
+		return out.mult(r);
+
 	}
-
+//Takes the hadamard tranfsorm of every qubit in the first register leaving the second unchanged
 	public static Matrix actOnRegister(Register r, int N) {
 		// Create a hadamard matrix of (size register length)/2 and and identity of same length
 		/*int sizeOfOneRegister = (int)Math.sqrt(r.getLength());
